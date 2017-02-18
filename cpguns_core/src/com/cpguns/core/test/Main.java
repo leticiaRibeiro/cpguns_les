@@ -5,8 +5,9 @@
  */
 package com.cpguns.core.test;
 
-import com.cpguns.core.util.MyConnection;
-import java.sql.Connection;
+import com.cpguns.core.dao.impl.ProductDAO;
+import com.cpguns.core.model.Product;
+import java.sql.SQLException;
 
 /**
  *
@@ -16,19 +17,18 @@ public class Main {
     
     public static void main(String[] args){
         
+        Product prod = new Product();
+        prod.setName("Colt M4");
+        
+        
+        ProductDAO prodDAO = new ProductDAO();
+        
+        
         try {
-            Connection cn = MyConnection.openConnection();
-            System.out.println(cn);
-            if (cn != null) {
-                System.out.println("SHOW");
-            }else{
-                System.out.println("NAO");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            prodDAO.create(prod);
+	} catch (SQLException e) {
             e.printStackTrace();
-        }
+	}
         
     }
-    
 }

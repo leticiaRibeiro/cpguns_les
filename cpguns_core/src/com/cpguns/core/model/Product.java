@@ -10,7 +10,7 @@ public class Product extends DomainEntity{
     private String name;
     private String description;
     private String caliber;
-    private Double weight;
+    private float weight;
     private String action;
     private String origin;
     private String model;
@@ -39,10 +39,10 @@ public class Product extends DomainEntity{
         this.caliber = caliber;
     }
 
-    public Double getWeight() {
+    public float getWeight() {
         return weight;
     }
-    public void setWeight(Double weight) {
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 
