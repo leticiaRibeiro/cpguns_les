@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +25,9 @@ public class ProductDAO extends AbstractJdbcDAO{
 
     public ProductDAO(){
         super("tb_product", "id_product");
-        
+    }
+    
+    public void criarTabela(){
         openConnection();
         StringBuilder sql = new StringBuilder();
         sql.append("CREATE TABLE tb_products(");
@@ -105,10 +108,13 @@ public class ProductDAO extends AbstractJdbcDAO{
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE tb_products SET name=?");
-            sql.append("WHERE id_product=?");
+            // estava faltando um espaço aqui no começo rs
+            sql.append(" WHERE id_product=?");
             
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, product.getName());
+            // settamos o id como um parametro qualquer. Ele é o segundo "?" na query correto? Então, ele será o segundo a ser settado.
+            pst.setInt(2, product.getId());
             pst.executeUpdate();
             connection.commit();            
         } catch (Exception e) {
@@ -133,8 +139,54 @@ public class ProductDAO extends AbstractJdbcDAO{
     @Override
     public List<DomainEntity> read(DomainEntity entity) throws SQLException {
         
+        openConnection();
+        PreparedStatement pst = null;
+        Product product = (Product) entity;
+        List<DomainEntity> products = new ArrayList<>();
+        boolean ehEspecifico = false;
         
-        return null;
+        try{
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT * FROM tb_products");
+            // Estamos buscando um produto especifico?
+            if(product.getId() != 0){ // pq != 0? INT é um tipo primitivo. Ou seja, NUNCA será null. Caso esteja 0, é pq não foi informado um ID especifico.
+                sql.append(" WHERE id_product=?"); // vamos procurar um produto especifico
+                ehEspecifico = true;
+            } 
+            
+            pst = connection.prepareStatement(sql.toString());
+            if(ehEspecifico){ // caso for o especifico, precisamos settar o ID para saber qual é o especifico
+                pst.setInt(1, product.getId());
+            }
+            
+            ResultSet rs = pst.executeQuery();
+            // enquanto houver registros, vamos lendo....
+            while(rs.next()){
+                // novo registro, novo product!
+                Product p = new Product();
+                // pegamos os valores das colunas e settamos no objeto de Product - Se a coluna for int: rs.getInt("NOME DA COLUNA")
+                p.setName(rs.getString("name"));
+                // adicionamos o produto na lista, que iremos retornar com todos os valores encontrados...
+                products.add(p);
+            }
+        } catch(Exception e){
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally{
+            try{
+                pst.close();
+                connection.close();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        
+        return products;
     }
 
     

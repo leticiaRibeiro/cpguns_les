@@ -22,6 +22,8 @@ public class Main {
         
         
         ProductDAO prodDAO = new ProductDAO();
+        // EXECUTAR O CRIAR A TABELA SOMENTE QUANDO PRECISAR CRIA-LA! Caso contrário, comente esta linha.
+        prodDAO.criarTabela();
         
         
         try {
