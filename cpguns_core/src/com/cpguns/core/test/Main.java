@@ -22,9 +22,9 @@ public class Main {
     public static void main(String[] args){
         
         Product prod = new Product();
-        prod.setId(3);
-        prod.setName("Germany Lunger");
-        prod.setDescription("Revolverr");
+        prod.setId(5);
+        prod.setName("Glock");
+        prod.setDescription("Pistol");
         prod.setCaliber(".388");
         prod.setWeight((float) 3.21);
         prod.setAction("autop");
@@ -36,7 +36,6 @@ public class Main {
         
         
         ProductDAO prodDAO = new ProductDAO();
-        // EXECUTAR O CRIAR A TABELA SOMENTE QUANDO PRECISAR CRIA-LA! Caso contrário, comente esta linha.
         //prodDAO.criarTabela();
         
         
@@ -44,10 +43,10 @@ public class Main {
             // variável do tipo list
             //List<DomainEntity> products = new ArrayList<>();
             //products = prodDAO.read(prod);
-            prodDAO.delete(prod);            
+            prodDAO.update(prod);            
             // para cada produto é um item da lista
-            //for(DomainEntity produto : products){
-                /*Product p = (Product) produto;
+            /*for(DomainEntity produto : products){
+                Product p = (Product) produto;
                 System.out.println("ID: " + p.getId());
                 System.out.println("Nome: " + p.getName());
                 System.out.println("Descrição: " + p.getDescription());
@@ -57,8 +56,7 @@ public class Main {
                 System.out.println("Origem: " + p.getOrigin());
                 System.out.println("Capacidade: " + p.getCapacity());
                 System.out.println("Data Cadastro: " + p.getDtCreate());
-                System.out.println("--------------------------------");*/
-                
+                System.out.println("--------------------------------");*/             
             //}
             //products.size();
 	} catch (Exception e) {

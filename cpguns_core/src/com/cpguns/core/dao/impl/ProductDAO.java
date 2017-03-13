@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 public class ProductDAO extends AbstractJdbcDAO{
 
     public ProductDAO(){
-        super("tb_product", "id_product");
+        super("tb_products", "id_product");
     }
     
     public void criarTabela(){
