@@ -21,6 +21,10 @@ main li{
     margin: 20px 0px 0px 0px;
 }
 
+main li i{
+    margin: 0px 10px 0px 0px;
+}
+
 .borda{
     border: 1px solid #bdbdbd;
 }
