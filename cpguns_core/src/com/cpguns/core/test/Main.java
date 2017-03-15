@@ -7,8 +7,8 @@ package com.cpguns.core.test;
 
 import com.cpguns.core.dao.impl.ProductDAO;
 import com.cpguns.core.model.DomainEntity;
+import com.cpguns.core.model.Manufacturer;
 import com.cpguns.core.model.Product;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,30 +22,35 @@ public class Main {
     public static void main(String[] args){
         
         Product prod = new Product();
-        prod.setId(5);
-        prod.setName("Glock");
-        prod.setDescription("Pistol");
-        prod.setCaliber(".388");
-        prod.setWeight((float) 3.21);
-        prod.setAction("autop");
-        prod.setOrigin("Alemanhaa");
-        prod.setModel("lungergermmmm");
-        prod.setCapacity("5 tirosinhos ");
+        Manufacturer manu = new Manufacturer();
+        manu.setId(4);
+        //prod.setId();
+        prod.setName("Rifle de Precisão Barrett M82A1");
+        prod.setDescription("Rifle");
+        prod.setCaliber(".50");
+        prod.setWeight((float) 5.34);
+        prod.setAction("auto");
+        prod.setOrigin("USA");
+        prod.setModel("M82A1");
+        prod.setCapacity("7 tirinhos");
+        prod.setManufacturer(manu);
         prod.setDtCreate(new Date());
         
         
         
         ProductDAO prodDAO = new ProductDAO();
-        //prodDAO.criarTabela();
+        
         
         
         try {
             // variável do tipo list
-            //List<DomainEntity> products = new ArrayList<>();
-            //products = prodDAO.read(prod);
-            prodDAO.update(prod);            
+            List<DomainEntity> products = new ArrayList<>();
+            //prodDAO.create(prod);
+            products = prodDAO.read(prod);
+            //prodDAO.criarTabela();
+                
             // para cada produto é um item da lista
-            /*for(DomainEntity produto : products){
+            for(DomainEntity produto : products){
                 Product p = (Product) produto;
                 System.out.println("ID: " + p.getId());
                 System.out.println("Nome: " + p.getName());
@@ -55,13 +60,14 @@ public class Main {
                 System.out.println("Ação: " + p.getAction());
                 System.out.println("Origem: " + p.getOrigin());
                 System.out.println("Capacidade: " + p.getCapacity());
+                System.out.println("Fabricante: " + p.getManufacturer().getName());
+                System.out.println("ID Fabricante: " + p.getManufacturer().getId());
                 System.out.println("Data Cadastro: " + p.getDtCreate());
-                System.out.println("--------------------------------");*/             
-            //}
-            //products.size();
+                System.out.println("--------------------------------");             
+            }
+            products.size();
 	} catch (Exception e) {
             e.printStackTrace();
 	}
-        
     }
 }

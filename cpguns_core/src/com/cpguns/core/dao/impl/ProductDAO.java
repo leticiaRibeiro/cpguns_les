@@ -7,6 +7,7 @@ package com.cpguns.core.dao.impl;
 
 import com.cpguns.core.dao.AbstractJdbcDAO;
 import com.cpguns.core.model.DomainEntity;
+import com.cpguns.core.model.Manufacturer;
 import com.cpguns.core.model.Product;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,12 +38,12 @@ public class ProductDAO extends AbstractJdbcDAO{
         sql.append("name text not null, ");
         sql.append("description text, ");
         sql.append("caliber text not null, ");
-        sql.append("weight float, ");
+        sql.append("weight float(2), ");
         sql.append("action text, ");
         sql.append("origin text, ");
         sql.append("model text, ");
         sql.append("capacity text, ");
-        //sql.append("manufacturer text not null, ");
+        sql.append("id_manuf INTEGER REFERENCES tb_manufacturer(id_manufacturer), ");
         sql.append("dtCreate date) ");
         
         try {
@@ -68,8 +69,8 @@ public class ProductDAO extends AbstractJdbcDAO{
             connection.setAutoCommit(false);
             
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO tb_products(name, description, caliber, weight, action, origin, model, capacity, dtCreate)");
-            sql.append(" VALUES (?,?,?,?,?,?,?,?,?)");
+            sql.append("INSERT INTO tb_products(name, description, caliber, weight, action, origin, model, capacity, dtCreate, id_manuf )");
+            sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?)");
             
             pst = connection.prepareStatement(sql.toString(), 
             Statement.RETURN_GENERATED_KEYS);
@@ -83,7 +84,9 @@ public class ProductDAO extends AbstractJdbcDAO{
             pst.setString(8, product.getCapacity());
             Timestamp time = new Timestamp(product.getDtCreate().getTime());
             pst.setTimestamp(9, time);
+            pst.setInt(10, product.getManufacturer().getId());
             pst.executeUpdate();
+            
             ResultSet rs = pst.getGeneratedKeys();
             int idProd = 0;
             if(rs.next()){
@@ -154,7 +157,6 @@ public class ProductDAO extends AbstractJdbcDAO{
     }
     
     
-    
     @Override
     public List<DomainEntity> read(DomainEntity entity) throws SQLException {
         
@@ -167,7 +169,7 @@ public class ProductDAO extends AbstractJdbcDAO{
         try{
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
-            sql.append("SELECT * FROM tb_products");
+            sql.append("SELECT m.name as fabricante_nome, m.dtCreate as fabricante_dataCadastro, p.* FROM tb_products p INNER JOIN tb_manufacturer m on p.id_manuf = m.id_manufacturer");
             // Estamos buscando um produto especifico?
             if(product.getId() != 0){ // pq != 0? INT é um tipo primitivo. Ou seja, NUNCA será null. Caso esteja 0, é pq não foi informado um ID especifico.
                 sql.append(" WHERE id_product=?"); // vamos procurar um produto especifico
@@ -184,6 +186,7 @@ public class ProductDAO extends AbstractJdbcDAO{
             while(rs.next()){
                 // novo registro, novo product!
                 Product p = new Product();
+                Manufacturer m = new Manufacturer();
                 // pegamos os valores das colunas e settamos no objeto de Product - Se a coluna for int: rs.getInt("NOME DA COLUNA")
                 p.setName(rs.getString("name"));
                 p.setId(rs.getInt("id_product"));
@@ -195,6 +198,9 @@ public class ProductDAO extends AbstractJdbcDAO{
                 p.setModel(rs.getString("model"));
                 p.setCapacity(rs.getString("capacity"));
                 java.sql.Date dtCreateLong = rs.getDate("dtCreate");
+                m.setName(rs.getString("fabricante_nome"));
+                m.setId(rs.getInt("id_manuf"));
+                p.setManufacturer(m);
                 Date dtCreate = new Date(dtCreateLong.getTime());
                 p.setDtCreate(dtCreate);
                 // adicionamos o produto na lista, que iremos retornar com todos os valores encontrados...
