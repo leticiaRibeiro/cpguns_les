@@ -1,7 +1,8 @@
 {
     "elements": {
         "header-logado": {},
-        "meu-footer": {}
+        "meu-footer": {},
+        "menu-cliente": {}
     },
     "attributes": {}
 }
