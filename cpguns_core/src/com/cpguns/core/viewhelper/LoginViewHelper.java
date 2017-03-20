@@ -27,8 +27,10 @@ public class LoginViewHelper implements IViewHelper{
         if(("CONSULTAR").equals(operacao)){
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            int level = Integer.valueOf(request.getParameter("level"));
+            
 
-            user = new User(email, password);
+            user = new User(email, password, level);
         }
 
         return user;

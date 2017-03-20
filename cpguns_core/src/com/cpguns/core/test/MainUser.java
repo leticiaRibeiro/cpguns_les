@@ -19,25 +19,23 @@ public class MainUser {
     
     public static void main(String[] args){
      
-        User usuario = new User("gustavo", "gugu");
-        
+        User usuario = new User("gustavo@hotmail.com", "leleka", 2);
         UserDAO uDAO = new UserDAO();
         
         try{
-            List<DomainEntity> listaUser = new ArrayList<>();
-            listaUser = uDAO.read(usuario);
-            
-            for (DomainEntity e : listaUser) {
-                User u = (User) e;
-                System.out.println(u.getEmail());
-                System.out.println(u.getPassword());
-            }
+            uDAO.create(usuario);
+//            List<DomainEntity> listaUser = new ArrayList<>();
+//            listaUser = uDAO.read(usuario);
+//            
+//            for (DomainEntity e : listaUser) {
+//                User u = (User) e;
+//                System.out.println(u.getEmail());
+//                System.out.println(u.getPassword());
+//                System.out.println(u.getLevel());
+//            }
             
         }catch(Exception e){
             e.printStackTrace();
         }
-        
-        
-        
     }
 }

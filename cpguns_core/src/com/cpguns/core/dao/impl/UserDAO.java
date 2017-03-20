@@ -11,6 +11,7 @@ import com.cpguns.core.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,48 @@ public class UserDAO extends AbstractJdbcDAO{
 
     @Override
     public void create(DomainEntity entity) throws SQLException {
-    
+        
+        openConnection();
+        PreparedStatement pst = null;
+        User user = (User) entity;
+        
+        try{
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("INSERT INTO tb_users(email, password, level)");
+            sql.append(" VALUES (?,?,?)");
+            
+            pst = connection.prepareStatement(sql.toString(), 
+            Statement.RETURN_GENERATED_KEYS);
+            pst.setString(1, user.getEmail());
+            pst.setString(2, user.getPassword());
+            pst.setInt(3, user.getLevel());
+            pst.executeUpdate();
+            
+            ResultSet rs = pst.getGeneratedKeys();
+            int idUs = 0;
+            if(rs.next()){
+                idUs = rs.getInt("id_user");
+            }
+            user.setId(idUs);        
+            connection.commit();
+        
+        }catch (Exception e){
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+            
+        }finally{
+            try{
+                pst.close();
+                connection.close();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
