@@ -11,6 +11,9 @@ package com.cpguns.core.model;
  */
 public class Costumer {
     
+    public enum Status{
+        ACCEPTED, REJECTED, ANALYSING;
+    }
     
     
 }
