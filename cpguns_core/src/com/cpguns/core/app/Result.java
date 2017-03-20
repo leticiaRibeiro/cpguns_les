@@ -16,10 +16,9 @@ public class Result extends ApplicationEntity{
     
     private String msg;
     private List<DomainEntity> entities;
-    /*
-     * Método de recuperação do campo msg
-     *
-     * @return valor do campo msg
-     */
+    
+    //Método de recuperação do campo msg
+    //@return valor do campo msg
+     
     
 }
