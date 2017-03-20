@@ -3,13 +3,13 @@ angular.module("cpguns").controller("loginController", function ($scope, $http) 
         alert("Nenhum usuário encontrado com o login e a senha informados!");
     };
 
-    $scope.logar = function (user) {
+    $scope.logar = function (login) {
         $http({
             method: 'GET',
             url: '/cpguns/login',
             params: {
-                email : user.email,
-                password: user.password,
+                email : login.email,
+                password: login.password,
                 operacao: "CONSULTAR"
             }
         }).then(function successCallback(response) {
@@ -19,6 +19,10 @@ angular.module("cpguns").controller("loginController", function ($scope, $http) 
             // called asynchronously if an error occurs
             // or server returns response with an error status.
         });
+    };
+    
+    $scope.cadastrar = function(user){
+                
     };
 });
 
