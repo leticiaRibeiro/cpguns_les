@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="cpguns">
+    <head>
+        <link href="../libs/css/materialize.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../libs/css/meucss.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <title>Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body ng-controller="loginController">
+        <!-- chamando nossa diretiva para o header da area logada -->
+    <header-logado></header-logado>
+
+    <main>
+        <!-- uma linha em branco, para dar o espaçamento do header -->
+        <div class="row"></div>
+
+        <div class="row">                
+            <!-- parte principal da página -->
+            <div class="card col s4 offset-s1 borda">
+
+                <div class="card-title">
+                    Sou cadastrado
+                </div>
+                <hr>
+                <div class="card-content">
+                    Acesse sua conta utilizando seus dados de acesso
+                </div>
+                <div class="card-action">
+                    <div class="row">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="icon_prefix" type="text" class="validate" ng-model="user.email">
+                                <label for="icon_prefix">E-mail</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">vpn_keys</i>
+                                <input id="icon_prefix" type="text" class="validate" ng-model="user.password">
+                                <label for="icon_prefix">Senha</label>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <a class="waves-effect waves-light btn right" ng-click="logar(user)">
+                                <i class="material-icons left">input</i>Entrar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim da parte principal -->
+
+            <!-- parte principal da página -->
+            <div class="card col s4 offset-s1 borda">
+
+                <div class="card-title">
+                    Não sou cadastrado
+                </div>
+                <hr>
+                <div class="card-content">
+                    Estes são seus pedidos em nossa loja - Para informações completas, clique no número do pedido
+                </div>
+                <div class="card-action">
+                    <table class="striped">
+                        <thead>
+                            <tr>
+                                <th data-field="id">Name</th>
+                                <th data-field="name">Item Name</th>
+                                <th data-field="price">Item Price</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Alvin</td>
+                                <td>Eclair</td>
+                                <td>$0.87</td>
+                            </tr>
+                            <tr>
+                                <td>Alan</td>
+                                <td>Jellybean</td>
+                                <td>$3.76</td>
+                            </tr>
+                            <tr>
+                                <td>Jonathan</td>
+                                <td>Lollipop</td>
+                                <td>$7.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Fim da parte principal -->
+        </div>
+    </main>
+
+
+
+    <!-- chamando nossa diretiva para o footer -->
+    <meu-footer></meu-footer>
+
+    <!-- Por prática, os imports de JavaScripts são feitos no final da página, e os de CSS no começo. -->
+    <script src="../libs/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../libs/js/materialize.min.js" type="text/javascript"></script>
+    <script src="../libs/js/angular.min.js" type="text/javascript"></script>
+    <script src="../angular/controllers/main.js" type="text/javascript"></script>        
+    <script src="../angular/controllers/LoginController.js" type="text/javascript"></script>        
+    <script src="../angular/directives/minhas-diretivas.js" type="text/javascript"></script>
+    <script src="../angular/directives/directive-header-logado.js" type="text/javascript"></script>
+    <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>        
+    <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
+</body>
+</html>
