@@ -17,8 +17,20 @@ public class Result extends ApplicationEntity{
     private String msg;
     private List<DomainEntity> entities;
     
-    //Método de recuperação do campo msg
-    //@return valor do campo msg
-     
+    public String getMsg() {
+        return msg;
+    }
+    
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+    
+    public List<DomainEntity> getEntidades() {
+        return entities;
+    }
+    
+    public void setEntidades(List<DomainEntity> entidades) {
+        this.entities = entities;
+    }
     
 }
