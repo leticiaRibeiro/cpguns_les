@@ -10,7 +10,7 @@ angular.module("cpguns").controller("loginController", function ($scope, $http) 
             params: {
                 email : user.email,
                 password: user.password,
-                user: user
+                operacao: "CONSULTAR"
             }
         }).then(function successCallback(response) {
             // this callback will be called asynchronously
