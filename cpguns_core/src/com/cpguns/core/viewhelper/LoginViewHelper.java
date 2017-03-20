@@ -7,6 +7,7 @@ package com.cpguns.core.viewhelper;
 
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Resultado;
+import com.cpguns.core.model.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +21,17 @@ public class LoginViewHelper implements IViewHelper{
 
     @Override
     public DomainEntity getEntidade(HttpServletRequest request) {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String user = request.getParameter("user");
-        System.out.println("RETORNO DA PAGINA: \n"+email+"\n"+password);
-        return null;
+        String operacao = request.getParameter("operacao");
+        User user = null;
+        
+        if(("CONSULTAR").equals(operacao)){
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            user = new User(email, password);
+        }
+
+        return user;
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Leticia
  */
-public class Costumer extends DomainEntity{
+public class Costumer extends User{
     
     private String cpf;
     private String rg;
