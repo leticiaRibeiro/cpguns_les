@@ -19,11 +19,12 @@ public class MainUser {
     
     public static void main(String[] args){
      
-        User usuario = new User("gustavo@hotmail.com", "leleka", 2);
+        User usuario = new User("gustavo@outlook.com", "leribeiro", 1);
+        usuario.setId(10);
         UserDAO uDAO = new UserDAO();
         
         try{
-            uDAO.create(usuario);
+            uDAO.update(usuario);
 //            List<DomainEntity> listaUser = new ArrayList<>();
 //            listaUser = uDAO.read(usuario);
 //            

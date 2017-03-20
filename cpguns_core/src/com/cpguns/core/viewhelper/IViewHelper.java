@@ -5,8 +5,8 @@
  */
 package com.cpguns.core.viewhelper;
 
+import com.cpguns.core.app.Result;
 import com.cpguns.core.model.DomainEntity;
-import com.cpguns.core.model.Resultado;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +20,6 @@ public interface IViewHelper {
     
     public DomainEntity getEntidade(HttpServletRequest request);
 
-    public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
+    public void setView(Result resultado, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
     
 }

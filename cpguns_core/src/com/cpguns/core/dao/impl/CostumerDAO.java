@@ -8,11 +8,14 @@ package com.cpguns.core.dao.impl;
 import com.cpguns.core.dao.AbstractJdbcDAO;
 import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
+import com.cpguns.core.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,19 +99,124 @@ public class CostumerDAO extends AbstractJdbcDAO{
         
         }catch(Exception e){
             
-        }
-        
+        }   
     }
 
     @Override
     public List<DomainEntity> read(DomainEntity entity) throws SQLException {
         
-        return null;
+        openConnection();
+        PreparedStatement pst = null;
+        Costumer costumer = (Costumer) entity;
+        List<DomainEntity> costumers = new ArrayList<>();
+        boolean ehEspecifico = false;
+        
+        try {
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT c.*, u.* FROM tb_costumers c INNER JOIN tb_users u on c.id_us = u.id_user");
+            // Estamos buscando um cliente especifico?
+            if(costumer.getId() != 0){ // pq != 0? INT é um tipo primitivo. Ou seja, NUNCA será null. 
+                                       // Caso esteja 0, é pq não foi informado um ID especifico.
+                sql.append(" WHERE id_costumer=?"); // vamos procurar um cliente especifico
+                ehEspecifico = true;
+            } 
+            
+            pst = connection.prepareStatement(sql.toString());
+            if(ehEspecifico){ // caso for o especifico, precisamos settar o ID para saber qual é o especifico
+                pst.setInt(1, costumer.getId());
+            }
+            
+            
+            ResultSet rs = pst.executeQuery();
+            // enquanto houver registros, vamos lendo....
+            while(rs.next()){
+                // novo registro, novo product!
+                Costumer c = new Costumer();
+                User u = new User();
+                // pegamos os valores das colunas e settamos no objeto de Product - Se a coluna for int: rs.getInt("NOME DA COLUNA")
+                c.setName(rs.getString("name"));
+                c.setId(rs.getInt("id_costumer"));
+                c.setCpf(rs.getString("cpf"));
+                c.setRg(rs.getString("rg"));
+                c.setGenre(rs.getString("genre"));
+                c.setPhoneNumber(rs.getString("phone_number"));
+                java.sql.Date dtBirthLong = rs.getDate("dt_birth");
+                Date dtBirth = new Date(dtBirthLong.getTime());
+                c.setDtBirth(dtBirth);
+                java.sql.Date dtCreateLong = rs.getDate("dt_create");
+                Date dtCreate = new Date(dtCreateLong.getTime());
+                c.setDtCreate(dtCreate);
+                u.setId(rs.getInt("id_us"));
+                u.setEmail(rs.getString("email"));
+                u.setPassword(rs.getString("password"));
+                u.setLevel(rs.getInt("level"));
+                c.setUser(u);
+                
+                // adicionamos o cliente na lista, que iremos retornar com todos os valores encontrados...
+                costumers.add(c);
+            }
+            
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        }finally{
+            try{
+                pst.close();
+                connection.close();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return costumers;
     }
 
     @Override
     public void update(DomainEntity entity) throws SQLException {
         
+        openConnection();
+        PreparedStatement pst = null;
+        Costumer costumer = (Costumer) entity;
+        UserDAO usDAO = new UserDAO();
+        
+        try {
+            usDAO.update(costumer.getUser());
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE tb_costumers SET name=?, cpf=?, rg=?, dt_birth=?, genre=?, phone_number=?");
+            // estava faltando um espaço aqui no começo rs
+            sql.append(" WHERE id_costumer=?");
+            
+            pst = connection.prepareStatement(sql.toString());
+            pst.setString(1, costumer.getName());
+            pst.setString(2, costumer.getCpf());
+            pst.setString(3, costumer.getRg());
+            Timestamp timedtBirth = new Timestamp(costumer.getDtBirth().getTime());
+            pst.setTimestamp(4, timedtBirth);
+            pst.setString(5, costumer.getGenre());
+            pst.setString(6, costumer.getPhoneNumber());
+            pst.setInt(7, costumer.getId());
+            pst.executeUpdate();
+            connection.commit(); 
+             
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        }finally{
+            try{
+                pst.close();
+                connection.close();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        }
     }
-    
 }

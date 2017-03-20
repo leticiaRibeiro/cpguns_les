@@ -5,8 +5,8 @@
  */
 package com.cpguns.core.viewhelper;
 
+import com.cpguns.core.app.Result;
 import com.cpguns.core.model.DomainEntity;
-import com.cpguns.core.model.Resultado;
 import com.cpguns.core.model.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -37,7 +37,7 @@ public class LoginViewHelper implements IViewHelper{
     }
 
     @Override
-    public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void setView(Result resultado, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

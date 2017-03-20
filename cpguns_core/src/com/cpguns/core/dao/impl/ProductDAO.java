@@ -223,8 +223,4 @@ public class ProductDAO extends AbstractJdbcDAO{
         }
         return products;
     }
-
-    
-    
-    
 }

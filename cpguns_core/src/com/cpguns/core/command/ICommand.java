@@ -5,8 +5,8 @@
  */
 package com.cpguns.core.command;
 
+import com.cpguns.core.app.Result;
 import com.cpguns.core.model.DomainEntity;
-import com.cpguns.core.model.Resultado;
 
 /**
  *
@@ -14,6 +14,6 @@ import com.cpguns.core.model.Resultado;
  */
 public interface ICommand {
     
-    public Resultado execute(DomainEntity entity);
+    public Result execute(DomainEntity entity);
     
 }

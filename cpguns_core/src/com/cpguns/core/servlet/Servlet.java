@@ -6,7 +6,7 @@ import com.cpguns.core.command.ExcluirCommand;
 import com.cpguns.core.command.ICommand;
 import com.cpguns.core.command.SalvarCommand;
 import com.cpguns.core.model.DomainEntity;
-import com.cpguns.core.model.Resultado;
+import com.cpguns.core.app.Result;
 import com.cpguns.core.viewhelper.IViewHelper;
 import com.cpguns.core.viewhelper.LoginViewHelper;
 import java.io.IOException;
@@ -77,7 +77,7 @@ public class Servlet extends HttpServlet{
         * o retorno é uma instância da classe resultado que pode conter mensagens derro
         * ou entidades de retorno
          */
-        Resultado resultado = command.execute(entidade);
+        Result resultado = command.execute(entidade);
 
         /*
         * Executa o método setView do view helper específico para definir como deverá ser apresentado

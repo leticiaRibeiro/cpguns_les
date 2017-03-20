@@ -5,8 +5,8 @@
  */
 package com.cpguns.core.command;
 
+import com.cpguns.core.app.Result;
 import com.cpguns.core.model.DomainEntity;
-import com.cpguns.core.model.Resultado;
 
 /**
  *
@@ -15,7 +15,7 @@ import com.cpguns.core.model.Resultado;
 public class ExcluirCommand implements ICommand{
 
     @Override
-    public Resultado execute(DomainEntity entity) {
+    public Result execute(DomainEntity entity) {
         System.out.println("Entrou no ExcluirCommand");
         return null;
     }
