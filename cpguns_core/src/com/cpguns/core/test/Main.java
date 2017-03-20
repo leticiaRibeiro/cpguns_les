@@ -47,7 +47,7 @@ public class Main {
             List<DomainEntity> products = new ArrayList<>();
             //prodDAO.create(prod);
             products = prodDAO.read(prod);
-            //prodDAO.criarTabela();
+            //prodDAO.createTableProduct();
                 
             // para cada produto é um item da lista
             for(DomainEntity produto : products){

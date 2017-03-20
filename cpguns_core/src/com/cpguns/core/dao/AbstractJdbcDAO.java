@@ -82,8 +82,4 @@ public abstract class AbstractJdbcDAO implements IDAO{
             e.printStackTrace();
         }
     }
-    
-    
-    
-    
 }

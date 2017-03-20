@@ -30,7 +30,7 @@ public class ProductDAO extends AbstractJdbcDAO{
         super("tb_products", "id_product");
     }
     
-    public void criarTabela(){
+    public void createTableProduct(){
         openConnection();
         StringBuilder sql = new StringBuilder();
         sql.append("CREATE TABLE tb_products(");

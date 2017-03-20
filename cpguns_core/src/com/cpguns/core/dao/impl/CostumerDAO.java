@@ -20,19 +20,24 @@ public class CostumerDAO extends AbstractJdbcDAO{
         super("tb_costumer", "id_costumer");
     }
     
+    public void createTableCostumer(){
+        
+    }
+    
     @Override
     public void create(DomainEntity entidade) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public List<DomainEntity> read(DomainEntity entidade) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return null;
     }
 
     @Override
     public void update(DomainEntity entidade) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
 }
