@@ -1,0 +1,93 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cpguns.core.viewhelper;
+
+import com.cpguns.core.app.Result;
+import com.cpguns.core.model.Costumer;
+import com.cpguns.core.model.DomainEntity;
+import com.cpguns.core.model.User;
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ *
+ * @author Gustavo
+ */
+public class CostumerViewHelper implements IViewHelper {
+
+    @Override
+    public DomainEntity getEntidade(HttpServletRequest request) {
+        String operacao = request.getParameter("operacao");
+        Costumer costumer = null;
+        User user;
+
+        if (("CONSULTAR").equals(operacao)) {
+            costumer = new Costumer();
+            user = new User();
+            costumer.setUser(user);
+        } else if(("SALVAR").equals(operacao)) {
+            String name = request.getParameter("name");
+            String nascimento = request.getParameter("nascimento");
+            String genre = request.getParameter("genre");
+            String cpf = request.getParameter("cpf");
+            String rg = request.getParameter("rg");
+            String phone = request.getParameter("phone");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            
+            costumer = new Costumer();
+            user = new User();
+            
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setLevel(1);
+            costumer.setUser(user);
+            
+            costumer.setCpf(cpf);
+            costumer.setDtCreate(new Date());
+            costumer.setGenre(genre);
+            costumer.setName(name);
+            costumer.setPhoneNumber(phone);
+            costumer.setRg(rg);
+            
+            DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                Date date = sourceFormat.parse(nascimento);
+                costumer.setDtBirth(date);
+            } catch (ParseException ex) {
+                Logger.getLogger(CostumerViewHelper.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+
+        return costumer;
+    }
+
+    @Override
+    public void setView(Result resultado, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String operacao = request.getParameter("operacao");
+        Gson gson = new Gson();
+        String retorno;
+
+        if (("CONSULTAR").equals(operacao)) {
+            retorno = gson.toJson(resultado.getEntidades());
+            response.getWriter().write(retorno);
+        } else if (("SALVAR").equals(operacao)) {
+            retorno = "Costumer cadastrado com sucesso!";
+            response.getWriter().write(retorno);
+        }
+    }
+
+}

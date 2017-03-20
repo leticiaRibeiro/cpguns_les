@@ -22,9 +22,9 @@ public class MainUser {
         User usuario = new User("gustavo@outlook.com", "leribeiro", 1);
         usuario.setId(10);
         UserDAO uDAO = new UserDAO();
-        
+        uDAO.createTableUser();
         try{
-            uDAO.update(usuario);
+//            uDAO.update(usuario);
 //            List<DomainEntity> listaUser = new ArrayList<>();
 //            listaUser = uDAO.read(usuario);
 //            

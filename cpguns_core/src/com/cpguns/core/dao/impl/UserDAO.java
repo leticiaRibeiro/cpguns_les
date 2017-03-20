@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,7 +27,27 @@ public class UserDAO extends AbstractJdbcDAO{
         super("tb_users", "id_user");
     }   
     
-    
+    public void createTableUser(){
+        
+        openConnection();
+        StringBuilder sql = new StringBuilder();
+        sql.append("CREATE TABLE tb_users(");
+        sql.append("email text, ");
+        sql.append("password text, ");
+        sql.append("level integer, ");
+        sql.append("id_user serial primary key) ");
+        
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement ps = connection.prepareStatement(sql.toString());
+            ps.executeUpdate();
+            connection.commit();
+            ps.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
     public void create(DomainEntity entity) throws SQLException {

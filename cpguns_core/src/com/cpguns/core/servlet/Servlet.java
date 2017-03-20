@@ -7,6 +7,7 @@ import com.cpguns.core.command.ICommand;
 import com.cpguns.core.command.SalvarCommand;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.app.Result;
+import com.cpguns.core.viewhelper.CostumerViewHelper;
 import com.cpguns.core.viewhelper.IViewHelper;
 import com.cpguns.core.viewhelper.LoginViewHelper;
 import java.io.IOException;
@@ -39,6 +40,7 @@ public class Servlet extends HttpServlet{
         helpers = new HashMap<String, IViewHelper>();
         
         helpers.put("/cpguns/login", new LoginViewHelper());
+        helpers.put("/cpguns/costumer", new CostumerViewHelper());
     }
 
     /**

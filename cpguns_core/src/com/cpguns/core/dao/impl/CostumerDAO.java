@@ -166,7 +166,9 @@ public class CostumerDAO extends AbstractJdbcDAO{
             e.printStackTrace();
         }finally{
             try{
-                pst.close();
+                if(pst != null){
+                    pst.close();
+                }
                 connection.close();
             } catch(Exception e){
                 e.printStackTrace();

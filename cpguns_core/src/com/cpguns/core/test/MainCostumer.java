@@ -26,26 +26,25 @@ public class MainCostumer {
         
         Costumer c = new Costumer();
         c.setId(1);
-        User u = new User("leticiaribeiro@hotmail.com", "leticiaar", 1);
+        User u = new User("gustavo@hotmail.com", "gu", 1);
         u.setId(6);
         c.setUser(u);
-        c.setName("Leticia Ribeiro");
-        c.setCpf("123123123123");
-        c.setRg("789");
-        c.setGenre("feminino");
-        c.setPhoneNumber("47888888");
+        c.setName("Gustavo Bezerra");
+        c.setCpf("4051231231");
+        c.setRg("87162464");
+        c.setGenre("masculino");
+        c.setPhoneNumber("47009718");
         c.setDtCreate(new Date());
         c.setDtBirth(new Date());
         
         
         CostumerDAO cDAO = new CostumerDAO();
-        
         try {
-            cDAO.update(c);
+            //cDAO.update(c);
             //cDAO.createTableCostumer();
 //        try {
 //            List<DomainEntity> costumers = new ArrayList<>();
-//            //cDAO.create(c);
+            cDAO.create(c);
 //            costumers = cDAO.read(c);
 //            
 //            for (DomainEntity costumer : costumers) {
@@ -66,11 +65,12 @@ public class MainCostumer {
 //            }
 //            costumers.size();
 //           
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
         } catch (SQLException ex) {
-            Logger.getLogger(MainCostumer.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+            ex.printStackTrace();
+        }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(MainCostumer.class.getName()).log(Level.SEVERE, null, ex);
+//        }   
+        //}
     }   
 }
