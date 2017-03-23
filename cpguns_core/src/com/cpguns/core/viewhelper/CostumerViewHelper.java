@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Gustavo
+ * @author Leticia
  */
 public class CostumerViewHelper implements IViewHelper {
 
@@ -69,6 +69,8 @@ public class CostumerViewHelper implements IViewHelper {
             } catch (ParseException ex) {
                 Logger.getLogger(CostumerViewHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+        } else if(("EXCLUIR").equals(operacao)){
             
         }
 
