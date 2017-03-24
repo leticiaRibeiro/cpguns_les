@@ -137,22 +137,22 @@ and open the template in the editor.
     <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>        
     <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
     <script>
-                                            $('.datepicker').pickadate({
-                                                monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                                                monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                                                weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-                                                weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                                                selectMonths: true, // Creates a dropdown to control month
-                                                selectYears: 100, // Creates a dropdown of 15 years to control year
-                                                today: false,
-                                                clear: 'Limpar',
-                                                close: 'Fechar',
-                                                max: new Date()
-                                            });
+    $('.datepicker').pickadate({
+        monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+        monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+        weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+        weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 100, // Creates a dropdown of 15 years to control year
+        today: false,
+        clear: 'Limpar',
+        close: 'Fechar',
+        max: new Date()
+    });
 
-                                            $(document).ready(function () {
-                                                $('select').material_select();
-                                            });
+    $(document).ready(function () {
+        $('select').material_select();
+    });
     </script>
 </body>
 </html>
