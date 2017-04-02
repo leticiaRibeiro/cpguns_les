@@ -5,7 +5,7 @@
         <link href="../libs/css/meucss.css" rel="stylesheet" type="text/css"/>
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-        <title>Pagamento</title>
+        <title>Confirmação</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -29,66 +29,20 @@
                 <div class="card-action">
                     <div class="row">
                         <div class="card-title">
-                            Meu Carrinho > Pagamento > Confirmação
+                            <h3>
+                                Obrigado pela sua compra!!
+                            </h3>
                         </div>
 
                         <div class="card-action">
                             <div class="row">
                                 <div class="col s6">
-                                    <div class="row">
-                                        <input class="col s6" type="text" placeholder="N° do Cartão">
-                                    </div>
-                                    <div class="row">
-                                        <!--<span class="col s3">Expira em</span>-->
-                                        <div class="input-field col s3">
-                                            <select id="mes">
-                                                <option value="" disabled selected>1</option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
-                                                <option value="3">Option 3</option>
-                                            </select>
-                                            <label for="mes">Mês</label>
-                                        </div>
-                                        <div class="input-field col s3">
-                                            <select id="ano">
-                                                <option value="" disabled selected>2018</option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
-                                                <option value="3">Option 3</option>
-                                            </select>
-                                            <label for="ano">Ano</label>
-                                        </div>
-                                        <div class="input-field col s2">
-                                            <input type="text" placeholder="CSC">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <input type="checkbox" id="oi" />
-                                        <label for="oi">Gostaria de salvar as info</label>
-                                    </div>
-                                    <div class="row">
-                                        <input class="col s10" type="text" placeholder="Nome impresso no cartão">
-                                    </div>
-                                    <div class="row">
-                                        <input class="col s10" type="text" placeholder="Endereço de cobrança">
-                                    </div>
-                                    <div class="row">
-                                        <div class="input-field col s5">
-                                            <input class="col s12" type="text" placeholder="Complemento (opcional)">
-                                        </div>
-                                        <div class="input-field col s6">
-                                            <input class="col s6" type="text" placeholder="CEP">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="input-field col s5">
-                                            <input class="col s12" type="text" placeholder="Cidade">
-                                        </div>
-                                        <div class="input-field col s6">
-                                            <input class="col s6" type="text" placeholder="Estado">
-                                        </div>
-                                    </div>
 
+                                    <h5>Endereço de Entrega</h5>
+                                    <div class="input-field col s5">
+                                        <label>Rua Dr Ricardo Vilela, 1223</label>
+                                    </div>
+                                    
                                 </div> <!-- Parte Esquerda -->
                                 <div class="col s6">
                                     <table class="striped">
@@ -152,7 +106,7 @@
                                             R$ 17.200,00
                                         </h2>
                                     </div>
-                                    
+
                                 </div> <!-- Parte Direita -->
                             </div>
 
@@ -160,7 +114,7 @@
                             <br/>
                             <div class="row">
                                 <div class="right">
-                                    <a class="waves-effect waves-light btn" href="confirmacao.html">Finalizar</a>
+                                    <a class="waves-effect waves-light btn">Finalizar</a>
                                 </div>
                             </div> 
                         </div> <!-- Fim do CARD -->
@@ -185,9 +139,9 @@
     <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>        
     <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
     <script>
-                $(document).ready(function () {
-                    $('select').material_select();
-                });
+                                                    $(document).ready(function () {
+                                                        $('select').material_select();
+                                                    });
     </script>
 </body>
 </html>
