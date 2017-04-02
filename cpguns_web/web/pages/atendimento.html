@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html ng-app="cpguns">
+    <head>
+        <link href="../libs/css/materialize.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../libs/css/meucss.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <title>Atendimento</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body ng-controller="ClienteController">
+        <!-- chamando nossa diretiva para o header da area logada -->
+    <header-logado></header-logado>
+
+    <!-- corpo da página -->
+    <main>
+        <!-- uma linha em branco, para dar o espaçamento do header -->
+        <div class="row"></div>
+
+        <div class="row">
+            <!-- Menuzinho da esquerda -->
+            <menu-cliente></menu-cliente>
+            <!-- Fim do menuzinho da esquerda -->
+
+            <!-- parte principal da página -->
+            <div class="card col s6 offset-s1 borda">
+
+                <div class="card-title">
+                    Seus dados
+                </div>
+                <hr>
+                <div class="card-content">
+                    Caso prefira, contate-nos pelo telefone (11) 1234-5678.
+                </div>
+                <div class="card-action">
+                    <div class="row">
+                        <form>
+                            <div class="row">
+                                <h5>Digite sua dúvida</h5>
+                                <div class="input-field col s9">
+                                    <input id="icon_prefix" type="text" class="validate" ng-model="user.name">
+                                    <label for="icon_prefix">Assunto</label>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="textarea1" class="materialize-textarea"></textarea>
+                                    <label for="textarea1">Mensagem</label>
+                                </div>
+                            </div>
+
+
+                            <br/>
+                            <div class="row">
+                                <a class="waves-effect waves-light btn right green darken-1" ng-click="cadastrar(user)">
+                                    <i class="material-icons left">input</i>Cadastrar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim da parte principal -->
+        </div>
+    </main>
+
+    <!-- chamando nossa diretiva para o footer -->
+    <meu-footer></meu-footer>
+
+    <!-- Por prática, os imports de JavaScripts são feitos no final da página, e os de CSS no começo. -->
+    <script src="../libs/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../libs/js/materialize.min.js" type="text/javascript"></script>
+    <script src="../libs/js/angular.min.js" type="text/javascript"></script>
+    <script src="../angular/controllers/main.js" type="text/javascript"></script>
+    <script src="../angular/controllers/cpguns.js" type="text/javascript"></script>
+    <script src="../angular/controllers/ClienteController.js" type="text/javascript"></script>
+    <script src="../angular/directives/minhas-diretivas.js" type="text/javascript"></script>
+    <script src="../angular/directives/directive-header-logado.js" type="text/javascript"></script>
+    <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>        
+    <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
+    <script>
+                                            $('.datepicker').pickadate({
+                                                monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                                                monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                                                weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                                                weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                                selectMonths: true, // Creates a dropdown to control month
+                                                selectYears: 100, // Creates a dropdown of 15 years to control year
+                                                today: false,
+                                                clear: 'Limpar',
+                                                close: 'Fechar',
+                                                max: new Date()
+                                            });
+
+                                            $(document).ready(function () {
+                                                $('select').material_select();
+                                            });
+    </script>
+</body>
+</html>

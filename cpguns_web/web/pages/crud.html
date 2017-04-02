@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html ng-app="cpguns">
     <head>
         <link href="../libs/css/materialize.min.css" rel="stylesheet" type="text/css"/>
@@ -15,115 +10,127 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body ng-controller="CrudController" data-ng-init="consultar()">
-        <div class="container">
-            <div class="row">
-                <form>
-                    <div class="row">
-                        <h5>Dados pessoais</h5>
-                        <div class="input-field col s5">
-                            <i class="material-icons prefix">account_circle</i>
-                            <input id="icon_prefix" type="text" placeholder="Nome" class="validate" ng-model="user.name">
-                            <label for="icon_prefix"></label>
+        <!-- chamando nossa diretiva para o header da area logada -->
+        <header-logado></header-logado>
+        
+        <!-- corpo da página -->
+        <main>
+            <div class="container">
+                <div class="row">
+                    <form>
+                        <div class="row">
+                            <h5>Dados pessoais</h5>
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="icon_prefix" type="text" placeholder="Nome" class="validate" ng-model="user.name">
+                                <label for="icon_prefix"></label>
+                            </div>
+                            <div class="input-field col s3">
+                                <i class="material-icons prefix">date_range</i>
+                                <input id="dt_nascimento" placeholder="Nascimento" type="date" class="datepicker" ng-model="user.dtBirth">
+                                <label for="dt_nascimento"></label>
+                            </div>
+                            <div class="input-field col s3">
+                                <select ng-model="user.genre" placeholder="Sexo">
+                                    <option value="masculino" selected>Masculino</option>
+                                    <option value="feminino">Feminino</option>
+                                </select>
+                                <label></label>
+                            </div>
                         </div>
-                        <div class="input-field col s3">
-                            <i class="material-icons prefix">date_range</i>
-                            <input id="dt_nascimento" placeholder="Nascimento" type="date" class="datepicker" ng-model="user.dtBirth">
-                            <label for="dt_nascimento"></label>
+                        <br/>
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">chrome_reader_mode</i>
+                                <input id="icon_prefix" placeholder="CPF" type="text" class="validate" ng-model="user.cpf">
+                                <label></label>
+                            </div>
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">assignment_ind</i>
+                                <input id="icon_prefix" placeholder="RG" type="text" class="validate" ng-model="user.rg">
+                                <label></label>
+                            </div>
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">phone</i>
+                                <input id="icon_telephone" placeholder="Telefone" type="tel" class="validate" ng-model="user.phoneNumber">
+                                <label for="icon_telephone"></label>
+                            </div>
                         </div>
-                        <div class="input-field col s3">
-                            <select ng-model="user.genre" placeholder="Sexo">
-                                <option value="masculino" selected>Masculino</option>
-                                <option value="feminino">Feminino</option>
-                            </select>
-                            <label></label>
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row">
-                        <div class="input-field col s4">
-                            <i class="material-icons prefix">chrome_reader_mode</i>
-                            <input id="icon_prefix" placeholder="CPF" type="text" class="validate" ng-model="user.cpf">
-                            <label></label>
-                        </div>
-                        <div class="input-field col s4">
-                            <i class="material-icons prefix">assignment_ind</i>
-                            <input id="icon_prefix" placeholder="RG" type="text" class="validate" ng-model="user.rg">
-                            <label></label>
-                        </div>
-                        <div class="input-field col s4">
-                            <i class="material-icons prefix">phone</i>
-                            <input id="icon_telephone" placeholder="Telefone" type="tel" class="validate" ng-model="user.phoneNumber">
-                            <label for="icon_telephone"></label>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="input-field col s4">
-                            <i class="material-icons prefix">email</i>
-                            <input id="icon_prefix" placeholder="E-mail" type="text" class="validate" ng-model="user.user.email">
-                            <label></label>
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">email</i>
+                                <input id="icon_prefix" placeholder="E-mail" type="text" class="validate" ng-model="user.user.email">
+                                <label></label>
+                            </div>
+                            <div class="input-field col s4">
+                                <i class="material-icons prefix">vpn_key</i>
+                                <input id="icon_prefix" placeholder="Senha" type="text" class="validate" ng-model="user.user.password">
+                                <label></label>
+                            </div>
                         </div>
-                        <div class="input-field col s4">
-                            <i class="material-icons prefix">vpn_key</i>
-                            <input id="icon_prefix" placeholder="Senha" type="text" class="validate" ng-model="user.user.password">
-                            <label></label>
-                        </div>
-                    </div>
 
-                    <br/>
-                    <div class="row">
-                        <a class="waves-effect waves-light btn right green darken-1" ng-click="cadastrar(user)">
-                            <i class="material-icons left">input</i>Cadastrar</a>
-                    </div>
-                </form>
+                        <br/>
+                        <div class="row">
+                            <a class="waves-effect waves-light btn right green darken-1" ng-click="cadastrar(user)">
+                                <i class="material-icons left">input</i>Cadastrar</a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row">
+                    <table class="striped">
+                        <thead>
+                            <tr>
+                                <th data-field="id">ID</th>
+                                <th data-field="nome">Nome</th>
+                                <th data-field="nascimento">Nascimento</th>
+                                <th data-field="sexo">Sexo</th>
+                                <th data-field="cpf">CPF</th>
+                                <th data-field="rg">RG</th>
+                                <th data-field="telefone">Telefone</th>
+                                <th data-field="email">Email</th>
+                                <th data-field="senha">Senha</th>
+                                <th data-field="acoes">Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="costumer in costumers">
+                                <td>{{costumer.id}}</td>
+                                <td>{{costumer.name}}</td>
+                                <td>{{costumer.dtBirth}}</td>
+                                <td>{{costumer.genre}}</td>
+                                <td>{{costumer.cpf}}</td>
+                                <td>{{costumer.rg}}</td>
+                                <td>{{costumer.phoneNumber}}</td>
+                                <td>{{costumer.user.email}}</td>
+                                <td>{{costumer.user.password}}</td>
+                                <td>
+                                    <a class="waves-effect waves-light btn-small btn left grey darken-1" ng-click="visualizar(costumer)">
+                                        Alterar</a>
+                                    <a class="waves-effect waves-light btn-small btn right orange darken-4" ng-click="">
+                                        Excluir</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <div class="row">
-                <table class="striped">
-                    <thead>
-                        <tr>
-                            <th data-field="id">ID</th>
-                            <th data-field="nome">Nome</th>
-                            <th data-field="nascimento">Nascimento</th>
-                            <th data-field="sexo">Sexo</th>
-                            <th data-field="cpf">CPF</th>
-                            <th data-field="rg">RG</th>
-                            <th data-field="telefone">Telefone</th>
-                            <th data-field="email">Email</th>
-                            <th data-field="senha">Senha</th>
-                            <th data-field="acoes">Ações</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr ng-repeat="costumer in costumers">
-                            <td>{{costumer.id}}</td>
-                            <td>{{costumer.name}}</td>
-                            <td>{{costumer.dtBirth}}</td>
-                            <td>{{costumer.genre}}</td>
-                            <td>{{costumer.cpf}}</td>
-                            <td>{{costumer.rg}}</td>
-                            <td>{{costumer.phoneNumber}}</td>
-                            <td>{{costumer.user.email}}</td>
-                            <td>{{costumer.user.password}}</td>
-                            <td>
-                                <a class="waves-effect waves-light btn left grey darken-1" ng-click="visualizar(costumer)">
-                                    Alterar</a>
-                                <a class="waves-effect waves-light btn right orange darken-4" ng-click="">
-                                    Excluir</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+        </main>
+        
+        <!-- chamando nossa diretiva para o footer -->
+        <meu-footer></meu-footer>
+        
         <script src="../libs/js/jquery.min.js" type="text/javascript"></script>
         <script src="../libs/js/materialize.min.js" type="text/javascript"></script>
         <script src="../libs/js/angular.min.js" type="text/javascript"></script>
         <script src="../angular/controllers/main.js" type="text/javascript"></script>        
         <script src="../angular/controllers/CrudController.js" type="text/javascript"></script>        
         <script src="../angular/directives/minhas-diretivas.js" type="text/javascript"></script>
+            <script src="../angular/directives/directive-header-logado.js" type="text/javascript"></script>
+    <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>        
+    <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
         <script>
         $('.datepicker').pickadate({
             monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],

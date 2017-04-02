@@ -190,7 +190,6 @@ public class CostumerDAO extends AbstractJdbcDAO{
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE tb_costumers SET name=?, cpf=?, rg=?, dt_birth=?, genre=?, phone_number=?");
-            // estava faltando um espaço aqui no começo rs
             sql.append(" WHERE id_costumer=?");
             
             pst = connection.prepareStatement(sql.toString());

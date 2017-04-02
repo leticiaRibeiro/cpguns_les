@@ -4,81 +4,129 @@
         <link href="../libs/css/materialize.min.css" rel="stylesheet" type="text/css"/>
         <link href="../libs/css/meucss.css" rel="stylesheet" type="text/css"/>
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        
+
         <title>Home cliente</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body ng-controller="ClienteController">
         <!-- chamando nossa diretiva para o header da area logada -->
-        <header-logado></header-logado>
+    <header-logado></header-logado>
 
-        <!-- corpo da página -->
-        <main>
-            <!-- uma linha em branco, para dar o espaçamento do header -->
-            <div class="row"></div>
-            
-            <div class="row">
-                <!-- Menuzinho da esquerda -->
-                <menu-cliente></menu-cliente>
-                <!-- Fim do menuzinho da esquerda -->
-                
-                <!-- parte principal da página -->
-                <div class="card col s6 offset-s1 borda">
+    <!-- corpo da página -->
+    <main>
+        <!-- uma linha em branco, para dar o espaçamento do header -->
+        <div class="row"></div>
 
-                    <div class="card-title">
-                        Seus pedidos
-                    </div>
-                    <hr>
-                    <div class="card-content">
-                        Estes são seus pedidos em nossa loja - Para informações completas, clique no número do pedido
-                    </div>
-                    <div class="card-action">
-                        <table class="striped">
-                            <thead>
-                                <tr>
-                                    <th data-field="id">Name</th>
-                                    <th data-field="name">Item Name</th>
-                                    <th data-field="price">Item Price</th>
-                                </tr>
-                            </thead>
+        <div class="row">
+            <!-- Menuzinho da esquerda -->
+            <menu-cliente></menu-cliente>
+            <!-- Fim do menuzinho da esquerda -->
 
-                            <tbody>
-                                <tr>
-                                    <td>Alvin</td>
-                                    <td>Eclair</td>
-                                    <td>$0.87</td>
-                                </tr>
-                                <tr>
-                                    <td>Alan</td>
-                                    <td>Jellybean</td>
-                                    <td>$3.76</td>
-                                </tr>
-                                <tr>
-                                    <td>Jonathan</td>
-                                    <td>Lollipop</td>
-                                    <td>$7.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <!-- parte principal da página -->
+            <div class="card col s6 offset-s1 borda">
+
+                <div class="card-title">
+                    Seus pedidos
                 </div>
-                <!-- Fim da parte principal -->
+                <hr>
+                <div class="card-content">
+                    Estes são seus pedidos em nossa loja - Para informações completas, clique no número do pedido
+                    <!-- Dropdown Trigger -->
+                    <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Filtre por</a>
+
+                    <!-- Dropdown Structure -->
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li><a href="#!">one</a></li>
+                        <li><a href="#!">two</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#!">three</a></li>
+                        <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+                        <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+                    </ul>
+                </div>
+                <div class="card-action">
+                    <table class="striped">
+                        <thead>
+                            <tr>
+                                <th data-field="id">N° Pedido</th>
+                                <th data-field="name">Data</th>
+                                <th data-field="price">Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td><a href="#!!!!">928347</a></td>
+                                <td>90/90/9090</td>
+                                <td>Aguardando aprovação</td>
+                                <td>
+                                    <a class="waves-effect waves-light btn disabled">Devolver</a>
+                                    <a class="waves-effect waves-light btn">Cancelar</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="#!!!!">928347</a></td>
+                                <td>90/90/9090</td>
+                                <td>Em separação</td>
+                                <td>
+                                    <a class="waves-effect waves-light btn disabled">Devolver</a>
+                                    <a class="waves-effect waves-light btn">Cancelar</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="#!!!!">883274</a></td>
+                                <td>28/28/1293</td>
+                                <td>Em transporte</td>
+                                <td>
+                                    <a class="waves-effect waves-light btn disabled">Devolver</a>
+                                    <a class="waves-effect waves-light btn disabled">Cancelar</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="#!!!!">982374</a></td>
+                                <td>13/23/7897</td>
+                                <td>Entregue</td>
+                                <td>
+                                    <a class="waves-effect waves-light btn">Devolver</a>
+                                    <a class="waves-effect waves-light btn disabled">Cancelar</a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </main>
+            <!-- Fim da parte principal -->
+        </div>
+    </main>
 
-        <!-- chamando nossa diretiva para o footer -->
-        <meu-footer></meu-footer>
+    <!-- chamando nossa diretiva para o footer -->
+    <meu-footer></meu-footer>
 
-        <!-- Por prática, os imports de JavaScripts são feitos no final da página, e os de CSS no começo. -->
-        <script src="../libs/js/jquery.min.js" type="text/javascript"></script>
-        <script src="../libs/js/materialize.min.js" type="text/javascript"></script>
-        <script src="../libs/js/angular.min.js" type="text/javascript"></script>
-        <script src="../angular/controllers/main.js" type="text/javascript"></script>
-        <script src="../angular/controllers/ClienteController.js" type="text/javascript"></script>
-        <script src="../angular/directives/minhas-diretivas.js" type="text/javascript"></script>
-        <script src="../angular/directives/directive-header-logado.js" type="text/javascript"></script>
-        <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>        
-        <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
-    </body>
+    <!-- Por prática, os imports de JavaScripts são feitos no final da página, e os de CSS no começo. -->
+    <script src="../libs/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../libs/js/materialize.min.js" type="text/javascript"></script>
+    <script src="../libs/js/angular.min.js" type="text/javascript"></script>
+    <script src="../angular/controllers/main.js" type="text/javascript"></script>
+    <script src="../angular/controllers/ClienteController.js" type="text/javascript"></script>
+    <script src="../angular/directives/minhas-diretivas.js" type="text/javascript"></script>
+    <script src="../angular/directives/directive-header-logado.js" type="text/javascript"></script>
+    <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>        
+    <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
+    <script>
+        $('.dropdown-button').dropdown({
+            inDuration: 300,
+            outDuration: 225,
+            constrainWidth: false, // Does not change width of dropdown to that of the activator
+            hover: true, // Activate on hover
+            gutter: 0, // Spacing from edge
+            belowOrigin: false, // Displays dropdown below the button
+            alignment: 'left', // Displays dropdown with edge aligned to the left of button
+            stopPropagation: false // Stops event propagation
+        });
+    </script>
+
+</body>
 </html>
