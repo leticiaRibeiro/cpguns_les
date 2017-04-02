@@ -37,14 +37,18 @@
                         <div class="card-action">
                             <div class="row">
                                 <div class="col s6">
-
-                                    <h5>Endereço de Entrega</h5>
-                                    <div class="input-field col s5">
-                                        <label>Rua Dr Ricardo Vilela, 1223</label>
+                                    <h5>Endereço de retirada</h5>
+                                    <div class="chip">
+                                        Rua Dr Ricardo Vilela, 123 - Das 8hrs às 18hrs
                                     </div>
-                                    
+                                    <br/><br/><br/>
+                                    <h5>Forma de pagamento</h5>
+                                    <div class="chip">
+                                        Cartão de crédito - 12x
+                                    </div>
                                 </div> <!-- Parte Esquerda -->
                                 <div class="col s6">
+                                    <h5>Produtos comprados</h5>
                                     <table class="striped">
                                         <thead>
                                             <tr>
@@ -114,7 +118,7 @@
                             <br/>
                             <div class="row">
                                 <div class="right">
-                                    <a class="waves-effect waves-light btn">Finalizar</a>
+                                    <a class="waves-effect waves-light btn">Voltar</a>
                                 </div>
                             </div> 
                         </div> <!-- Fim do CARD -->
@@ -139,9 +143,9 @@
     <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>        
     <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
     <script>
-                                                    $(document).ready(function () {
-                                                        $('select').material_select();
-                                                    });
+                $(document).ready(function () {
+                    $('select').material_select();
+                });
     </script>
 </body>
 </html>
