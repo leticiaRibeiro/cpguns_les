@@ -1,3 +1,3 @@
-angular.module("cpguns", ['minhasDiretivas', 'chart.js']);
+angular.module("cpguns", ['minhasDiretivas']);
 
 
