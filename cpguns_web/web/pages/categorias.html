@@ -26,25 +26,39 @@
             <!-- parte principal da página -->
             <div class="card col s7 offset-s1 borda">
                 <div class="card-action">
-                    <h5>Alterar produto</h5>
+                    <h5>Cadastrar categorias</h5>
+                </div>
+                <div class="card-action">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">mode_edit</i>
+                            <input type="text" id="nome" />
+                            <label for="nome">Nome do produto</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="right">
+                            <a class="waves-effect waves-light btn">Cadastrar</a>
+                        </div>
+                    </div> 
+                </div>                    
+            </div>
+            <div class="card col s7 offset-s1 borda">
+                <div class="card-action">
+                    <h5>Categorias cadastradas</h5>
                 </div>
                 <div class="card-action">
                     <div class="row">
                         <table class="striped">
                             <thead>
                                 <tr>
-                                    <th data-field="product" class="center" colspan="2">Produto</th>
-                                    <th data-field="price">Preço</th>
-                                    <th data-field="category">Categoria</th>
+                                    <th data-field="product">Nome</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody class="center">
                                 <tr>
-                                    <td><img class="materialboxed" width="150" src="../images/m4a4.png"></td>
-                                    <td>M4A4</td>
-                                    <td>R$ 5.500,00</td>
                                     <td>Semi-automática</td>
                                     <td>
                                         <i class="small material-icons">delete</i>
@@ -52,9 +66,6 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img class="materialboxed" width="150" src="../images/glock.png"></td>
-                                    <td>Glock</td>
-                                    <td>R$ 1.500,00</td>
                                     <td>Pistola</td>
                                     <td>
                                         <i class="small material-icons">delete</i>
@@ -62,9 +73,6 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img class="materialboxed" width="150" src="../images/ak47.png"></td>
-                                    <td>AK47</td>
-                                    <td>R$ 6.500,00</td>
                                     <td>Semi-automática</td>
                                     <td>
                                         <i class="small material-icons">delete</i>
@@ -73,7 +81,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div> 
                 </div>                    
             </div>
 
