@@ -19,30 +19,7 @@
         <div class="row"></div>
 
         <div class="row">
-            <div class="col s2 offset-s1">
-                <!-- Menuzinho da esquerda -->
-                <div class="card col s12 borda">
-                    <div class="card-action">
-                        <div class="row">
-                            <div class="input-field">
-                                <i class="material-icons prefix">search</i>
-                                <input id="icon_prefix" type="text" class="validate">
-                                <label for="icon_prefix">Pesquisar</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            Semi-automáticas
-                        </div>
-                        <div class="row">
-                            Pistolas
-                        </div>
-                        <div class="row">
-                            Espingardas
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <menu-loja></menu-loja>
 
             <!-- Fim do menuzinho da esquerda -->
             <div class="col s8">
@@ -66,7 +43,7 @@
                                     <div class="card-action">
                                         <div class="row">
                                             <div class="card-image">
-                                                <img src="../images/ak47.png">
+                                                <a href="anuncio.html"><img src="../images/ak47.png"></a>
                                             </div>
                                             <div class="card-content">
                                                 <p>AK47 uma arma muito foda, barata e roubada. CTs sempre perdem para ela.</p>
@@ -184,7 +161,7 @@
     <script src="../angular/directives/minhas-diretivas.js" type="text/javascript"></script>
     <script src="../angular/directives/directive-header-logado.js" type="text/javascript"></script>
     <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>        
-    <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
+    <script src="../angular/directives/directive-menu-loja.js" type="text/javascript"></script>
     <script>
                 $('.carousel.carousel-slider').carousel({fullWidth: false, duration: 100, indicators: true});
     </script>

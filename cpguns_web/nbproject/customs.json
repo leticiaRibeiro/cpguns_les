@@ -1,5 +1,6 @@
 {
     "elements": {
+        "menu-loja": {},
         "header-logado": {},
         "meu-footer": {},
         "menu-cliente": {}

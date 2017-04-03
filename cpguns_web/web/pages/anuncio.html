@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="cpguns">
+    <head>
+        <link href="../libs/css/materialize.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../libs/css/meucss.css" rel="stylesheet" type="text/css"/>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <title>Anuncio</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body ng-controller="ClienteController">
+        <!-- chamando nossa diretiva para o header da area logada -->
+    <header-logado></header-logado>
+
+    <!-- corpo da página -->
+    <main>
+        <!-- uma linha em branco, para dar o espaçamento do header -->
+        <div class="row"></div>
+
+        <div class="row">
+            <menu-loja></menu-loja>
+
+            <!-- Fim do menuzinho da esquerda -->
+            <div class="col s8">
+                <div class="row">
+                    <div class="card borda">
+                        <div class="card-action">
+                            <div class="row">
+                                <div class="card col s6 borda">
+                                    <div class="card-action">
+                                        <div class="carousel carousel-slider center" data-indicators="true">
+                                            <div class="carousel-item white-text" href="#one!">
+                                                <img class="responsive-img" src="../images/ak47.png">
+                                            </div>
+                                            <div class="carousel-item white-text" href="#two!">
+                                                <img class="responsive-img" src="../images/m4a4.png">
+                                            </div>
+                                            <div class="carousel-item white-text" href="#three!">
+                                                <img class="responsive-img" src="../images/glock.png">
+                                            </div>
+                                        </div>
+                                    </div> <!-- Fim do CARD -->
+                                </div>
+
+                                <div class="col s5">
+                                    <h3 class="center">AK47 dos TR</h3>
+                                    <div class="row">
+                                        <h4 class="center">R$ 5.000,00</h4>
+                                    </div>
+                                    <div class="row offset-s1">
+                                        Formas de pagamento:
+                                        <div class="chip offset-s1">
+                                            Crédito
+                                        </div>
+                                        <div class="chip">
+                                            Débito
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="center">
+                                            <a class="waves-effect waves-light btn-large">Comprar</a>
+                                        </div>
+                                    </div>                                        
+                                </div>
+                            </div> <!-- Parte inicial do anuncio -->
+
+                            <div class="row">
+                                <h4>
+                                    Características do produto
+                                    <hr/>
+                                </h4>
+                            </div>
+                            <div class="row">
+                                <!-- primeira coluna -->
+                                <div class="col s6">
+                                    <div class="row">
+                                        Nome: AK
+                                    </div>
+                                    <div class="row">
+                                        Ano: 47
+                                    </div>
+                                    <div class="row">
+                                        Local de fabricação: Rússia
+                                    </div>
+                                </div> <!-- Fim da primeira coluna -->
+
+                                <!-- segunda coluna -->
+                                <div class="col s6">
+                                    <div class="row">
+                                        Estado: Nova
+                                    </div>
+                                    <div class="row">
+                                        Pente: 31 balas
+                                    </div>
+                                </div> <!-- Fim da segunda coluna -->
+                            </div>
+
+
+                        </div> <!-- fim row principal -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- chamando nossa diretiva para o footer -->
+    <meu-footer></meu-footer>
+
+    <!-- Por prática, os imports de JavaScripts são feitos no final da página, e os de CSS no começo. -->
+    <script src="../libs/js/jquery.min.js" type="text/javascript"></script>
+    <script src="../libs/js/materialize.min.js" type="text/javascript"></script>
+    <script src="../libs/js/angular.min.js" type="text/javascript"></script>
+    <script src="../angular/controllers/main.js" type="text/javascript"></script>
+    <script src="../angular/controllers/ClienteController.js" type="text/javascript"></script>
+    <script src="../angular/directives/minhas-diretivas.js" type="text/javascript"></script>
+    <script src="../angular/directives/directive-header-logado.js" type="text/javascript"></script>
+    <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>        
+    <script src="../angular/directives/directive-menu-loja.js" type="text/javascript"></script>
+    <script>
+                $('.carousel.carousel-slider').carousel({fullWidth: true});
+    </script>
+</body>
+</html>
