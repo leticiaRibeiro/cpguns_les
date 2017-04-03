@@ -5,7 +5,7 @@
         <link href="../libs/css/meucss.css" rel="stylesheet" type="text/css"/>
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-        <title>Gerenciar categorias</title>
+        <title>Pedidos</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -26,57 +26,60 @@
             <!-- parte principal da página -->
             <div class="card col s7 offset-s1 borda">
                 <div class="card-action">
-                    <h5>Cadastrar categorias</h5>
-                </div>
-                <div class="card-action">
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">mode_edit</i>
-                            <input type="text" id="nome" />
-                            <label for="nome">Nome do produto</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="right">
-                            <a class="waves-effect waves-light btn">Cadastrar</a>
-                        </div>
-                    </div> 
-                </div>                    
-            </div>
-            <div class="card col s7 offset-s1 borda">
-                <div class="card-action">
-                    <h5>Categorias cadastradas</h5>
+                    <h5>Lista de pedidos</h5>
                 </div>
                 <div class="card-action">
                     <div class="row">
                         <table class="striped">
                             <thead>
                                 <tr>
-                                    <th data-field="product">Nome</th>
+                                    <th data-field="id">N° Pedido</th>
+                                    <th data-field="date">Realizado em</th>
+                                    <th data-field="cpf">CPF</th>
+                                    <th data-field="price">Status</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
 
-                            <tbody class="center">
+                            <tbody>
                                 <tr>
-                                    <td>Semi-automática</td>
+                                    <td><a href="pedido_especifico.html">928347</a></td>
+                                    <td>90/90/9090</td>
+                                    <td>129.371.987-02</td>
+                                    <td>Aguardando aprovação</td>
                                     <td>
-                                        <i class="small material-icons">delete</i>
-                                        <i class="small material-icons">edit</i>
+                                        <a class="waves-effect waves-light btn disabled">Devolver</a>
+                                        <a class="waves-effect waves-light btn">Cancelar</a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Pistola</td>
+                                    <td><a href="#!!!!">928347</a></td>
+                                    <td>90/90/9090</td>
+                                    <td>129.371.987-02</td>
+                                    <td>Em negociação com a fabricante</td>
                                     <td>
-                                        <i class="small material-icons">delete</i>
-                                        <i class="small material-icons">edit</i>
+                                        <a class="waves-effect waves-light btn disabled">Devolver</a>
+                                        <a class="waves-effect waves-light btn">Cancelar</a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Semi-automática</td>
+                                    <td><a href="#!!!!">883274</a></td>
+                                    <td>28/28/1293</td>
+                                    <td>129.371.987-02</td>
+                                    <td>Em fabricação</td>
                                     <td>
-                                        <i class="small material-icons">delete</i>
-                                        <i class="small material-icons">edit</i>
+                                        <a class="waves-effect waves-light btn disabled">Devolver</a>
+                                        <a class="waves-effect waves-light btn disabled">Cancelar</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#!!!!">982374</a></td>
+                                    <td>13/23/7897</td>
+                                    <td>129.371.987-02</td>
+                                    <td>Em separação</td>
+                                    <td>
+                                        <a class="waves-effect waves-light btn disabled">Devolver</a>
+                                        <a class="waves-effect waves-light btn">Cancelar</a>
                                     </td>
                                 </tr>
                             </tbody>
