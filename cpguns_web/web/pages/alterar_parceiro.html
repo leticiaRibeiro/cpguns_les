@@ -26,28 +26,13 @@
             <!-- parte principal da página -->
             <div class="card col s7 offset-s1 borda">
                 <div class="card-action">
-                    <h5>Novo Parceiro</h5>
+                    <h5>Alterar Parceiro</h5>
                 </div>
                 <div class="card-action">
                     <div class="row">
-                        <div class="input-field col s5">
-                            <i class="material-icons prefix">store</i>
-                            <input id="icon_prefix" type="text" class="validate">
-                            <label for="icon_prefix">Endereço</label>
-                        </div>
-                        <div class="input-field col s1">
-                            <input id="icon_prefix" type="text" class="validate">
-                            <label for="icon_prefix">Número</label>
-                        </div>
-                        <div class="input-field col s2">
-                            <input id="icon_prefix" type="text" class="validate">
-                            <label for="icon_prefix">CEP</label>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="input-field col s3">
                             <select id="estados">
-                                <option value="" disabled selected>Estado</option>
+                                <option value="" disabled selected>Selecione</option>
                                 <option value="1">AC</option>
                                 <option value="2">PR</option>
                                 <option value="3">SP</option>
@@ -55,15 +40,55 @@
                             <label for="estado">Estado</label>
                         </div>
                         <div class="input-field col s3">
-                            <input id="icon_prefix" type="text">
-                            <label for="cidade">Cidade</label>
-                        </div>
-                    </div> 
-                    <div class="row">
-                        <div class="right">
-                            <a class="waves-effect waves-light btn">Cadastrar</a>
+                            <select id="estados">
+                                <option value="" disabled selected>Selecione</option>
+                                <option value="1">Mogi das Cruzes</option>
+                                <option value="2">Suzano</option>
+                                <option value="3">Cornélio Procópio</option>
+                            </select>
+                            <label for="estado">Cidade</label>
                         </div>
                     </div>
+                    <table class="striped">
+                        <thead>
+                            <tr>
+                                <th data-field="address" class="center">Endereço</th>
+                                <th data-field="city">Cidade</th>
+                                <th data-field="state">Estado</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Rua Navajas, 413</td>
+                                <td>Mogi das Cruzes</td>
+                                <td>SP</td>
+                                <td>
+                                    <i class="small material-icons">delete</i>
+                                    <i class="small material-icons">edit</i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Rua Trinta e Sete, 37</td>
+                                <td>Suzano</td>
+                                <td>SP</td>
+                                <td>
+                                    <i class="small material-icons">delete</i>
+                                    <i class="small material-icons">edit</i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Rua Alameda Carvalho, 123</td>
+                                <td>Cornélio Procópio</td>
+                                <td>PR</td>
+                                <td>
+                                    <i class="small material-icons">delete</i>
+                                    <i class="small material-icons">edit</i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
