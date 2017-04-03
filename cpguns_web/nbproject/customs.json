@@ -6,5 +6,9 @@
         "menu-admin": {},
         "menu-cliente": {}
     },
-    "attributes": {}
+    "attributes": {
+        "chart-data": {
+            "context": "canvas"
+        }
+    }
 }
