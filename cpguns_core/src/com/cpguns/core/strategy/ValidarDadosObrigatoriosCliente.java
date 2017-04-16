@@ -12,7 +12,7 @@ import com.cpguns.core.model.DomainEntity;
  *
  * @author Leticia
  */
-public class ValidarDadosObrigatorios implements IStrategy{
+public class ValidarDadosObrigatoriosCliente implements IStrategy{
 
     @Override
     public String process(DomainEntity entity) {
@@ -23,6 +23,5 @@ public class ValidarDadosObrigatorios implements IStrategy{
         }
         
         return null;
-    }
-    
+    }    
 }

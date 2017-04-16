@@ -59,18 +59,23 @@
                             <br/>
                             <div class="row">
                                 <div class="input-field col s4">
-                                    <i class="material-icons prefix">phone</i>
+                                    <i class="material-icons prefix">chrome_reader_mode</i>
                                     <input id="icon_prefix" type="text" class="validate" disabled ng-model="user.cpf">
                                     <label>CPF</label>
                                 </div>
-                                <div class="input-field col s5">
+                                <div class="input-field col s4">
+                                    <i class="material-icons prefix">assignment_ind</i>
+                                    <input id="icon_prefix" type="text" class="validate" ng-model="user.rg">
+                                    <label>RG</label>
+                                </div>
+                                <div class="input-field col s4">
                                     <i class="material-icons prefix">phone</i>
                                     <input id="icon_telephone" type="tel" class="validate" ng-model="user.phone">
                                     <label for="icon_telephone">Telephone</label>
                                 </div>
                             </div>
 
-                            
+
                             <br/>
                             <div class="row">
                                 <h5>Dados de Acesso</h5>
@@ -98,7 +103,7 @@
                             <br/>
                             <div class="row">
                                 <a class="waves-effect waves-light btn right green darken-1" ng-click="cadastrar(user)">
-                                    <i class="material-icons left">input</i>Cadastrar</a>
+                                    <i class="material-icons left">input</i>Alterar Dados</a>
                             </div>
                         </form>
                     </div>
@@ -123,22 +128,22 @@
     <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>        
     <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
     <script>
-                                                $('.datepicker').pickadate({
-                                                    monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                                                    monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                                                    weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-                                                    weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
-                                                    selectMonths: true, // Creates a dropdown to control month
-                                                    selectYears: 100, // Creates a dropdown of 15 years to control year
-                                                    today: false,
-                                                    clear: 'Limpar',
-                                                    close: 'Fechar',
-                                                    max: new Date()
-                                                });
+                                            $('.datepicker').pickadate({
+                                                monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                                                monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                                                weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                                                weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                                                selectMonths: true, // Creates a dropdown to control month
+                                                selectYears: 100, // Creates a dropdown of 15 years to control year
+                                                today: false,
+                                                clear: 'Limpar',
+                                                close: 'Fechar',
+                                                max: new Date()
+                                            });
 
-                                                $(document).ready(function () {
-                                                    $('select').material_select();
-                                                });
+                                            $(document).ready(function () {
+                                                $('select').material_select();
+                                            });
     </script>
 </body>
 </html>

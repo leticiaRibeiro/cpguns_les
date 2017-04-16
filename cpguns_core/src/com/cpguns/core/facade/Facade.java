@@ -21,7 +21,7 @@ import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Manufacturer;
 import com.cpguns.core.model.Product;
 import com.cpguns.core.strategy.IStrategy;
-import com.cpguns.core.strategy.ValidarDadosObrigatorios;
+import com.cpguns.core.strategy.ValidarDadosObrigatoriosCliente;
 import com.cpguns.core.strategy.ValidarIdade;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class Facade implements IFacade {
 
         /* Criando instâncias de regras de negócio a serem utilizados*/
         ValidarIdade validarIdade = new ValidarIdade();
-        ValidarDadosObrigatorios validarDadosObg = new ValidarDadosObrigatorios();
+        ValidarDadosObrigatoriosCliente validarDadosObg = new ValidarDadosObrigatoriosCliente();
 
 
         /* Criando uma lista para conter as regras de negócio do cliente
