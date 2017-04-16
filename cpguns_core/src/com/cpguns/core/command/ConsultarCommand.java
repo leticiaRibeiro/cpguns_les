@@ -23,7 +23,7 @@ public class ConsultarCommand implements ICommand{
         Result result = new Result();
         CostumerDAO dao = new CostumerDAO();
         try {
-            result.setEntidades(dao.read(entity));
+            result.setEntities(dao.read(entity));
         } catch (SQLException ex) {
             Logger.getLogger(ConsultarCommand.class.getName()).log(Level.SEVERE, null, ex);
         }

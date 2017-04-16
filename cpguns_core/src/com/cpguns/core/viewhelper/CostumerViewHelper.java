@@ -37,7 +37,7 @@ public class CostumerViewHelper implements IViewHelper {
             costumer = new Costumer();
             user = new User();
             costumer.setUser(user);
-        } else if(("SALVAR").equals(operacao)) {
+        } else if (("SALVAR").equals(operacao)) {
             String name = request.getParameter("name");
             String nascimento = request.getParameter("nascimento");
             String genre = request.getParameter("genre");
@@ -46,22 +46,22 @@ public class CostumerViewHelper implements IViewHelper {
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            
+
             costumer = new Costumer();
             user = new User();
-            
+
             user.setEmail(email);
             user.setPassword(password);
             user.setLevel(1);
             costumer.setUser(user);
-            
+
             costumer.setCpf(cpf);
             costumer.setDtCreate(new Date());
             costumer.setGenre(genre);
             costumer.setName(name);
             costumer.setPhoneNumber(phone);
             costumer.setRg(rg);
-            
+
             DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 Date date = sourceFormat.parse(nascimento);
@@ -69,9 +69,9 @@ public class CostumerViewHelper implements IViewHelper {
             } catch (ParseException ex) {
                 Logger.getLogger(CostumerViewHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        } else if(("EXCLUIR").equals(operacao)){
-            
+
+        } else if (("EXCLUIR").equals(operacao)) {
+
         }
 
         return costumer;
@@ -87,7 +87,11 @@ public class CostumerViewHelper implements IViewHelper {
             retorno = gson.toJson(resultado.getEntidades());
             response.getWriter().write(retorno);
         } else if (("SALVAR").equals(operacao)) {
-            retorno = "Costumer cadastrado com sucesso!";
+            if (resultado.getMsg() == null) {
+                retorno = "O cadastro foi realizado com sucesso.";
+            } else {
+                retorno = resultado.getMsg();
+            }
             response.getWriter().write(retorno);
         }
     }

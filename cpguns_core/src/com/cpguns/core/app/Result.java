@@ -29,7 +29,7 @@ public class Result extends ApplicationEntity{
         return entities;
     }
     
-    public void setEntidades(List<DomainEntity> entities) {
+    public void setEntities(List<DomainEntity> entities) {
         this.entities = entities;
     }
     
