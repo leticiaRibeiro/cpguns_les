@@ -84,7 +84,6 @@ public class Facade implements IFacade {
         /* Adicionando as regras a serem utilizadas na operação salvar do fornecedor*/
         rnsCreateCostumer.add(validarDadosObg);
 	rnsCreateCostumer.add(validarCpf);
-        rnsCreateCostumer.add(validarIdade);
         rnsCreateCostumer.add(complementarDtCad);
 
         /* Cria o mapa que poderá conter todas as listas de regras de negócio específica
