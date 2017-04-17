@@ -43,7 +43,7 @@ angular.module("cpguns").controller("loginController", function ($scope, $http) 
             if (response.data.msg) {
                 alert(response.data.msg);
             } else {
-                window.sessionStorage.setItem("user", JSON.stringify(response.data.entities[0]));
+                window.sessionStorage.setItem("user", JSON.stringify(response.data[0]));
                 //var usuario = JSON.parse(window.sessionStorage.getItem("user"));
                 alert("Usuário cadastrado com sucesso!");
                 window.location.href = "http://localhost:8084/cpguns/pages/alterar_dados_cadastrais.html";
