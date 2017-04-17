@@ -22,7 +22,9 @@ import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Manufacturer;
 import com.cpguns.core.model.Product;
 import com.cpguns.core.model.User;
+import com.cpguns.core.strategy.ComplementarDtCadastro;
 import com.cpguns.core.strategy.IStrategy;
+import com.cpguns.core.strategy.ValidarCpf;
 import com.cpguns.core.strategy.ValidarDadosObrigatoriosCliente;
 import com.cpguns.core.strategy.ValidarIdade;
 import java.sql.SQLException;
@@ -71,7 +73,8 @@ public class Facade implements IFacade {
         /* Criando instâncias de regras de negócio a serem utilizados*/
         ValidarIdade validarIdade = new ValidarIdade();
         ValidarDadosObrigatoriosCliente validarDadosObg = new ValidarDadosObrigatoriosCliente();
-
+        ComplementarDtCadastro complementarDtCad = new ComplementarDtCadastro();
+        ValidarCpf validarCpf = new ValidarCpf();
 
         /* Criando uma lista para conter as regras de negócio do cliente
          * quando a operação for salvar
@@ -80,7 +83,9 @@ public class Facade implements IFacade {
         List<IStrategy> rnsReadCostumer = new ArrayList<IStrategy>();
         /* Adicionando as regras a serem utilizadas na operação salvar do fornecedor*/
         rnsCreateCostumer.add(validarDadosObg);
-		////////////////////////////////////////rnsCreateCostumer.add(vCnpj);
+	rnsCreateCostumer.add(validarCpf);
+        rnsCreateCostumer.add(validarIdade);
+        rnsCreateCostumer.add(complementarDtCad);
 
         /* Cria o mapa que poderá conter todas as listas de regras de negócio específica
          * por operação  do fornecedor
