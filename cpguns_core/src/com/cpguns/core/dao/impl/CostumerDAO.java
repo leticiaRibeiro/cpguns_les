@@ -24,14 +24,14 @@ import java.util.logging.Logger;
  *
  * @author Leticia
  */
-public class CostumerDAO extends AbstractJdbcDAO{
+public class CostumerDAO extends AbstractJdbcDAO {
 
-    public CostumerDAO(){
+    public CostumerDAO() {
         super("tb_costumer", "id_costumer");
     }
-    
-    public void createTableCostumer(){
-        
+
+    public void createTableCostumer() {
+
         openConnection();
         StringBuilder sql = new StringBuilder();
         sql.append("CREATE TABLE tb_costumers(");
@@ -45,7 +45,7 @@ public class CostumerDAO extends AbstractJdbcDAO{
         sql.append("id_us INTEGER REFERENCES tb_users(id_user), ");
         sql.append("dt_create date, ");
         sql.append("ativo boolean) ");
-        
+
         try {
             connection.setAutoCommit(false);
             PreparedStatement ps = connection.prepareStatement(sql.toString());
@@ -57,27 +57,26 @@ public class CostumerDAO extends AbstractJdbcDAO{
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public void create(DomainEntity entity) throws SQLException {
-        
-        
+
         PreparedStatement pst = null;
         Costumer costumer = (Costumer) entity;
         UserDAO usDAO = new UserDAO();
-        
-        try{
-            
+
+        try {
+
             usDAO.create(costumer.getUser());
             openConnection();
             connection.setAutoCommit(false);
-            
+
             StringBuilder sql = new StringBuilder();
             sql.append("INSERT INTO tb_costumers(name, cpf, rg, genre, dt_birth, phone_number, id_us, dt_create, ativo)");
             sql.append(" VALUES (?,?,?,?,?,?,?,?,?)");
-            
-            pst = connection.prepareStatement(sql.toString(), 
-            Statement.RETURN_GENERATED_KEYS);
+
+            pst = connection.prepareStatement(sql.toString(),
+                    Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, costumer.getName());
             pst.setString(2, costumer.getCpf());
             pst.setString(3, costumer.getRg());
@@ -90,49 +89,48 @@ public class CostumerDAO extends AbstractJdbcDAO{
             pst.setTimestamp(8, timedtCreate);
             pst.setBoolean(9, true);
             pst.executeUpdate();
-            
+
             ResultSet rs = pst.getGeneratedKeys();
             int idCos = 0;
-            if(rs.next()){
+            if (rs.next()) {
                 idCos = rs.getInt("id_costumer");
             }
             costumer.setId(idCos);
-            connection.commit();            
-        
-        }catch(Exception e){
-            
-        }   
+            connection.commit();
+
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
     public List<DomainEntity> read(DomainEntity entity) throws SQLException {
-        
+
         openConnection();
         PreparedStatement pst = null;
         Costumer costumer = (Costumer) entity;
         List<DomainEntity> costumers = new ArrayList<>();
         boolean ehEspecifico = false;
-        
+
         try {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT c.*, u.* FROM tb_costumers c INNER JOIN tb_users u on c.id_us = u.id_user");
             // Estamos buscando um cliente especifico?
-            if(costumer.getId() != 0){ // pq != 0? INT é um tipo primitivo. Ou seja, NUNCA será null. 
-                                       // Caso esteja 0, é pq não foi informado um ID especifico.
+            if (costumer.getId() != 0) { // pq != 0? INT é um tipo primitivo. Ou seja, NUNCA será null. 
+                // Caso esteja 0, é pq não foi informado um ID especifico.
                 sql.append(" WHERE id_costumer=?"); // vamos procurar um cliente especifico
                 ehEspecifico = true;
-            } 
-            
+            }
+
             pst = connection.prepareStatement(sql.toString());
-            if(ehEspecifico){ // caso for o especifico, precisamos settar o ID para saber qual é o especifico
+            if (ehEspecifico) { // caso for o especifico, precisamos settar o ID para saber qual é o especifico
                 pst.setInt(1, costumer.getId());
             }
-            
-            
+
             ResultSet rs = pst.executeQuery();
             // enquanto houver registros, vamos lendo....
-            while(rs.next()){
+            while (rs.next()) {
                 // novo registro, novo product!
                 Costumer c = new Costumer();
                 User u = new User();
@@ -154,11 +152,11 @@ public class CostumerDAO extends AbstractJdbcDAO{
                 u.setPassword(rs.getString("password"));
                 u.setLevel(rs.getInt("level"));
                 c.setUser(u);
-                
+
                 // adicionamos o cliente na lista, que iremos retornar com todos os valores encontrados...
                 costumers.add(c);
             }
-            
+
         } catch (Exception e) {
             try {
                 connection.rollback();
@@ -166,13 +164,13 @@ public class CostumerDAO extends AbstractJdbcDAO{
                 sqlE.printStackTrace();
             }
             e.printStackTrace();
-        }finally{
-            try{
-                if(pst != null){
+        } finally {
+            try {
+                if (pst != null) {
                     pst.close();
                 }
                 connection.close();
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -181,19 +179,19 @@ public class CostumerDAO extends AbstractJdbcDAO{
 
     @Override
     public void update(DomainEntity entity) throws SQLException {
-        
+
         openConnection();
         PreparedStatement pst = null;
         Costumer costumer = (Costumer) entity;
         UserDAO usDAO = new UserDAO();
-        
+
         try {
             usDAO.update(costumer.getUser());
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE tb_costumers SET name=?, cpf=?, rg=?, dt_birth=?, genre=?, phone_number=?");
             sql.append(" WHERE id_costumer=?");
-            
+
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, costumer.getName());
             pst.setString(2, costumer.getCpf());
@@ -204,8 +202,8 @@ public class CostumerDAO extends AbstractJdbcDAO{
             pst.setString(6, costumer.getPhoneNumber());
             pst.setInt(7, costumer.getId());
             pst.executeUpdate();
-            connection.commit(); 
-             
+            connection.commit();
+
         } catch (Exception e) {
             try {
                 connection.rollback();
@@ -213,11 +211,11 @@ public class CostumerDAO extends AbstractJdbcDAO{
                 sqlE.printStackTrace();
             }
             e.printStackTrace();
-        }finally{
-            try{
+        } finally {
+            try {
                 pst.close();
                 connection.close();
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -229,20 +227,20 @@ public class CostumerDAO extends AbstractJdbcDAO{
         PreparedStatement pst = null;
         Costumer costumer = (Costumer) entity;
         UserDAO usDAO = new UserDAO();
-        
+
         try {
             usDAO.delete(costumer.getUser());
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE tb_costumers SET ativo=?");
             sql.append(" WHERE id_costumer=?");
-            
+
             pst = connection.prepareStatement(sql.toString());
             pst.setBoolean(1, false);
             pst.setInt(2, costumer.getId());
             pst.executeUpdate();
-            connection.commit(); 
-             
+            connection.commit();
+
         } catch (Exception e) {
             try {
                 connection.rollback();
@@ -250,36 +248,36 @@ public class CostumerDAO extends AbstractJdbcDAO{
                 sqlE.printStackTrace();
             }
             e.printStackTrace();
-        }finally{
-            try{
+        } finally {
+            try {
                 pst.close();
                 connection.close();
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
-    
+
     public boolean verificaExistenciaRg(DomainEntity entity) throws SQLException {
-        
+
         openConnection();
         PreparedStatement pst = null;
         Costumer costumer = (Costumer) entity;
-        
+
         try {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT * FROM tb_costumers");
-            sql.append(" WHERE rg=?");            
-            
-            pst = connection.prepareStatement(sql.toString());            
+            sql.append(" WHERE rg=?");
+
+            pst = connection.prepareStatement(sql.toString());
             pst.setString(1, costumer.getRg());
             ResultSet rs = pst.executeQuery();
             // enquanto houver registros, vamos lendo....
-            while(rs.next()){
-               return true;
+            while (rs.next()) {
+                return true;
             }
-            
+
         } catch (Exception e) {
             try {
                 connection.rollback();
@@ -287,39 +285,41 @@ public class CostumerDAO extends AbstractJdbcDAO{
                 sqlE.printStackTrace();
             }
             e.printStackTrace();
-        }finally{
-            try{
-                if(pst != null){
+        } finally {
+            try {
+                if (pst != null) {
                     pst.close();
                 }
-                connection.close();
-            } catch(Exception e){
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return false;
     }
-    
+
     public boolean verificaExistenciaCpf(DomainEntity entity) throws SQLException {
-        
+
         openConnection();
         PreparedStatement pst = null;
         Costumer costumer = (Costumer) entity;
-        
+
         try {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT * FROM tb_costumers");
-            sql.append(" WHERE cpf=?");            
-            
-            pst = connection.prepareStatement(sql.toString());            
+            sql.append(" WHERE cpf=?");
+
+            pst = connection.prepareStatement(sql.toString());
             pst.setString(1, costumer.getCpf());
             ResultSet rs = pst.executeQuery();
             // enquanto houver registros, vamos lendo....
-            while(rs.next()){
-               return true;
+            while (rs.next()) {
+                return true;
             }
-            
+
         } catch (Exception e) {
             try {
                 connection.rollback();
@@ -327,40 +327,41 @@ public class CostumerDAO extends AbstractJdbcDAO{
                 sqlE.printStackTrace();
             }
             e.printStackTrace();
-        }finally{
-            try{
-                if(pst != null){
+        } finally {
+            try {
+                if (pst != null) {
                     pst.close();
                 }
-                connection.close();
-            } catch(Exception e){
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return false;
     }
-    
+
     public boolean verificaExistenciaEmail(DomainEntity entity) throws SQLException {
-        
+
         openConnection();
         PreparedStatement pst = null;
         Costumer costumer = (Costumer) entity;
-        
-        
+
         try {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT * FROM tb_users");
-            sql.append(" WHERE email=?");            
-            
-            pst = connection.prepareStatement(sql.toString());            
+            sql.append(" WHERE email=?");
+
+            pst = connection.prepareStatement(sql.toString());
             pst.setString(1, costumer.getUser().getEmail());
             ResultSet rs = pst.executeQuery();
             // enquanto houver registros, vamos lendo....
-            while(rs.next()){
-               return true;
+            while (rs.next()) {
+                return true;
             }
-            
+
         } catch (Exception e) {
             try {
                 connection.rollback();
@@ -368,13 +369,15 @@ public class CostumerDAO extends AbstractJdbcDAO{
                 sqlE.printStackTrace();
             }
             e.printStackTrace();
-        }finally{
-            try{
-                if(pst != null){
+        } finally {
+            try {
+                if (pst != null) {
                     pst.close();
                 }
-                connection.close();
-            } catch(Exception e){
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

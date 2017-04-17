@@ -42,12 +42,7 @@ public class LoginViewHelper implements IViewHelper {
         String retorno;
 
         if (("CONSULTAR").equals(operacao)) {
-            if (!resultado.getEntidades().isEmpty()) {
-                retorno = gson.toJson(resultado.getEntidades());
-            } else {
-                retorno = null;
-            }
-            response.getWriter().write(retorno);
+            response.getWriter().write(new Gson().toJson(resultado));
         }
     }
 

@@ -17,10 +17,14 @@ angular.module("cpguns").controller("loginController", function ($scope, $http) 
                 operacao: "CONSULTAR"
             }
         }).then(function successCallback(response) {
-            window.sessionStorage.setItem("user", JSON.stringify(response.data[0]));
-            window.location.href = "http://localhost:8084/cpguns/pages/alterar_dados_cadastrais.html";            
+            if (response.data.entities.length === 0) {
+                alert("Nenhum usuário encontrado com essas credenciais!");
+            } else {
+                window.sessionStorage.setItem("user", JSON.stringify(response.data.entities[0]));
+                window.location.href = "http://localhost:8084/cpguns/pages/alterar_dados_cadastrais.html";
+            }
         }, function errorCallback(response) {
-            alert("Nenhum usuário encontrado com essas credenciais!");
+            alert("ERRO");
         });
     };
 
