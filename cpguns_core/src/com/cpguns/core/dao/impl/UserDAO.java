@@ -111,7 +111,7 @@ public class UserDAO extends AbstractJdbcDAO {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT * from tb_costumers c\n"
-                    + "inner join tb_users u on u.id_user=c.id_us where u.email=? and u.password=?;");
+                    + "inner join tb_users u on u.id_user=c.id_us where u.email=? and u.password=? and u.ativo=true;");
 
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, user.getEmail());

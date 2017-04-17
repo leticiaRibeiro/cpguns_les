@@ -25,5 +25,29 @@ angular.module("cpguns").controller("ClienteController", function ($scope, $http
             });
         }
     };
+    
+    $scope.alterar = function () {
+        $http({
+            method: 'POST',
+            url: '/cpguns/costumer',
+            params: {
+                operacao: "ALTERAR",
+                name: $scope.user.name,
+                nascimento: $scope.user.dtBirth,
+                genre: $scope.user.genre,
+                cpf: $scope.user.cpf,
+                rg: $scope.user.rg,
+                phone: $scope.user.phoneNumber,
+                email: $scope.user.user.email,
+                password: $scope.user.user.password,
+                id: $scope.user.id
+            }
+        }).then(function successCallback(response) {
+            window.sessionStorage.setItem("user", JSON.stringify(response.data[0]));  
+            alert("Dados alterados com sucesso!");
+        }, function errorCallback(response) {
+            alert("ERRO");
+        });
+    };
 
 });
