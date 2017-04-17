@@ -19,6 +19,11 @@ public class User extends DomainEntity{
         
     }
     
+    public User(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
+    
     public User(String email, String password, int level){
         this.email = email;
         this.password = password;

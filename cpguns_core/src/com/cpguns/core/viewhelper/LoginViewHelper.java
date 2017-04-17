@@ -8,6 +8,7 @@ package com.cpguns.core.viewhelper;
 import com.cpguns.core.app.Result;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.User;
+import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,20 +18,18 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gustavo
  */
-public class LoginViewHelper implements IViewHelper{
+public class LoginViewHelper implements IViewHelper {
 
     @Override
     public DomainEntity getEntidade(HttpServletRequest request) {
         String operacao = request.getParameter("operacao");
         User user = null;
-        
-        if(("CONSULTAR").equals(operacao)){
+
+        if (("CONSULTAR").equals(operacao)) {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            int level = Integer.valueOf(request.getParameter("level"));
-            
 
-            user = new User(email, password, level);
+            user = new User(email, password);
         }
 
         return user;
@@ -38,7 +37,18 @@ public class LoginViewHelper implements IViewHelper{
 
     @Override
     public void setView(Result resultado, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String operacao = request.getParameter("operacao");
+        Gson gson = new Gson();
+        String retorno;
+
+        if (("CONSULTAR").equals(operacao)) {
+            if (!resultado.getEntidades().isEmpty()) {
+                retorno = gson.toJson(resultado.getEntidades());
+            } else {
+                retorno = null;
+            }
+            response.getWriter().write(retorno);
+        }
     }
-    
+
 }

@@ -6,11 +6,8 @@
 package com.cpguns.core.command;
 
 import com.cpguns.core.app.Result;
-import com.cpguns.core.dao.impl.CostumerDAO;
+import com.cpguns.core.facade.Facade;
 import com.cpguns.core.model.DomainEntity;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -20,14 +17,8 @@ public class ConsultarCommand implements ICommand{
 
     @Override
     public Result execute(DomainEntity entity) {
-        Result result = new Result();
-        CostumerDAO dao = new CostumerDAO();
-        try {
-            result.setEntities(dao.read(entity));
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultarCommand.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return result;
+        Facade f = new Facade();
+        return f.read(entity);
     }
     
 }
