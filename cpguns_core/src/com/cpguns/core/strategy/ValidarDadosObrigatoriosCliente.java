@@ -18,8 +18,30 @@ public class ValidarDadosObrigatoriosCliente implements IStrategy{
     public String process(DomainEntity entity) {
         Costumer costumer = (Costumer)entity;
         
-        if(costumer.getName() == null || costumer.getName().isEmpty()){
+        String name = costumer.getName();
+        String genre = costumer.getGenre();
+        String rg = costumer.getRg();
+        String phoneNumber = costumer.getPhoneNumber();
+        String email = costumer.getUser().getEmail();
+        String password = costumer.getUser().getPassword();
+        
+        if(name == null || name.isEmpty() || name.trim().equals("")){
             return "O nome deve ser preechido";
+        }
+        if(genre == null){
+            return "Escolha um gênero";
+        }
+        if(rg == null || rg.isEmpty() || rg.trim().equals("")){
+            return "O RG deve ser preenchido";
+        }
+        if(phoneNumber == null || phoneNumber.isEmpty()){
+            return "Preencha com um telefone de contato";
+        }
+        if(email == null || email.trim().equals("")){
+            return "O email deve ser preenchido";
+        }
+        if(password == null || password.trim().equals("")){
+            return "A senha deve ser preenchida";
         }
         
         return null;
