@@ -43,7 +43,8 @@ public class CostumerDAO extends AbstractJdbcDAO{
         sql.append("dt_birth date, ");
         sql.append("phone_number text, ");
         sql.append("id_us INTEGER REFERENCES tb_users(id_user), ");
-        sql.append("dt_create date) ");
+        sql.append("dt_create date, ");
+        sql.append("ativo boolean) ");
         
         try {
             connection.setAutoCommit(false);
@@ -72,8 +73,8 @@ public class CostumerDAO extends AbstractJdbcDAO{
             connection.setAutoCommit(false);
             
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO tb_costumers(name, cpf, rg, genre, dt_birth, phone_number, id_us, dt_create)");
-            sql.append(" VALUES (?,?,?,?,?,?,?,?)");
+            sql.append("INSERT INTO tb_costumers(name, cpf, rg, genre, dt_birth, phone_number, id_us, dt_create, ativo)");
+            sql.append(" VALUES (?,?,?,?,?,?,?,?,?)");
             
             pst = connection.prepareStatement(sql.toString(), 
             Statement.RETURN_GENERATED_KEYS);
@@ -87,6 +88,7 @@ public class CostumerDAO extends AbstractJdbcDAO{
             pst.setInt(7, costumer.getUser().getId());
             Timestamp timedtCreate = new Timestamp(costumer.getDtCreate().getTime());
             pst.setTimestamp(8, timedtCreate);
+            pst.setBoolean(9, true);
             pst.executeUpdate();
             
             ResultSet rs = pst.getGeneratedKeys();
@@ -220,4 +222,44 @@ public class CostumerDAO extends AbstractJdbcDAO{
             }
         }
     }
+
+    @Override
+    public void delete(DomainEntity entity) {
+        openConnection();
+        PreparedStatement pst = null;
+        Costumer costumer = (Costumer) entity;
+        UserDAO usDAO = new UserDAO();
+        
+        try {
+            usDAO.delete(costumer.getUser());
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE tb_costumers SET ativo=?");
+            sql.append(" WHERE id_costumer=?");
+            
+            pst = connection.prepareStatement(sql.toString());
+            pst.setBoolean(1, false);
+            pst.setInt(2, costumer.getId());
+            pst.executeUpdate();
+            connection.commit(); 
+             
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        }finally{
+            try{
+                pst.close();
+                connection.close();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    
+    
 }

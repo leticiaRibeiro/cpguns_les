@@ -116,4 +116,9 @@ public class Servlet extends HttpServlet{
             throws ServletException, IOException {
         processRequest(request, response);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
 }

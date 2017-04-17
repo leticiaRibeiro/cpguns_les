@@ -71,7 +71,13 @@ public class CostumerViewHelper implements IViewHelper {
             }
 
         } else if (("EXCLUIR").equals(operacao)) {
-
+            int id = Integer.valueOf(request.getParameter("id"));
+            
+            costumer = new Costumer();
+            user = new User();
+            user.setId(id);
+            costumer.setUser(user);
+            costumer.setId(id);
         }
 
         return costumer;
@@ -87,12 +93,9 @@ public class CostumerViewHelper implements IViewHelper {
             retorno = gson.toJson(resultado.getEntidades());
             response.getWriter().write(retorno);
         } else if (("SALVAR").equals(operacao)) {
-            if (resultado.getMsg() == null) {
-                retorno = "O cadastro foi realizado com sucesso.";
-            } else {
-                retorno = resultado.getMsg();
-            }
-            response.getWriter().write(retorno);
+            response.getWriter().write(new Gson().toJson(resultado));
+        } else if(("EXCLUIR").equals(operacao)) {
+            response.getWriter().write(new Gson().toJson(resultado));
         }
     }
 

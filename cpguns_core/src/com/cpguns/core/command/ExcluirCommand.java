@@ -6,6 +6,7 @@
 package com.cpguns.core.command;
 
 import com.cpguns.core.app.Result;
+import com.cpguns.core.facade.Facade;
 import com.cpguns.core.model.DomainEntity;
 
 /**
@@ -16,8 +17,8 @@ public class ExcluirCommand implements ICommand{
 
     @Override
     public Result execute(DomainEntity entity) {
-        System.out.println("Entrou no ExcluirCommand");
-        return null;
+        Facade f = new Facade();
+        return f.delete(entity);
     }
     
 }

@@ -35,7 +35,8 @@ public class UserDAO extends AbstractJdbcDAO{
         sql.append("email text, ");
         sql.append("password text, ");
         sql.append("level integer, ");
-        sql.append("id_user serial primary key) ");
+        sql.append("id_user serial primary key, ");
+        sql.append("ativo boolean) ");
         
         try {
             connection.setAutoCommit(false);
@@ -59,14 +60,15 @@ public class UserDAO extends AbstractJdbcDAO{
         try{
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO tb_users(email, password, level)");
-            sql.append(" VALUES (?,?,?)");
+            sql.append("INSERT INTO tb_users(email, password, level, ativo)");
+            sql.append(" VALUES (?,?,?,?)");
             
             pst = connection.prepareStatement(sql.toString(), 
             Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, user.getEmail());
             pst.setString(2, user.getPassword());
             pst.setInt(3, user.getLevel());
+            pst.setBoolean(4, true);
             pst.executeUpdate();
             
             ResultSet rs = pst.getGeneratedKeys();
@@ -159,6 +161,41 @@ public class UserDAO extends AbstractJdbcDAO{
             pst.setString(2, user.getPassword());
             pst.setInt(3, user.getLevel());
             pst.setInt(4, user.getId());
+            pst.executeUpdate();
+            connection.commit();            
+            
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        }finally{
+            try{
+                pst.close();
+                connection.close();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void delete(DomainEntity entity) {
+        openConnection();
+        PreparedStatement pst = null;
+        User user = (User) entity;
+        
+        try {
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE tb_users SET ativo=?");
+            sql.append(" WHERE id_user=?");
+            
+            pst = connection.prepareStatement(sql.toString());
+            pst.setBoolean(1, false);
+            pst.setInt(2, user.getId());
             pst.executeUpdate();
             connection.commit();            
             

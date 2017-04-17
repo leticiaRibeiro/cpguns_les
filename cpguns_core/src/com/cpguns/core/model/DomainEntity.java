@@ -6,6 +6,7 @@ public class DomainEntity {
     
     private int id;
     private Date dtCreate;
+    private boolean ativo;
 
     public int getId() {
         return id;
@@ -21,5 +22,19 @@ public class DomainEntity {
 
     public void setDtCreate(Date dtCreate) {
         this.dtCreate = dtCreate;
+    }
+
+    /**
+     * @return the ativo
+     */
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    /**
+     * @param ativo the ativo to set
+     */
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }
