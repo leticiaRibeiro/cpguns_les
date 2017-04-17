@@ -103,7 +103,7 @@ public class CostumerViewHelper implements IViewHelper {
         } else if (("EXCLUIR").equals(operacao)) {
             response.getWriter().write(new Gson().toJson(resultado));
         } else if (("ALTERAR").equals(operacao)) {
-            response.getWriter().write(new Gson().toJson(resultado.getEntidades()));
+            response.getWriter().write(new Gson().toJson(resultado));
         }
     }
 

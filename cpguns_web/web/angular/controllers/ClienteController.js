@@ -25,7 +25,7 @@ angular.module("cpguns").controller("ClienteController", function ($scope, $http
             });
         }
     };
-    
+
     $scope.alterar = function () {
         $http({
             method: 'POST',
@@ -43,8 +43,12 @@ angular.module("cpguns").controller("ClienteController", function ($scope, $http
                 id: $scope.user.id
             }
         }).then(function successCallback(response) {
-            window.sessionStorage.setItem("user", JSON.stringify(response.data[0]));  
-            alert("Dados alterados com sucesso!");
+            if (response.data.msg) {
+                alert(response.data.msg);
+            } else {
+                window.sessionStorage.setItem("user", JSON.stringify(response.data.entities[0]));
+                alert("Dados alterados com sucesso!");
+            }
         }, function errorCallback(response) {
             alert("ERRO");
         });
