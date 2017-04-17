@@ -49,8 +49,8 @@ public class CostumerViewHelper implements IViewHelper {
 
             costumer = new Costumer();
             user = new User();
-            
-            if(("ALTERAR").equals(operacao)){
+
+            if (("ALTERAR").equals(operacao)) {
                 int id = Integer.valueOf(request.getParameter("id"));
                 costumer.setId(id);
                 user.setId(id);
@@ -78,7 +78,7 @@ public class CostumerViewHelper implements IViewHelper {
 
         } else if (("EXCLUIR").equals(operacao)) {
             int id = Integer.valueOf(request.getParameter("id"));
-            
+
             costumer = new Costumer();
             user = new User();
             user.setId(id);
@@ -98,10 +98,12 @@ public class CostumerViewHelper implements IViewHelper {
         if (("CONSULTAR").equals(operacao)) {
             retorno = gson.toJson(resultado.getEntidades());
             response.getWriter().write(retorno);
-        } else if (("SALVAR").equals(operacao) || ("ALTERAR").equals(operacao)) {
-            response.getWriter().write(new Gson().toJson(resultado.getEntidades()));
-        } else if(("EXCLUIR").equals(operacao)) {
+        } else if (("SALVAR").equals(operacao)) {
             response.getWriter().write(new Gson().toJson(resultado));
+        } else if (("EXCLUIR").equals(operacao)) {
+            response.getWriter().write(new Gson().toJson(resultado));
+        } else if (("ALTERAR").equals(operacao)) {
+            response.getWriter().write(new Gson().toJson(resultado.getEntidades()));
         }
     }
 
