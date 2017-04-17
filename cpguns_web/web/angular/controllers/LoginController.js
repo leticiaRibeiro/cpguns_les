@@ -43,6 +43,7 @@ angular.module("cpguns").controller("loginController", function ($scope, $http) 
             if (response.data.msg) {
                 alert(response.data.msg);
             } else {
+                // converte um objeto JavaScript para um objeto JSON 
                 window.sessionStorage.setItem("user", JSON.stringify(response.data.entities[0]));
                 //var usuario = JSON.parse(window.sessionStorage.getItem("user"));
                 alert("Usuário cadastrado com sucesso!");
