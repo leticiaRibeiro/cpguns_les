@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  *
- * @author Leticia
+ * @author Leticia - MOMO <3
  */
 public class ComplementarDtCadastro implements IStrategy{
 
