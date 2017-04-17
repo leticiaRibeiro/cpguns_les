@@ -26,7 +26,11 @@ import com.cpguns.core.strategy.ComplementarDtCadastro;
 import com.cpguns.core.strategy.IStrategy;
 import com.cpguns.core.strategy.ValidarCpf;
 import com.cpguns.core.strategy.ValidarDadosObrigatoriosCliente;
+import com.cpguns.core.strategy.ValidarEmail;
+import com.cpguns.core.strategy.ValidarExistencia;
 import com.cpguns.core.strategy.ValidarIdade;
+import com.cpguns.core.strategy.ValidarNome;
+import com.cpguns.core.strategy.ValidarTelefone;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,16 +79,30 @@ public class Facade implements IFacade {
         ValidarDadosObrigatoriosCliente validarDadosObg = new ValidarDadosObrigatoriosCliente();
         ComplementarDtCadastro complementarDtCad = new ComplementarDtCadastro();
         ValidarCpf validarCpf = new ValidarCpf();
+        ValidarEmail validarEmail = new ValidarEmail();
+        ValidarExistencia validarExistencia = new ValidarExistencia();
+        ValidarTelefone validarTelefone = new ValidarTelefone();
+        ValidarNome validarNome = new ValidarNome();
+        
 
         /* Criando uma lista para conter as regras de negócio do cliente
          * quando a operação for salvar
          */
         List<IStrategy> rnsCreateCostumer = new ArrayList<IStrategy>();
-        List<IStrategy> rnsReadCostumer = new ArrayList<IStrategy>();
+        List<IStrategy> rnsUpdateCostumer = new ArrayList<IStrategy>();
         /* Adicionando as regras a serem utilizadas na operação salvar do fornecedor*/
         rnsCreateCostumer.add(validarDadosObg);
 	rnsCreateCostumer.add(validarCpf);
         rnsCreateCostumer.add(complementarDtCad);
+        rnsCreateCostumer.add(validarEmail);
+        rnsCreateCostumer.add(validarExistencia);
+        rnsCreateCostumer.add(validarTelefone);
+        rnsCreateCostumer.add(validarNome);
+        rnsUpdateCostumer.add(validarEmail);
+        rnsUpdateCostumer.add(validarTelefone);
+        rnsUpdateCostumer.add(validarNome);
+        rnsUpdateCostumer.add(validarDadosObg);
+        
 
         /* Cria o mapa que poderá conter todas as listas de regras de negócio específica
          * por operação  do fornecedor
@@ -94,6 +112,7 @@ public class Facade implements IFacade {
          * Adiciona a listra de regras na operação salvar no mapa do fornecedor (lista criada na linha 70)
          */
         rnsCostumer.put("SALVAR", rnsCreateCostumer);
+        rnsCostumer.put("ALTERAR", rnsUpdateCostumer);
 
         /* Adiciona o mapa(criado na linha 79) com as regras indexadas pelas operações no mapa geral indexado
          * pelo nome da entidade

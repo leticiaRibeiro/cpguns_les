@@ -260,6 +260,124 @@ public class CostumerDAO extends AbstractJdbcDAO{
         }
     }
     
+    public boolean verificaExistenciaRg(DomainEntity entity) throws SQLException {
+        
+        openConnection();
+        PreparedStatement pst = null;
+        Costumer costumer = (Costumer) entity;
+        
+        try {
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT * FROM tb_costumers");
+            sql.append(" WHERE rg=?");            
+            
+            pst = connection.prepareStatement(sql.toString());            
+            pst.setString(1, costumer.getRg());
+            ResultSet rs = pst.executeQuery();
+            // enquanto houver registros, vamos lendo....
+            while(rs.next()){
+               return true;
+            }
+            
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        }finally{
+            try{
+                if(pst != null){
+                    pst.close();
+                }
+                connection.close();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
     
+    public boolean verificaExistenciaCpf(DomainEntity entity) throws SQLException {
+        
+        openConnection();
+        PreparedStatement pst = null;
+        Costumer costumer = (Costumer) entity;
+        
+        try {
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT * FROM tb_costumers");
+            sql.append(" WHERE cpf=?");            
+            
+            pst = connection.prepareStatement(sql.toString());            
+            pst.setString(1, costumer.getCpf());
+            ResultSet rs = pst.executeQuery();
+            // enquanto houver registros, vamos lendo....
+            while(rs.next()){
+               return true;
+            }
+            
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        }finally{
+            try{
+                if(pst != null){
+                    pst.close();
+                }
+                connection.close();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
     
+    public boolean verificaExistenciaEmail(DomainEntity entity) throws SQLException {
+        
+        openConnection();
+        PreparedStatement pst = null;
+        Costumer costumer = (Costumer) entity;
+        
+        
+        try {
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT * FROM tb_users");
+            sql.append(" WHERE email=?");            
+            
+            pst = connection.prepareStatement(sql.toString());            
+            pst.setString(1, costumer.getUser().getEmail());
+            ResultSet rs = pst.executeQuery();
+            // enquanto houver registros, vamos lendo....
+            while(rs.next()){
+               return true;
+            }
+            
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        }finally{
+            try{
+                if(pst != null){
+                    pst.close();
+                }
+                connection.close();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
 }
