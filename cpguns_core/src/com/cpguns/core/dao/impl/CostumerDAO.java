@@ -99,7 +99,20 @@ public class CostumerDAO extends AbstractJdbcDAO {
             connection.commit();
 
         } catch (Exception e) {
-
+            
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally{
+            try {
+                pst.close();
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

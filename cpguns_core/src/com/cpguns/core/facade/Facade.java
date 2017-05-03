@@ -15,17 +15,20 @@ import com.cpguns.core.dao.impl.AddressDAO;
 import com.cpguns.core.dao.impl.CostumerDAO;
 import com.cpguns.core.dao.impl.ManufacturerDAO;
 import com.cpguns.core.dao.impl.ProductDAO;
+import com.cpguns.core.dao.impl.StoreDAO;
 import com.cpguns.core.dao.impl.UserDAO;
 import com.cpguns.core.model.Address;
 import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Manufacturer;
 import com.cpguns.core.model.Product;
+import com.cpguns.core.model.Store;
 import com.cpguns.core.model.User;
 import com.cpguns.core.strategy.ComplementarDtCadastro;
 import com.cpguns.core.strategy.IStrategy;
 import com.cpguns.core.strategy.ValidarCpf;
 import com.cpguns.core.strategy.ValidarDadosObrigatoriosCliente;
+import com.cpguns.core.strategy.ValidarDadosObrigatoriosLoja;
 import com.cpguns.core.strategy.ValidarEmail;
 import com.cpguns.core.strategy.ValidarExistencia;
 import com.cpguns.core.strategy.ValidarIdade;
@@ -65,6 +68,7 @@ public class Facade implements IFacade {
         ProductDAO prodDAO = new ProductDAO();
         AddressDAO addrDAO = new AddressDAO();
         UserDAO userDAO = new UserDAO();
+        StoreDAO stoDAO = new StoreDAO();
 
         /* Adicionando cada dao no MAP indexando pelo nome da classe */
         daos.put(Manufacturer.class.getName(), manuDAO);
@@ -72,17 +76,19 @@ public class Facade implements IFacade {
         daos.put(Product.class.getName(), prodDAO);
         daos.put(Address.class.getName(), addrDAO);
         daos.put(User.class.getName(), userDAO);
+        daos.put(Store.class.getName(), stoDAO);
 
 
         /* Criando instâncias de regras de negócio a serem utilizados*/
         ValidarIdade validarIdade = new ValidarIdade();
-        ValidarDadosObrigatoriosCliente validarDadosObg = new ValidarDadosObrigatoriosCliente();
+        ValidarDadosObrigatoriosCliente validarDadosObgCli = new ValidarDadosObrigatoriosCliente();
         ComplementarDtCadastro complementarDtCad = new ComplementarDtCadastro();
         ValidarCpf validarCpf = new ValidarCpf();
         ValidarEmail validarEmail = new ValidarEmail();
         ValidarExistencia validarExistencia = new ValidarExistencia();
         ValidarTelefone validarTelefone = new ValidarTelefone();
         ValidarNome validarNome = new ValidarNome();
+        ValidarDadosObrigatoriosLoja validarDadosObgLoja = new ValidarDadosObrigatoriosLoja();
         
 
         /* Criando uma lista para conter as regras de negócio do cliente
@@ -90,8 +96,12 @@ public class Facade implements IFacade {
          */
         List<IStrategy> rnsCreateCostumer = new ArrayList<IStrategy>();
         List<IStrategy> rnsUpdateCostumer = new ArrayList<IStrategy>();
+        List<IStrategy> rnsCreateStore = new ArrayList<IStrategy>();
+        
+        
+        
         /* Adicionando as regras a serem utilizadas na operação salvar do fornecedor*/
-        rnsCreateCostumer.add(validarDadosObg);
+        rnsCreateCostumer.add(validarDadosObgCli);
 	rnsCreateCostumer.add(validarCpf);
         rnsCreateCostumer.add(complementarDtCad);
         rnsCreateCostumer.add(validarEmail);
@@ -101,23 +111,31 @@ public class Facade implements IFacade {
         rnsUpdateCostumer.add(validarEmail);
         rnsUpdateCostumer.add(validarTelefone);
         rnsUpdateCostumer.add(validarNome);
-        rnsUpdateCostumer.add(validarDadosObg);
+        rnsUpdateCostumer.add(validarDadosObgCli);
+        rnsCreateStore.add(validarDadosObgLoja);
         
 
         /* Cria o mapa que poderá conter todas as listas de regras de negócio específica
          * por operação  do fornecedor
          */
         Map<String, List<IStrategy>> rnsCostumer = new HashMap<String, List<IStrategy>>();
+        Map<String, List<IStrategy>> rnsStore = new HashMap<String, List<IStrategy>>();
+        
+        
+        
         /*
          * Adiciona a listra de regras na operação salvar no mapa do fornecedor (lista criada na linha 70)
          */
         rnsCostumer.put("SALVAR", rnsCreateCostumer);
         rnsCostumer.put("ALTERAR", rnsUpdateCostumer);
+        rnsStore.put("SALVAR", rnsCreateStore);
 
         /* Adiciona o mapa(criado na linha 79) com as regras indexadas pelas operações no mapa geral indexado
          * pelo nome da entidade
          */
         rns.put(Costumer.class.getName(), rnsCostumer);
+        rns.put(Store.class.getName(), rnsStore);
+        
 
     }
 

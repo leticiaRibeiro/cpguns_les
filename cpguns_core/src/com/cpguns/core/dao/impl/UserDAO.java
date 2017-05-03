@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Gustavo
+ * @author Leticia
  */
 public class UserDAO extends AbstractJdbcDAO {
 

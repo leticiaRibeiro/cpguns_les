@@ -53,5 +53,32 @@ angular.module("cpguns").controller("ClienteController", function ($scope, $http
             alert("ERRO");
         });
     };
+    
+    $scope.salvarStore = function(store) {
+        $http({
+            method: 'POST',
+            url: '/cpguns/store',
+            params: {
+                operacao: "SALVAR",
+                name: store.name,
+                address: store.address,
+                number: store.number,
+                complement: store.complement,
+                zip: store.zip,
+                neighborhood: store.neighborhood,
+                city: store.city,
+                state: store.state
+            }
+        }).then(function successCallback(response) {
+            
+        }, function errorCallback(response) {
+            // deu caquinha
+        });
+    };
+    
+    
+    
+    
+    
 
 });

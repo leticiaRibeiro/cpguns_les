@@ -10,6 +10,7 @@ import com.cpguns.core.app.Result;
 import com.cpguns.core.viewhelper.CostumerViewHelper;
 import com.cpguns.core.viewhelper.IViewHelper;
 import com.cpguns.core.viewhelper.LoginViewHelper;
+import com.cpguns.core.viewhelper.StoreViewHelper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +42,7 @@ public class Servlet extends HttpServlet{
         
         helpers.put("/cpguns/login", new LoginViewHelper());
         helpers.put("/cpguns/costumer", new CostumerViewHelper());
+        helpers.put("/cpguns/store", new StoreViewHelper());
     }
 
     /**

@@ -111,7 +111,6 @@ public class ProductDAO extends AbstractJdbcDAO{
         }
     }
     
-    
     @Override
     public void update(DomainEntity entity) throws SQLException {
         
@@ -128,7 +127,6 @@ public class ProductDAO extends AbstractJdbcDAO{
             
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, product.getName());
-            // settamos o id como um parametro qualquer. Ele é o segundo "?" na query correto? Então, ele será o segundo a ser settado.
             pst.setString(2, product.getDescription());
             pst.setString(3, product.getCaliber());
             pst.setFloat(4, product.getWeight());
@@ -155,7 +153,6 @@ public class ProductDAO extends AbstractJdbcDAO{
             }
         }
     }
-    
     
     @Override
     public List<DomainEntity> read(DomainEntity entity) throws SQLException {

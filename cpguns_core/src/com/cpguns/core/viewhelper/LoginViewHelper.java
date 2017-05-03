@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Gustavo
+ * @author Leticia
  */
 public class LoginViewHelper implements IViewHelper {
 
