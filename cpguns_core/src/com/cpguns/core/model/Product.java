@@ -1,6 +1,8 @@
 
 package com.cpguns.core.model;
 
+import java.util.List;
+
 /**
  *
  * @author Leticia
@@ -16,6 +18,7 @@ public class Product extends DomainEntity{
     private String model;
     private String capacity;                // measured in rd.
     private Manufacturer manufacturer;
+    private List<Image> images;
 
     
     public String getName() {
@@ -79,6 +82,20 @@ public class Product extends DomainEntity{
     }
     public void setManufacturer(Manufacturer manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    /**
+     * @return the images
+     */
+    public List<Image> getImages() {
+        return images;
+    }
+
+    /**
+     * @param images the images to set
+     */
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
     
 }

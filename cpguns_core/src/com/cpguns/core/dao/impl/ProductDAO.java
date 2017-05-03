@@ -7,6 +7,7 @@ package com.cpguns.core.dao.impl;
 
 import com.cpguns.core.dao.AbstractJdbcDAO;
 import com.cpguns.core.model.DomainEntity;
+import com.cpguns.core.model.Image;
 import com.cpguns.core.model.Manufacturer;
 import com.cpguns.core.model.Product;
 import java.sql.PreparedStatement;
@@ -64,6 +65,7 @@ public class ProductDAO extends AbstractJdbcDAO{
         openConnection();
         PreparedStatement pst = null;
         Product product = (Product) entity;
+        ImageDAO imageDAO = new ImageDAO();
         
         try {
             connection.setAutoCommit(false);
@@ -93,7 +95,13 @@ public class ProductDAO extends AbstractJdbcDAO{
                 idProd = rs.getInt("id_product");
             }
             product.setId(idProd);
-            connection.commit();            
+            
+            
+            connection.commit();
+            for(Image i : product.getImages()){
+                i.setId_product(product.getId());
+                imageDAO.create(i);
+            }
         } catch (Exception e) {
             try {
                 connection.rollback();
@@ -160,6 +168,7 @@ public class ProductDAO extends AbstractJdbcDAO{
         openConnection();
         PreparedStatement pst = null;
         Product product = (Product) entity;
+        ImageDAO imageDAO = new ImageDAO();
         List<DomainEntity> products = new ArrayList<>();
         boolean ehEspecifico = false;
         
@@ -184,6 +193,7 @@ public class ProductDAO extends AbstractJdbcDAO{
                 // novo registro, novo product!
                 Product p = new Product();
                 Manufacturer m = new Manufacturer();
+                List<Image> imagens = new ArrayList<>();
                 // pegamos os valores das colunas e settamos no objeto de Product - Se a coluna for int: rs.getInt("NOME DA COLUNA")
                 p.setName(rs.getString("name"));
                 p.setId(rs.getInt("id_product"));
@@ -200,6 +210,11 @@ public class ProductDAO extends AbstractJdbcDAO{
                 p.setManufacturer(m);
                 Date dtCreate = new Date(dtCreateLong.getTime());
                 p.setDtCreate(dtCreate);
+                List<DomainEntity> imgs = imageDAO.read(p);
+                for(DomainEntity e : imgs){
+                    imagens.add((Image) e);
+                }
+                p.setImages(imagens);
                 // adicionamos o produto na lista, que iremos retornar com todos os valores encontrados...
                 products.add(p);
             }
