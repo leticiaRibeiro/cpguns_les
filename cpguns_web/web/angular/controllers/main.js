@@ -214,7 +214,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                         operacao: "CONSULTAR"
                     }
                 }).then(function successCallback(response) {
-                    alert("Funcionou");
+                    $scope.arms = response.data;
                 }, function errorCallback(response) {
                     alert("ERRO");
                 });
