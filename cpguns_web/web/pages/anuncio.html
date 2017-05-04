@@ -31,22 +31,16 @@
                                     <div class="card-action">
                                         <div class="carousel carousel-slider center" data-indicators="true">
                                             <div class="carousel-item white-text">
-                                                <img class="responsive-img" src="../images/ak47.png">
-                                            </div>
-                                            <div class="carousel-item white-text">
-                                                <img class="responsive-img" src="../images/m4a4.png">
-                                            </div>
-                                            <div class="carousel-item white-text">
-                                                <img class="responsive-img" src="../images/glock.png">
+                                                <img class="responsive-img" src="{{produto.images[0].uri}}">
                                             </div>
                                         </div>
                                     </div> <!-- Fim do CARD -->
                                 </div>
 
                                 <div class="col s5">
-                                    <h3 class="center">AK47 dos TR</h3>
+                                    <h3 class="center">{{produto.name}}</h3>
                                     <div class="row">
-                                        <h4 class="center">R$ 5.000,00</h4>
+                                        <h4 class="center">R$ {{produto.price}}</h4>
                                     </div>
                                     <div class="row offset-s1">
                                         Formas de pagamento:
@@ -67,31 +61,43 @@
 
                             <div class="row">
                                 <h4>
-                                    Características do produto
-                                    <hr/>
+                                    Características do produto                                    
                                 </h4>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <blockquote>
+                                    {{produto.description}}
+                                </blockquote>
+                                
                             </div>
                             <div class="row">
                                 <!-- primeira coluna -->
                                 <div class="col s6">
                                     <div class="row">
-                                        Nome: AK
+                                        Nome: {{produto.name}}
                                     </div>
                                     <div class="row">
-                                        Ano: 47
+                                        Modelo: {{produto.model}}
                                     </div>
                                     <div class="row">
-                                        Local de fabricação: Rússia
+                                        Calibre: {{produto.caliber}}
                                     </div>
                                 </div> <!-- Fim da primeira coluna -->
 
                                 <!-- segunda coluna -->
                                 <div class="col s6">
                                     <div class="row">
-                                        Estado: Nova
+                                        Cap. Magazine: {{produto.capacity}}
                                     </div>
                                     <div class="row">
-                                        Pente: 31 balas
+                                        Código: {{produto.id}}
+                                    </div>
+                                    <div class="row">
+                                        Origem: {{produto.origin}}
+                                    </div>
+                                    <div class="row">
+                                        Peso: {{produto.weight}}
                                     </div>
                                 </div> <!-- Fim da segunda coluna -->
                             </div>

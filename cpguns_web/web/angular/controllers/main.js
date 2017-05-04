@@ -190,22 +190,21 @@ angular.module("cpguns", ['minhasDiretivas'])
         })
 
         .controller("anuncioController", function ($scope) {
+            $scope.produto = JSON.parse(window.sessionStorage.getItem("arm"));
             $scope.addCarrinho = function () {
-                var produto = {id: "1", name:"AK 47", price:"3.400"};
-                
                 if (window.sessionStorage.getItem("carrinho")) { // EXISTE o carrinho
                     var carrinho = JSON.parse(window.sessionStorage.getItem("carrinho"));
                 } else { // CARRINHO NÃO EXISTE
                     var carrinho = new Array();
                 }
-                carrinho.push(produto);
+                carrinho.push($scope.produto);
                 window.sessionStorage.setItem("carrinho", JSON.stringify(carrinho));
-                
+
                 window.location.href = "http://localhost:8084/cpguns/pages/carrinho.html";
             };
         })
-        
-        .controller("indexController", function($scope, $http){
+
+        .controller("indexController", function ($scope, $http) {
             $scope.getArms = function () {
                 $http({
                     method: 'GET',
@@ -219,9 +218,10 @@ angular.module("cpguns", ['minhasDiretivas'])
                     alert("ERRO");
                 });
             };
-            
-            $scope.verAnuncio = function(arm){
-                      
+
+            $scope.verAnuncio = function (arm) {
+                window.sessionStorage.setItem("arm", JSON.stringify(arm));
+                window.location.href = "http://localhost:8084/cpguns/pages/anuncio.html";
             };
         })
 
@@ -231,10 +231,10 @@ angular.module("cpguns", ['minhasDiretivas'])
                 if (window.sessionStorage.getItem("carrinho")) {
                     var carrinho = JSON.parse(window.sessionStorage.getItem("carrinho"));
                     var mensagem = "";
-                    carrinho.forEach(function(produto){
-                        mensagem += "- "+produto.name+" - R$"+produto.price+"\n";
+                    carrinho.forEach(function (produto) {
+                        mensagem += "- " + produto.name + " - R$" + produto.price + "\n";
                     });
-                    alert("Quantidade de itens: "+mensagem);
+                    alert("Quantidade de itens: " + mensagem);
                 } else {
                     alert("Não existe o carrinho");
                 }

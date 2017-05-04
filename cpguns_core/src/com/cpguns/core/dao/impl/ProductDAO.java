@@ -44,7 +44,7 @@ public class ProductDAO extends AbstractJdbcDAO{
         sql.append("origin text, ");
         sql.append("model text, ");
         sql.append("capacity text, ");
-        sql.append("price double, ");
+        sql.append("price decimal, ");
         sql.append("id_manuf INTEGER REFERENCES tb_manufacturer(id_manufacturer), ");
         sql.append("dtCreate date) ");
         
@@ -73,7 +73,7 @@ public class ProductDAO extends AbstractJdbcDAO{
             
             StringBuilder sql = new StringBuilder();
             sql.append("INSERT INTO tb_products(name, description, caliber, weight, action, origin, model, capacity, price, dtCreate, id_manuf )");
-            sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?)");
+            sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             
             pst = connection.prepareStatement(sql.toString(), 
             Statement.RETURN_GENERATED_KEYS);
