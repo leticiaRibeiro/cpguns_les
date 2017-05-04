@@ -14,7 +14,7 @@
     <header-logado></header-logado>
 
     <!-- corpo da página -->
-    <main data-ng-init="recuperaCarrinho()">
+    <main>
         <!-- uma linha em branco, para dar o espaçamento do header -->
         <div class="row">
 
@@ -46,43 +46,18 @@
                                     </thead>
 
                                     <tbody>
-                                        <tr>
-                                            <td><img class="materialboxed" width="150" src="../images/m4a4.png"></td>
-                                            <td>M4A4</td>
-                                            <td>R$ 5.500,00</td>
+                                        <tr ng-repeat="produto in carrinho">
+                                            <td><img class="materialboxed" width="150" src="{{produto.images[0].uri}}"></td>
+                                            <td>{{produto.name}}</td>
+                                            <td>R{{produto.price | currency}}</td>
                                             <td>
-                                                <input type="number" min="1" class="col s5">
+                                                <input type="number" min="1" class="col s5" ng-model="produto.qtdeCarrinho" ng-change="mudarQtde()">
                                             </td>
-                                            <td>R$ 11.000,00</td>
+                                            <td>R{{produto.price * produto.qtdeCarrinho | currency}}</td>
                                             <td>
-                                                <i class="small material-icons">delete</i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="materialboxed" width="150" src="../images/glock.png"></td>
-                                            <td>Glock</td>
-                                            <td>R$ 2.800,00</td>
-                                            <td>
-                                                <input type="number" min="1" class="col s5">
-                                            </td>
-                                            <td>R$ 2.800,00</td>
-                                            <td>
-                                                <i class="small material-icons">delete</i>
+                                                <i class="small material-icons" ng-click="removeItemCarrinho(produto)">delete</i>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><img class="materialboxed" width="150" src="../images/ak47.png"></td>
-                                            <td>AK-47</td>
-                                            <td>R$ 3.400,00</td>
-                                            <td>
-                                                <input type="number" min="1" class="col s5">
-                                            </td>
-                                            <td>R$ 3.400,00</td>
-                                            <td>
-                                                <i class="small material-icons">delete</i>
-                                            </td>
-                                        </tr>
-
                                     </tbody>
                                 </table>
 
@@ -98,14 +73,14 @@
 
                             <div class="row">
                                 <h2 class="right">
-                                    R$ 17.200,00
+                                    R{{valorTotal | currency}}
                                 </h2>
                             </div>
                             <br/>
                             <div class="row">
                                 <div class="right">
-                                    <a class="waves-effect waves-light btn brown lighten-3">Limpar Carrinho</a>
-                                    <a class="waves-effect waves-light btn" href="escolher_endereco.html">Continuar</a>
+                                    <a class="waves-effect waves-light btn brown lighten-3" ng-click="limparCarrinho()">Limpar Carrinho</a>
+                                    <a class="waves-effect waves-light btn" ng-click="continuar()">Continuar</a>
                                 </div>
                             </div>
                         </div> <!-- Fim do CARD -->

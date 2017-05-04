@@ -226,18 +226,41 @@ angular.module("cpguns", ['minhasDiretivas'])
         })
 
         .controller("carrinhoController", function ($scope) {
+            $scope.carrinho = {};
+            $scope.valorTotal = 0;
+            if (window.sessionStorage.getItem("carrinho")) {
+                $scope.qtde = 1;
+                $scope.carrinho = JSON.parse(window.sessionStorage.getItem("carrinho"));
+                $scope.carrinho.forEach(function(produto){
+                    produto.qtdeCarrinho = 1;
+                    $scope.valorTotal += produto.price;
+                });
+            } else {
+                alert("Nenhum item no carrinho!");
+            }           
 
-            $scope.recuperaCarrinho = function () {
-                if (window.sessionStorage.getItem("carrinho")) {
-                    var carrinho = JSON.parse(window.sessionStorage.getItem("carrinho"));
-                    var mensagem = "";
-                    carrinho.forEach(function (produto) {
-                        mensagem += "- " + produto.name + " - R$" + produto.price + "\n";
-                    });
-                    alert("Quantidade de itens: " + mensagem);
-                } else {
-                    alert("Não existe o carrinho");
-                }
+            $scope.removeItemCarrinho = function (produto) {
+                var indice = $scope.carrinho.indexOf(produto);
+                $scope.carrinho.splice(indice, 1);
+                window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
+            };
+            
+            $scope.mudarQtde = function(){
+                $scope.valorTotal = 0;
+                $scope.carrinho.forEach(function(produto){
+                    $scope.valorTotal += produto.price * produto.qtdeCarrinho;
+                });
+            };
+            
+            $scope.limparCarrinho = function(){
+                $scope.carrinho.splice(0, $scope.carrinho.length);
+                window.sessionStorage.removeItem("carrinho");
+            };
+            
+            $scope.continuar = function(){
+                window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
+                window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
+                window.location.href = "http://localhost:8084/cpguns/pages/escolher_endereco.html";
             };
         });
 
