@@ -219,6 +219,10 @@ angular.module("cpguns", ['minhasDiretivas'])
                     alert("ERRO");
                 });
             };
+            
+            $scope.verAnuncio = function(arm){
+                      
+            };
         })
 
         .controller("carrinhoController", function ($scope) {
