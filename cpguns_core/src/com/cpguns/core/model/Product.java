@@ -17,6 +17,7 @@ public class Product extends DomainEntity{
     private String origin;
     private String model;
     private String capacity;                // measured in rd.
+    private Double price;
     private Manufacturer manufacturer;
     private List<Image> images;
 
@@ -96,6 +97,20 @@ public class Product extends DomainEntity{
      */
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    /**
+     * @return the price
+     */
+    public Double getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(Double price) {
+        this.price = price;
     }
     
 }

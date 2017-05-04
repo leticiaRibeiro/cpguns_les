@@ -87,6 +87,7 @@ public class ConstruirBanco {
         p1.setDescription("Arma tema dos terroristas");
         p1.setCapacity("31");
         p1.setCaliber(".38");
+        p1.setPrice(3000.00);
         p1.setAtivo(true);
         p1.setAction("N/A");
         
@@ -108,6 +109,7 @@ public class ConstruirBanco {
         p2.setDescription("Arma tema dos contra-terroristas");
         p2.setCapacity("31");
         p2.setCaliber(".38");
+        p2.setPrice(4500.00);
         p2.setAtivo(true);
         p2.setAction("N/A");
         
@@ -129,6 +131,7 @@ public class ConstruirBanco {
         p3.setDescription("Pistola que nunca da HS");
         p3.setCapacity("31");
         p3.setCaliber(".38");
+        p3.setPrice(1300.00);
         p3.setAtivo(true);
         p3.setAction("N/A");
 

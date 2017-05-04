@@ -44,6 +44,7 @@ public class ProductDAO extends AbstractJdbcDAO{
         sql.append("origin text, ");
         sql.append("model text, ");
         sql.append("capacity text, ");
+        sql.append("price double, ");
         sql.append("id_manuf INTEGER REFERENCES tb_manufacturer(id_manufacturer), ");
         sql.append("dtCreate date) ");
         
@@ -71,7 +72,7 @@ public class ProductDAO extends AbstractJdbcDAO{
             connection.setAutoCommit(false);
             
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO tb_products(name, description, caliber, weight, action, origin, model, capacity, dtCreate, id_manuf )");
+            sql.append("INSERT INTO tb_products(name, description, caliber, weight, action, origin, model, capacity, price, dtCreate, id_manuf )");
             sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?)");
             
             pst = connection.prepareStatement(sql.toString(), 
@@ -84,9 +85,10 @@ public class ProductDAO extends AbstractJdbcDAO{
             pst.setString(6, product.getOrigin());
             pst.setString(7, product.getModel());
             pst.setString(8, product.getCapacity());
+            pst.setDouble(9, product.getPrice());
             Timestamp time = new Timestamp(product.getDtCreate().getTime());
-            pst.setTimestamp(9, time);
-            pst.setInt(10, product.getManufacturer().getId());
+            pst.setTimestamp(10, time);
+            pst.setInt(11, product.getManufacturer().getId());
             pst.executeUpdate();
             
             ResultSet rs = pst.getGeneratedKeys();
@@ -129,7 +131,7 @@ public class ProductDAO extends AbstractJdbcDAO{
         try {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
-            sql.append("UPDATE tb_products SET name=?, description=?, caliber=?, weight=?, action=?, origin=?, model=?, capacity=?");
+            sql.append("UPDATE tb_products SET name=?, description=?, caliber=?, weight=?, action=?, origin=?, model=?, capacity=?, price=?");
             // estava faltando um espaço aqui no começo rs
             sql.append(" WHERE id_product=?");
             
@@ -142,7 +144,8 @@ public class ProductDAO extends AbstractJdbcDAO{
             pst.setString(6, product.getOrigin());
             pst.setString(7, product.getModel());
             pst.setString(8, product.getCapacity());
-            pst.setInt(9, product.getId());
+            pst.setDouble(9, product.getPrice());
+            pst.setInt(10, product.getId());
             pst.executeUpdate();
             connection.commit();            
         } catch (Exception e) {
@@ -204,6 +207,7 @@ public class ProductDAO extends AbstractJdbcDAO{
                 p.setOrigin(rs.getString("origin"));
                 p.setModel(rs.getString("model"));
                 p.setCapacity(rs.getString("capacity"));
+                p.setPrice(rs.getDouble("price"));
                 java.sql.Date dtCreateLong = rs.getDate("dtCreate");
                 m.setName(rs.getString("fabricante_nome"));
                 m.setId(rs.getInt("id_manuf"));

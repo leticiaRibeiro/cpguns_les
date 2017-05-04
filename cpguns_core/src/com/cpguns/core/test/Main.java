@@ -33,6 +33,7 @@ public class Main {
         prod.setOrigin("USA");
         prod.setModel("M82A1");
         prod.setCapacity("7 tirinhos");
+        prod.setPrice(9500.00);
         prod.setManufacturer(manu);
         prod.setDtCreate(new Date());
         
@@ -60,6 +61,7 @@ public class Main {
                 System.out.println("Ação: " + p.getAction());
                 System.out.println("Origem: " + p.getOrigin());
                 System.out.println("Capacidade: " + p.getCapacity());
+                System.out.println("Preço: " + p.getPrice());
                 System.out.println("Fabricante: " + p.getManufacturer().getName());
                 System.out.println("ID Fabricante: " + p.getManufacturer().getId());
                 System.out.println("Data Cadastro: " + p.getDtCreate());
