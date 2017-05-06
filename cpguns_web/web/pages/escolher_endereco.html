@@ -9,12 +9,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body ng-controller="ClienteController">
+    <body ng-controller="StoreController">
         <!-- chamando nossa diretiva para o header da area logada -->
     <header-logado></header-logado>
 
     <!-- corpo da página -->
-    <main>
+    <main data-ng-init="buscarLojas()">
         <!-- uma linha em branco, para dar o espaçamento do header -->
         <div class="row">
 
@@ -34,35 +34,26 @@
 
                         <div class="card-action">
                             <div class="row">
-                                <h3>Escolha uma de nossas lojas</h3>
+                                <h3>Escolha uma de nossas lojas </h3>
                                 <br/>
                                 <div class="row">
                                     <div class="input-field col s3">
-                                        <select id="estado">
-                                            <option value="" disabled selected>Estado</option>
-                                            <option value="1">AC</option>
-                                            <option value="2">PR</option>
-                                            <option value="3">SP</option>
+                                        <select ng-model="slcestado" ng-options="estado for estado in estados" ng-change="carregarCidade()">
+                                            <option value="">Selecione o estado</option>
                                         </select>
-                                        <label for="estado">Estado</label>
+                                        <label for="estado">Estado - {{slcestado}}</label>
                                     </div>
                                     <div class="input-field col s3">
-                                        <select id="cidade">
-                                            <option value="" disabled selected>Cidade</option>
-                                            <option value="1">Mogi das Cruzes</option>
-                                            <option value="2">Suzano</option>
-                                            <option value="3">Cornélio Procópio</option>
+                                        <select ng-model="slccidade" ng-options="cidade for cidade in cidades" ng-change="carregarLoja()">
+                                            <option value="">Selecione uma Cidade</option>
                                         </select>
-                                        <label for="cidade">Cidade</label>
+                                        <label for="cidade">Cidade - {{slccidade}}</label>
                                     </div>
                                     <div class="input-field col s3">
-                                        <select id="loja">
-                                            <option value="" disabled selected>Loja</option>
-                                            <option value="1">Av. Japão, 1480</option>
-                                            <option value="2">R. Navajas, 413</option>
-                                            <option value="3">Rua Sei La, 123</option>
+                                        <select ng-model="slcloja" ng-options="loja for loja in lojas">
+                                            <option value="">Selecione uma loja</option>
                                         </select>
-                                        <label for="loja">Loja</label>
+                                        <label for="loja">Loja - {{slcloja}}</label>
                                     </div>
                                 </div>
                             </div> <!-- Parte Esquerda -->
@@ -73,7 +64,10 @@
                     <br/>
                     <div class="row">
                         <div class="right">
-                            <a class="waves-effect waves-light btn" href="pagamento.html">Continuar</a>
+                            <a class="waves-effect waves-light btn" ng-disabled="slcestado === null || 
+                                        slccidade === null || slcloja === null" ng-click="continuar()">
+                                Continuar
+                            </a>
                         </div>
                     </div>
                 </div> <!-- Fim do CARD -->
@@ -95,9 +89,7 @@
     <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>
     <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
     <script>
-                $(document).ready(function () {
-                    $('select').material_select();
-                });
+                
     </script>
 </body>
 </html>

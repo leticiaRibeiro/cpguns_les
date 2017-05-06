@@ -78,6 +78,77 @@ angular.module("cpguns", ['minhasDiretivas'])
                     // deu caquinha
                 });
             };
+
+            $scope.buscarLojas = function () {
+                $http({
+                    method: 'GET',
+                    url: '/cpguns/store',
+                    params: {
+                        operacao: "CONSULTAR"
+                    }
+                }).then(function successCallback(response) {
+                    $(document).ready(function () {
+                        $('select').material_select();
+                    });
+                    $scope.stores = response.data;
+                    $scope.slcestado = null;
+                    $scope.slccidade = null;
+                    $scope.slcloja = null;
+                    $scope.estados = new Array();
+                    $scope.cidades = new Array();
+                    $scope.lojas = new Array();
+                    $scope.stores.forEach(function (store) {
+                        if ($scope.estados.indexOf(store.address.city.state.name) < 0) {
+                            $scope.estados.push(store.address.city.state.name);
+                        }
+                    });
+                }, function errorCallback(response) {
+                    alert("ERRO");
+                });
+            };
+
+            $scope.carregarCidade = function () {
+                try {
+                    $scope.cidades.splice(0, $scope.cidades.length);
+                    $scope.stores.forEach(function (store) {
+                        if (store.address.city.state.name === $scope.slcestado) {
+                            if ($scope.cidades.indexOf(store.address.city.name) < 0) {
+                                $scope.cidades.push(store.address.city.name);
+                            }
+                        }
+                    });
+                } finally {
+                    $(document).ready(function () {
+                        $('select').material_select();
+                    });
+                }
+            };
+
+            $scope.carregarLoja = function () {
+                try {
+                    $scope.lojas.splice(0, $scope.lojas.length);
+                    $scope.stores.forEach(function (store) {
+                        if (store.address.city.name === $scope.slccidade) {
+                            if ($scope.lojas.indexOf(store.name) < 0) {
+                                $scope.lojas.push(store.name);
+                            }
+                        }
+                    });
+                } finally {
+                    $(document).ready(function () {
+                        $('select').material_select();
+                    });
+                }
+            };
+
+            $scope.continuar = function () {
+                $scope.stores.forEach(function (store) {
+                    if (store.name === $scope.slcloja && store.address.city.name === $scope.slccidade && store.address.city.state.name === $scope.slcestado) {
+                        window.sessionStorage.setItem("store", JSON.stringify(store));
+                        window.location.href = "http://localhost:8084/cpguns/pages/pagamento.html";
+                    }
+                });
+            };
         })
 
         .controller("CrudController", function ($scope, $http) {
@@ -231,37 +302,67 @@ angular.module("cpguns", ['minhasDiretivas'])
             if (window.sessionStorage.getItem("carrinho")) {
                 $scope.qtde = 1;
                 $scope.carrinho = JSON.parse(window.sessionStorage.getItem("carrinho"));
-                $scope.carrinho.forEach(function(produto){
+                $scope.carrinho.forEach(function (produto) {
                     produto.qtdeCarrinho = 1;
                     $scope.valorTotal += produto.price;
                 });
             } else {
                 alert("Nenhum item no carrinho!");
-            }           
+            }
 
             $scope.removeItemCarrinho = function (produto) {
                 var indice = $scope.carrinho.indexOf(produto);
                 $scope.carrinho.splice(indice, 1);
                 window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
             };
-            
-            $scope.mudarQtde = function(){
+
+            $scope.mudarQtde = function () {
                 $scope.valorTotal = 0;
-                $scope.carrinho.forEach(function(produto){
+                $scope.carrinho.forEach(function (produto) {
                     $scope.valorTotal += produto.price * produto.qtdeCarrinho;
                 });
             };
-            
-            $scope.limparCarrinho = function(){
+
+            $scope.limparCarrinho = function () {
                 $scope.carrinho.splice(0, $scope.carrinho.length);
                 window.sessionStorage.removeItem("carrinho");
             };
-            
-            $scope.continuar = function(){
-                window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
-                window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
-                window.location.href = "http://localhost:8084/cpguns/pages/escolher_endereco.html";
+
+            $scope.continuar = function () {
+                if (window.sessionStorage.getItem("user")) {
+                    window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
+                    window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
+                    window.location.href = "http://localhost:8084/cpguns/pages/escolher_endereco.html";
+                } else{
+                    alert("Você deve estar logado para efetuar a compra!");
+                    window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
+                    window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
+                    window.location.href = "http://localhost:8084/cpguns/pages/login.html";
+                }
+            };
+        })
+
+        .controller("confirmacaoController", function ($scope, $http) {
+            $scope.carrinho = JSON.parse(window.sessionStorage.getItem("carrinho"));
+            $scope.valorTotal = JSON.parse(window.sessionStorage.getItem("valorTotal"));
+
+            $scope.buscarCEP = function () {
+                $http({
+                    method: 'GET',
+                    url: 'https://viacep.com.br/ws/' + $scope.endereco.cep + '/json',
+                }).then(function success(response) {
+                    $scope.endereco.logradouro = response.data.logradouro;
+                    $scope.endereco.cidade = response.data.localidade;
+                    $scope.endereco.estado = response.data.uf;
+                    $scope.endereco.bairro = response.data.bairro;
+                }, function erro(response) {
+                    console.log(response);
+                });
+            };
+
+            $scope.finalizar = function () {
+                $scope.cartao;
+                $scope.endereco;
+                $scope.store = JSON.parse(window.sessionStorage.getItem("store"));
             };
         });
-
-

@@ -7,9 +7,13 @@ import com.cpguns.core.dao.impl.ManufacturerDAO;
 import com.cpguns.core.dao.impl.ProductDAO;
 import com.cpguns.core.dao.impl.StoreDAO;
 import com.cpguns.core.dao.impl.UserDAO;
+import com.cpguns.core.model.Address;
+import com.cpguns.core.model.City;
 import com.cpguns.core.model.Image;
 import com.cpguns.core.model.Manufacturer;
 import com.cpguns.core.model.Product;
+import com.cpguns.core.model.State;
+import com.cpguns.core.model.Store;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +46,7 @@ public class ConstruirBanco {
         sDAO.createTableStore();
         
         popularArmas();
+        popularLojas();
     }
     
     public static void popularArmas(){
@@ -144,4 +149,85 @@ public class ConstruirBanco {
         }
     }
 
+    public static void popularLojas() {
+        StoreDAO sDAO = new StoreDAO();
+        Address add1 = new Address();
+        Address add2 = new Address();
+        Address add3 = new Address();
+        City city1 = new City();
+        City city2 = new City();
+        City city3 = new City();
+        State state1 = new State();
+        State state2 = new State();
+        Store store1 = new Store();
+        Store store2 = new Store();
+        Store store3 = new Store();
+        
+        state1.setAtivo(true);
+        state1.setDtCreate(new Date());
+        state1.setName("São Paulo");
+        
+        state2.setAtivo(true);
+        state2.setDtCreate(new Date());
+        state2.setName("Rio de Janeiro");
+        
+        city1.setAtivo(true);
+        city1.setDtCreate(new Date());
+        city1.setName("Mogi das Cruzes");
+        city1.setState(state1);
+        
+        city2.setAtivo(true);
+        city2.setDtCreate(new Date());
+        city2.setName("Suzano");
+        city2.setState(state1);
+        
+        city3.setAtivo(true);
+        city3.setDtCreate(new Date());
+        city3.setName("Rio de Janeiro");
+        city3.setState(state2);
+        
+        add1.setAtivo(true);
+        add1.setCity(city1);
+        add1.setComplement("Casa");
+        add1.setDtCreate(new Date());
+        add1.setNeighborhood("Alto do Ipiranga");
+        add1.setNumber("1480");
+        add1.setStreet("Av. Japão");
+        add1.setZip("08730330");
+        
+        add2.setAtivo(true);
+        add2.setCity(city2);
+        add2.setComplement("Casa");
+        add2.setDtCreate(new Date());
+        add2.setNeighborhood("Centro");
+        add2.setNumber("321");
+        add2.setStreet("Rua Central");
+        add2.setZip("08645321");
+        
+        add3.setAtivo(true);
+        add3.setCity(city3);
+        add3.setComplement("Casa");
+        add3.setDtCreate(new Date());
+        add3.setNeighborhood("Botafogo");
+        add3.setNumber("752");
+        add3.setStreet("Rua Ipanema");
+        add3.setZip("08956432");
+        
+        store1.setAddress(add1);
+        store1.setName("CPGuns Alto do Ipiranga");
+        
+        store2.setAddress(add2);
+        store2.setName("CPGuns Suzano");
+        
+        store3.setAddress(add3);
+        store3.setName("CPGuns Botafogo");
+        
+        try {
+            sDAO.create(store1);
+            sDAO.create(store2);
+            sDAO.create(store3);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConstruirBanco.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

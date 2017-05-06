@@ -9,7 +9,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body ng-controller="ClienteController">
+    <body ng-controller="confirmacaoController">
         <!-- chamando nossa diretiva para o header da area logada -->
     <header-logado></header-logado>
 
@@ -33,59 +33,79 @@
                         </div>
 
                         <div class="card-action">
+
                             <div class="row">
                                 <div class="col s6">
                                     <div class="row">
-                                        <input class="col s6" type="text" placeholder="N° do Cartão">
+                                        <input class="col s10" type="text" placeholder="Nome impresso no cartão" ng-model="cartao.nome">
+                                    </div>
+                                    <div class="row">
+                                        <input class="col s6" type="text" placeholder="N° do Cartão" ng-model="cartao.numero">
                                     </div>
                                     <div class="row">
                                         <!--<span class="col s3">Expira em</span>-->
                                         <div class="input-field col s3">
-                                            <select id="mes">
-                                                <option value="" disabled selected>1</option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
-                                                <option value="3">Option 3</option>
+                                            <select ng-model="cartao.mes">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
                                             </select>
                                             <label for="mes">Mês</label>
                                         </div>
                                         <div class="input-field col s3">
-                                            <select id="ano">
-                                                <option value="" disabled selected>2018</option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
-                                                <option value="3">Option 3</option>
+                                            <select ng-model="cartao.ano">
+                                                <option value="2017">2017</option>
+                                                <option value="2018">2018</option>
+                                                <option value="2019">2019</option>
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
                                             </select>
                                             <label for="ano">Ano</label>
                                         </div>
                                         <div class="input-field col s2">
-                                            <input type="text" placeholder="CSC">
+                                            <input type="text" placeholder="CSC" ng-model="cartao.csc">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <input type="checkbox" id="oi" />
                                         <label for="oi">Gostaria de salvar as info</label>
                                     </div>
+
+
                                     <div class="row">
-                                        <input class="col s10" type="text" placeholder="Nome impresso no cartão">
+                                        <div class="input-field col s5">
+                                            <input class="col s12" type="text" placeholder="CEP" ng-model="endereco.cep" ng-blur="buscarCEP()">
+                                        </div>
                                     </div>
+
                                     <div class="row">
-                                        <input class="col s10" type="text" placeholder="Endereço de cobrança">
+                                        <input class="col s10" type="text" placeholder="Endereço de cobrança" ng-model="endereco.logradouro">
                                     </div>
                                     <div class="row">
                                         <div class="input-field col s5">
-                                            <input class="col s12" type="text" placeholder="Complemento (opcional)">
+                                            <input class="col s12" type="text" placeholder="Complemento (opcional)" ng-model="endereco.complemento">
                                         </div>
                                         <div class="input-field col s6">
-                                            <input class="col s6" type="text" placeholder="CEP">
+                                            <input class="col s12" type="text" placeholder="Bairro" ng-model="endereco.bairro">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="input-field col s5">
-                                            <input class="col s12" type="text" placeholder="Cidade">
+                                            <input class="col s12" type="text" placeholder="Cidade" ng-model="endereco.cidade">
                                         </div>
                                         <div class="input-field col s6">
-                                            <input class="col s6" type="text" placeholder="Estado">
+                                            <input class="col s6" type="text" placeholder="Estado" ng-model="endereco.estado">
                                         </div>
                                     </div>
 
@@ -100,26 +120,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Rifle Walther Colt M4 Carbine Rimfire</td>
+                                            <tr ng-repeat="produto in carrinho">
+                                                <td>{{produto.name}}</td>
                                                 <td>
-                                                    2
+                                                    {{produto.qtdeCarrinho}}
                                                 </td>
-                                                <td>R$ 11.000,00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Glock</td>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>R$ 11.000,00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>AK-47</td>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>R$ 11.000,00</td>
+                                                <td>R{{produto.price * produto.qtdeCarrinho| currency}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -132,16 +138,16 @@
                                             <h5>
                                                 <table>
                                                     <tr>
-                                                        <td>Subtotal (3 itens):</td>
-                                                        <td>R$ 11.000,00</td>
+                                                        <td>Subtotal ({{carrinho.length}} itens):</td>
+                                                        <td>R{{valorTotal| currency}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Taxa de Retirada:</td>
-                                                        <td>R$ 50,00</td>
+                                                        <td>R$ 300,00</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Taxa de Transporte:</td>
-                                                        <td>R$ 690,00</td>
+                                                        <td>R{{(valorTotal * 10)/100 | currency}}</td>
                                                     </tr>
                                                 </table>
                                             </h5>
@@ -149,7 +155,7 @@
                                     </div>
                                     <div class="row">
                                         <h2 class="right">
-                                            R$ 17.200,00
+                                            R{{valorTotal + 300 + ((valorTotal * 10) / 100) | currency}}
                                         </h2>
                                     </div>
 
@@ -185,9 +191,9 @@
     <script src="../angular/directives/directive-footer.js" type="text/javascript"></script>
     <script src="../angular/directives/directive-menu-cliente.js" type="text/javascript"></script>
     <script>
-                $(document).ready(function () {
-                    $('select').material_select();
-                });
+                                                        $(document).ready(function () {
+                                                            $('select').material_select();
+                                                        });
     </script>
 </body>
 </html>
