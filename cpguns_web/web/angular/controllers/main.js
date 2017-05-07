@@ -364,5 +364,8 @@ angular.module("cpguns", ['minhasDiretivas'])
                 $scope.cartao;
                 $scope.endereco;
                 $scope.store = JSON.parse(window.sessionStorage.getItem("store"));
+                $scope.user = JSON.parse(window.sessionStorage.getItem("user"));
+                
+                // chamar o Java ($http)
             };
         });
