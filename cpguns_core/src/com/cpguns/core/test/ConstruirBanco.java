@@ -5,16 +5,22 @@ import com.cpguns.core.dao.impl.CardDAO;
 import com.cpguns.core.dao.impl.CostumerDAO;
 import com.cpguns.core.dao.impl.ImageDAO;
 import com.cpguns.core.dao.impl.ManufacturerDAO;
+import com.cpguns.core.dao.impl.OrderDAO;
 import com.cpguns.core.dao.impl.ProductDAO;
 import com.cpguns.core.dao.impl.StoreDAO;
 import com.cpguns.core.dao.impl.UserDAO;
 import com.cpguns.core.model.Address;
+import com.cpguns.core.model.Card;
+import com.cpguns.core.model.Carrinho;
 import com.cpguns.core.model.City;
+import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.Image;
 import com.cpguns.core.model.Manufacturer;
+import com.cpguns.core.model.Order;
 import com.cpguns.core.model.Product;
 import com.cpguns.core.model.State;
 import com.cpguns.core.model.Store;
+import com.cpguns.core.model.User;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +33,6 @@ import java.util.logging.Logger;
  * @author Leticia
  */
 public class ConstruirBanco {
-    // POPULAR OS CARTÕES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public static void main(String[] args) {
         
         CostumerDAO costumerDAO = new CostumerDAO();
@@ -38,6 +43,7 @@ public class ConstruirBanco {
         StoreDAO sDAO = new StoreDAO();
         ImageDAO imgDAO = new ImageDAO();
         CardDAO cardDAO = new CardDAO();
+        OrderDAO oDAO = new OrderDAO();
         
         manuDAO.createTableManufacturer();
         pDAO.createTableProduct();
@@ -47,9 +53,12 @@ public class ConstruirBanco {
         costumerDAO.createTableCostumer();
         sDAO.createTableStore();
         cardDAO.createTableCard();
+        oDAO.createTableOrder();
         
         popularArmas();
         popularLojas();
+        popularUsuario();
+        fazerPedidoTeste();
     }
     
     public static void popularArmas(){
@@ -229,6 +238,75 @@ public class ConstruirBanco {
             sDAO.create(store1);
             sDAO.create(store2);
             sDAO.create(store3);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConstruirBanco.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void fazerPedidoTeste(){
+        OrderDAO orderDAO = new OrderDAO();
+        Product p1 = new Product();
+        Product p2 = new Product();
+        Carrinho carrinho = new Carrinho();
+        List<Product> products = new ArrayList<>();
+        Costumer costumer = new Costumer();
+        Card card = new Card();
+        Order o = new Order();
+        Store s = new Store();
+        
+        costumer.setId(1);
+        s.setId(1);
+        card.setCsc("123");
+        card.setAtivo(true);
+        card.setDtCreate(new Date());
+        card.setMonth("1");
+        card.setName("GUSTAVO B");
+        card.setNumber("123456789");
+        card.setYear("2020");
+        
+        o.setCard(card);
+        o.setCostumer(costumer);
+        o.setStore(s);
+        o.setValorTotal(4500);
+        
+        p1.setId(1);
+        p2.setId(2);
+        products.add(p1);
+        products.add(p2);
+        carrinho.setProducts(products);
+        
+        o.setCarrinho(carrinho);
+        
+        try {
+            orderDAO.create(o);
+        } catch (SQLException ex) {
+            Logger.getLogger(TestaOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private static void popularUsuario() {
+        CostumerDAO costumerDAO = new CostumerDAO();
+        Costumer c = new Costumer();
+        User u = new User();
+        
+        u.setAtivo(true);
+        u.setDtCreate(new Date());
+        u.setEmail("leticia@hotmail.com");
+        u.setLevel(2);
+        u.setPassword("123");
+        
+        c.setAtivo(true);
+        c.setCpf("40562486801");
+        c.setDtBirth(new Date());
+        c.setDtCreate(new Date());
+        c.setGenre("Feminino");
+        c.setName("Leticia");
+        c.setPhoneNumber("11974567733");
+        c.setRg("432524381");
+        c.setUser(u);
+        
+        try {
+            costumerDAO.create(c);
         } catch (SQLException ex) {
             Logger.getLogger(ConstruirBanco.class.getName()).log(Level.SEVERE, null, ex);
         }

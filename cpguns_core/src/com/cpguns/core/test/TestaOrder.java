@@ -39,7 +39,7 @@ public class TestaOrder {
         Order o = new Order();
         Store s = new Store();
         
-        costumer.setId(3);
+        costumer.setId(1);
         s.setId(1);
         card.setCsc("123");
         card.setAtivo(true);
