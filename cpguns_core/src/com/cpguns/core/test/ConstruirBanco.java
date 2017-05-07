@@ -1,6 +1,7 @@
 package com.cpguns.core.test;
 
 import com.cpguns.core.dao.impl.AddressDAO;
+import com.cpguns.core.dao.impl.CardDAO;
 import com.cpguns.core.dao.impl.CostumerDAO;
 import com.cpguns.core.dao.impl.ImageDAO;
 import com.cpguns.core.dao.impl.ManufacturerDAO;
@@ -22,11 +23,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author Gustavo de Souza Bezerra <gustavo.bezerra@hotmail.com>
- * @date   16/04/2017
+ * 
+ * @author Leticia
  */
 public class ConstruirBanco {
-
+    // POPULAR OS CARTÕES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public static void main(String[] args) {
         
         CostumerDAO costumerDAO = new CostumerDAO();
@@ -36,6 +37,7 @@ public class ConstruirBanco {
         ProductDAO pDAO = new ProductDAO();
         StoreDAO sDAO = new StoreDAO();
         ImageDAO imgDAO = new ImageDAO();
+        CardDAO cardDAO = new CardDAO();
         
         manuDAO.createTableManufacturer();
         pDAO.createTableProduct();
@@ -44,6 +46,7 @@ public class ConstruirBanco {
         user.createTableUser();
         costumerDAO.createTableCostumer();
         sDAO.createTableStore();
+        cardDAO.createTableCard();
         
         popularArmas();
         popularLojas();
