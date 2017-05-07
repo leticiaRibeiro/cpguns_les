@@ -33,7 +33,11 @@ public class OrderDAO extends AbstractJdbcDAO{
         sql.append("id_cos INTEGER REFERENCES tb_costumers(id_costumer), ");
         sql.append("id_credcard INTEGER REFERENCES tb_cards(id_card), ");
         sql.append("valorTotal decimal,");
-        sql.append("dtCreate date) ");
+        sql.append("dtCreate date); ");
+        
+        sql.append("CREATE TABLE tb_order_product(");
+        sql.append("id_order INTEGER REFERENCES tb_orders(id_order), ");
+        sql.append("id_product INTEGER REFERENCES tb_products(id_product));");
         
         try{
             connection.setAutoCommit(false);
