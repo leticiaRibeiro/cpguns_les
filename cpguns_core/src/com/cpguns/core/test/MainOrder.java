@@ -22,7 +22,7 @@ public class MainOrder {
         OrderDAO orDAO = new OrderDAO();
         CardDAO cardDAO = new CardDAO();
         Order o = new Order();
-        cardDAO.createTableCard();
+        //cardDAO.createTableCard();
         orDAO.createTableOrder();
     }
     
