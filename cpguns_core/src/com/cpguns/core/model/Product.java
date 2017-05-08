@@ -20,6 +20,8 @@ public class Product extends DomainEntity{
     private Double price;
     private Manufacturer manufacturer;
     private List<Image> images;
+    private int qtde;
+    private int qtdeCarrinho;
 
     
     public String getName() {
@@ -111,6 +113,34 @@ public class Product extends DomainEntity{
      */
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    /**
+     * @return the qtde
+     */
+    public int getQtde() {
+        return qtde;
+    }
+
+    /**
+     * @param qtde the qtde to set
+     */
+    public void setQtde(int qtde) {
+        this.qtde = qtde;
+    }
+
+    /**
+     * @return the qtdeCarrinho
+     */
+    public int getQtdeCarrinho() {
+        return qtdeCarrinho;
+    }
+
+    /**
+     * @param qtdeCarrinho the qtdeCarrinho to set
+     */
+    public void setQtdeCarrinho(int qtdeCarrinho) {
+        this.qtdeCarrinho = qtdeCarrinho;
     }
     
 }

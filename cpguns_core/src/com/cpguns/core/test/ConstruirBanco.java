@@ -270,7 +270,9 @@ public class ConstruirBanco {
         o.setValorTotal(4500);
         
         p1.setId(1);
+        p1.setQtdeCarrinho(2);
         p2.setId(2);
+        p2.setQtdeCarrinho(1);
         products.add(p1);
         products.add(p2);
         carrinho.setProducts(products);

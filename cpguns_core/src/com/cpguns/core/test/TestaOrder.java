@@ -52,10 +52,12 @@ public class TestaOrder {
         o.setCard(card);
         o.setCostumer(costumer);
         o.setStore(s);
-        o.setValorTotal(4500);
+        o.setValorTotal(6000);
         
         p1.setId(1);
+        p1.setQtdeCarrinho(1);
         p2.setId(2);
+        p2.setQtdeCarrinho(1);
         products.add(p1);
         products.add(p2);
         carrinho.setProducts(products);
