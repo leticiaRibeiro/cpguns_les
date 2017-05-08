@@ -68,6 +68,7 @@ public class OrderViewHelper implements IViewHelper {
             order.setCostumer(costumer);
             order.setStore(store);
             order.setCard(card);
+            order.setAutorizacao(request.getParameter("autorizacao"));
             order.setValorTotal(Double.valueOf(request.getParameter("valorTotal")));
             System.out.println("Oi");
         }
@@ -76,7 +77,20 @@ public class OrderViewHelper implements IViewHelper {
 
     @Override
     public void setView(Result resultado, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String operacao = request.getParameter("operacao");
+        Gson gson = new Gson();
+        String retorno;
+        
+        if (("CONSULTAR").equals(operacao)) {
+            retorno = gson.toJson(resultado.getEntidades());
+            response.getWriter().write(retorno);
+        } else if (("SALVAR").equals(operacao)) {
+            response.getWriter().write(new Gson().toJson(resultado));
+        } else if (("EXCLUIR").equals(operacao)) {
+            response.getWriter().write(new Gson().toJson(resultado));
+        } else if (("ALTERAR").equals(operacao)) {
+            response.getWriter().write(new Gson().toJson(resultado));
+        }
     }
 
 }

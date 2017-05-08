@@ -17,6 +17,7 @@ public class Order extends DomainEntity{
     private Costumer costumer;
     private double valorTotal;
     private Card card;
+    private String autorizacao;
 
     /**
      * @return the carrinho
@@ -86,6 +87,20 @@ public class Order extends DomainEntity{
      */
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    /**
+     * @return the autorizacao
+     */
+    public String getAutorizacao() {
+        return autorizacao;
+    }
+
+    /**
+     * @param autorizacao the autorizacao to set
+     */
+    public void setAutorizacao(String autorizacao) {
+        this.autorizacao = autorizacao;
     }
     
 }

@@ -329,16 +329,24 @@ angular.module("cpguns", ['minhasDiretivas'])
             };
 
             $scope.continuar = function () {
-                if (window.sessionStorage.getItem("user")) {
-                    window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
-                    window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
-                    window.location.href = "http://localhost:8084/cpguns/pages/escolher_endereco.html";
-                } else {
-                    alert("Você deve estar logado para efetuar a compra!");
-                    window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
-                    window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
-                    window.location.href = "http://localhost:8084/cpguns/pages/login.html";
+                var autorizacao = prompt("Insira o número da autorização concedida pela polícia");
+                if (autorizacao !== null) {
+                    if (window.sessionStorage.getItem("user")) {
+                        window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
+                        window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
+                        window.sessionStorage.setItem("autorizacao", autorizacao);
+                        window.location.href = "http://localhost:8084/cpguns/pages/escolher_endereco.html";
+                    } else {
+                        alert("Você deve estar logado para efetuar a compra!");
+                        window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
+                        window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
+                        window.location.href = "http://localhost:8084/cpguns/pages/login.html";
+                    }
+                } else{
+                    alert("Favor inserir o número da autorização!");
                 }
+
+
             };
         })
 
@@ -366,7 +374,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                 $scope.store = JSON.parse(window.sessionStorage.getItem("store"));
                 $scope.user = JSON.parse(window.sessionStorage.getItem("user"));
                 var valor = window.sessionStorage.getItem("valorTotal");
-                var valorFinal = (parseFloat(valor) + parseFloat(300) + ((parseFloat(valor) * parseFloat(10)) / parseFloat(100)));                
+                var valorFinal = (parseFloat(valor) + parseFloat(300) + ((parseFloat(valor) * parseFloat(10)) / parseFloat(100)));
 
                 $http({
                     method: 'POST',
@@ -377,6 +385,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                         carrinho: window.sessionStorage.getItem("carrinho"),
                         valorTotal: valorFinal,
                         store: window.sessionStorage.getItem("store"),
+                        autorizacao: window.sessionStorage.getItem("autorizacao"),
                         endereco: $scope.endereco,
                         card: $scope.card
                     }
@@ -384,7 +393,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                     if (response.data.msg) {
                         alert(response.data.msg);
                     } else {
-                        
+
                     }
                 }, function errorCallback(response) {
                     // deu caquinha

@@ -43,6 +43,7 @@ public class OrderDAO extends AbstractJdbcDAO {
         sql.append("id_cos INTEGER REFERENCES tb_costumers(id_costumer), ");
         sql.append("id_credcard INTEGER REFERENCES tb_cards(id_card), ");
         sql.append("valorTotal decimal,");
+        sql.append("autorizacao TEXT,");
         sql.append("dtCreate date); ");
 
         sql.append("CREATE TABLE tb_order_product(");
@@ -75,8 +76,8 @@ public class OrderDAO extends AbstractJdbcDAO {
             connection.setAutoCommit(false);
 
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO tb_orders(id_sto, id_cos, id_credcard, valortotal, dtcreate)");
-            sql.append(" VALUES (?,?,?,?,?)");
+            sql.append("INSERT INTO tb_orders(id_sto, id_cos, id_credcard, valortotal, autorizacao, dtcreate)");
+            sql.append(" VALUES (?,?,?,?,?,?)");
 
             pst = connection.prepareStatement(sql.toString(),
                     Statement.RETURN_GENERATED_KEYS);
@@ -84,8 +85,9 @@ public class OrderDAO extends AbstractJdbcDAO {
             pst.setInt(2, order.getCostumer().getId());
             pst.setInt(3, order.getCard().getId());
             pst.setDouble(4, order.getValorTotal());
+            pst.setString(5, order.getAutorizacao());
             Timestamp timedtCreate = new Timestamp(new Date().getTime());
-            pst.setTimestamp(5, timedtCreate);
+            pst.setTimestamp(6, timedtCreate);
             pst.executeUpdate();
 
             ResultSet rs = pst.getGeneratedKeys();
@@ -206,6 +208,7 @@ public class OrderDAO extends AbstractJdbcDAO {
 
                     // settar os dados comuns de uma order
                     o.setId(id);
+                    o.setAutorizacao(rs.getString("autorizacao"));
                     o.setValorTotal(rs.getDouble("valortotal"));
                     java.sql.Date dtCreateLong = rs.getDate("dtcreate");
                     Date dtCreate = new Date(dtCreateLong.getTime());

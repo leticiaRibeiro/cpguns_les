@@ -278,7 +278,7 @@ public class ConstruirBanco {
         carrinho.setProducts(products);
         
         o.setCarrinho(carrinho);
-        
+        o.setAutorizacao("123828937128937");
         try {
             orderDAO.create(o);
         } catch (SQLException ex) {
