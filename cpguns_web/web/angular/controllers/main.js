@@ -333,7 +333,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                     window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
                     window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
                     window.location.href = "http://localhost:8084/cpguns/pages/escolher_endereco.html";
-                } else{
+                } else {
                     alert("Você deve estar logado para efetuar a compra!");
                     window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
                     window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
@@ -349,7 +349,7 @@ angular.module("cpguns", ['minhasDiretivas'])
             $scope.buscarCEP = function () {
                 $http({
                     method: 'GET',
-                    url: 'https://viacep.com.br/ws/' + $scope.endereco.cep + '/json',
+                    url: 'https://viacep.com.br/ws/' + $scope.endereco.zip + '/json',
                 }).then(function success(response) {
                     $scope.endereco.logradouro = response.data.logradouro;
                     $scope.endereco.cidade = response.data.localidade;
@@ -365,7 +365,31 @@ angular.module("cpguns", ['minhasDiretivas'])
                 $scope.endereco;
                 $scope.store = JSON.parse(window.sessionStorage.getItem("store"));
                 $scope.user = JSON.parse(window.sessionStorage.getItem("user"));
-                
+                var valor = window.sessionStorage.getItem("valorTotal");
+                var valorFinal = (parseFloat(valor) + parseFloat(300) + ((parseFloat(valor) * parseFloat(10)) / parseFloat(100)));                
+
+                $http({
+                    method: 'POST',
+                    url: '/cpguns/order',
+                    params: {
+                        operacao: "SALVAR",
+                        user: $scope.user,
+                        carrinho: window.sessionStorage.getItem("carrinho"),
+                        valorTotal: valorFinal,
+                        store: window.sessionStorage.getItem("store"),
+                        endereco: $scope.endereco,
+                        card: $scope.card
+                    }
+                }).then(function successCallback(response) {
+                    if (response.data.msg) {
+                        alert(response.data.msg);
+                    } else {
+                        
+                    }
+                }, function errorCallback(response) {
+                    // deu caquinha
+                });
+
                 // chamar o Java ($http)
             };
         });

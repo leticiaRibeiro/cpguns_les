@@ -37,15 +37,15 @@
                             <div class="row">
                                 <div class="col s6">
                                     <div class="row">
-                                        <input class="col s10" type="text" placeholder="Nome impresso no cartão" ng-model="cartao.nome">
+                                        <input class="col s10" type="text" placeholder="Nome impresso no cartão" ng-model="card.name">
                                     </div>
                                     <div class="row">
-                                        <input class="col s6" type="text" placeholder="N° do Cartão" ng-model="cartao.numero">
+                                        <input class="col s6" type="text" placeholder="N° do Cartão" ng-model="card.number">
                                     </div>
                                     <div class="row">
                                         <!--<span class="col s3">Expira em</span>-->
                                         <div class="input-field col s3">
-                                            <select ng-model="cartao.mes">
+                                            <select ng-model="card.month">
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
@@ -62,7 +62,7 @@
                                             <label for="mes">Mês</label>
                                         </div>
                                         <div class="input-field col s3">
-                                            <select ng-model="cartao.ano">
+                                            <select ng-model="card.year">
                                                 <option value="2017">2017</option>
                                                 <option value="2018">2018</option>
                                                 <option value="2019">2019</option>
@@ -74,7 +74,7 @@
                                             <label for="ano">Ano</label>
                                         </div>
                                         <div class="input-field col s2">
-                                            <input type="text" placeholder="CSC" ng-model="cartao.csc">
+                                            <input type="text" placeholder="CSC" ng-model="card.csc">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -85,7 +85,7 @@
 
                                     <div class="row">
                                         <div class="input-field col s5">
-                                            <input class="col s12" type="text" placeholder="CEP" ng-model="endereco.cep" ng-blur="buscarCEP()">
+                                            <input class="col s12" type="text" placeholder="CEP" ng-model="endereco.zip" ng-blur="buscarCEP()">
                                         </div>
                                     </div>
 
@@ -167,7 +167,7 @@
                             <div class="row">
                                 <div class="right">
                                     <a class="waves-effect waves-light btn brown lighten-3" href="escolher_endereco.html">Voltar</a>
-                                    <a class="waves-effect waves-light btn" href="confirmacao.html">Finalizar</a>
+                                    <a class="waves-effect waves-light btn" ng-click="finalizar()">Finalizar</a>
                                 </div>
                             </div>
                         </div> <!-- Fim do CARD -->
