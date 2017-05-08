@@ -6,14 +6,17 @@
 package com.cpguns.core.dao.impl;
 
 import com.cpguns.core.dao.AbstractJdbcDAO;
+import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Order;
 import com.cpguns.core.model.Product;
+import com.cpguns.core.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -119,8 +122,65 @@ public class OrderDAO extends AbstractJdbcDAO {
 
     @Override
     public List<DomainEntity> read(DomainEntity entity) throws SQLException {
+        openConnection();
+        PreparedStatement pst = null;
+        Order order = (Order) entity;
+        List<DomainEntity> orders = new ArrayList<>();
+        boolean ehPedidoEspecifico = false;
+        boolean ehCostumerEspecifico = false;
+        try {
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT o.*, c.*, op.*, p.*, cos.*, s.* FROM tb_orders o INNER JOIN tb_cards c on o.id_credcard= c.id_card\n"
+                    + "INNER JOIN tb_order_product op on o.id_order=op.id_order\n"
+                    + "INNER JOIN tb_products p on op.id_product=p.id_product\n"
+                    + "INNER JOIN tb_costumers cos on cos.id_costumer=o.id_cos\n"
+                    + "INNER JOIN tb_stores s on s.id_store=o.id_sto ");
+            // Estamos buscando um cliente especifico?
+            if(order.getCostumer() != null){
+                if(order.getCostumer().getId() != 0){
+                    sql.append("WHERE o.id_cos=?;"); // vamos procurar um cliente especifico
+                    ehCostumerEspecifico = true;
+                }
+            }
+            else if (order.getId() != 0) { // pq != 0? INT é um tipo primitivo. Ou seja, NUNCA será null. 
+                // Caso esteja 0, é pq não foi informado um ID especifico.
+                sql.append("WHERE o.id_order=?;"); // vamos procurar um cliente especifico
+                ehPedidoEspecifico = true;
+            }
 
-        return null;
+            pst = connection.prepareStatement(sql.toString());
+            if (ehPedidoEspecifico) { // caso for o especifico, precisamos settar o ID para saber qual é o especifico
+                pst.setInt(1, order.getId());
+            }
+            else if(ehCostumerEspecifico){
+                pst.setInt(1, order.getCostumer().getId());
+            }
+
+            ResultSet rs = pst.executeQuery();
+            // enquanto houver registros, vamos lendo....
+            while (rs.next()) {
+                
+            }
+
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return orders;
     }
 
     @Override
