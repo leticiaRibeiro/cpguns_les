@@ -9,7 +9,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body ng-controller="ClienteController">
+    <body ng-controller="confirmacaoController">
         <!-- chamando nossa diretiva para o header da area logada -->
     <header-logado></header-logado>
 
@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="card-title">
                             <h3>
-                                Obrigado pela sua compra!!
+                                Obrigado pela sua compra!! <h5>(Número da compra: {{order.id}})</h5>
                             </h3>
                         </div>
 
@@ -39,12 +39,17 @@
                                 <div class="col s6">
                                     <h5>Endereço de retirada</h5>
                                     <div class="chip">
-                                        Rua Dr Ricardo Vilela, 123 - Das 8hrs às 18hrs
+                                        {{order.store.address.street}}, {{order.store.address.number}}, {{order.store.address.neighborhood}} - {{order.store.address.city.name}}
                                     </div>
                                     <br/><br/><br/>
                                     <h5>Forma de pagamento</h5>
                                     <div class="chip">
                                         Cartão de crédito - 12x
+                                    </div>
+                                    <br/><br/><br/>
+                                    <h5>Número da autorização</h5>
+                                    <div class="chip">
+                                        {{order.autorizacao}}
                                     </div>
                                 </div> <!-- Parte Esquerda -->
                                 <div class="col s6">
@@ -58,26 +63,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Rifle Walther Colt M4 Carbine Rimfire</td>
+                                            <tr ng-repeat="produto in order.carrinho.products">
+                                                <td>{{produto.name}}</td>
                                                 <td>
-                                                    2
+                                                    {{produto.qtdeCarrinho}}
                                                 </td>
-                                                <td>R$ 11.000,00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Glock</td>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>R$ 11.000,00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>AK-47</td>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>R$ 11.000,00</td>
+                                                <td>R{{produto.price * produto.qtdeCarrinho | currency}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -85,29 +76,13 @@
                                     <hr>
                                     <br/>
                                     <div class="row">
-
-                                        <blockquote class="right">
-                                            <h5>
-                                                <table>
-                                                    <tr>
-                                                        <td>Subtotal (3 itens):</td>
-                                                        <td>R$ 11.000,00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Taxa de Retirada:</td>
-                                                        <td>R$ 50,00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Taxa de Transporte:</td>
-                                                        <td>R$ 690,00</td>
-                                                    </tr>
-                                                </table>
-                                            </h5>
-                                        </blockquote>
+                                        <p class="right">Valor total com taxas</p>
                                     </div>
-                                    <div class="row">
+                                    <div class="row">                                        
                                         <h2 class="right">
-                                            R$ 17.200,00
+                                            R{{order.valorTotal | currency}}
+                                            <br/>
+                                            
                                         </h2>
                                     </div>
 

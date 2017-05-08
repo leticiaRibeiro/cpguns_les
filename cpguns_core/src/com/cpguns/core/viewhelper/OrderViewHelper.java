@@ -79,7 +79,7 @@ public class OrderViewHelper implements IViewHelper {
     public void setView(Result resultado, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
         Gson gson = new Gson();
-        String retorno;
+        String retorno = "";
         
         if (("CONSULTAR").equals(operacao)) {
             retorno = gson.toJson(resultado.getEntidades());

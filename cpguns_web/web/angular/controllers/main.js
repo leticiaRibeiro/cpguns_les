@@ -350,7 +350,7 @@ angular.module("cpguns", ['minhasDiretivas'])
             };
         })
 
-        .controller("confirmacaoController", function ($scope, $http) {
+        .controller("finalizarController", function ($scope, $http) {
             $scope.carrinho = JSON.parse(window.sessionStorage.getItem("carrinho"));
             $scope.valorTotal = JSON.parse(window.sessionStorage.getItem("valorTotal"));
 
@@ -390,15 +390,21 @@ angular.module("cpguns", ['minhasDiretivas'])
                         card: $scope.card
                     }
                 }).then(function successCallback(response) {
-                    if (response.data.msg) {
-                        alert(response.data.msg);
-                    } else {
-
-                    }
+                    
+                    window.sessionStorage.removeItem("store");
+                    window.sessionStorage.removeItem("carrinho");
+                    window.sessionStorage.removeItem("autorizacao");
+                    window.sessionStorage.removeItem("valorTotal");
+                    window.sessionStorage.setItem("order", JSON.stringify(response.data.entities[0]));
+                    window.location.href = "http://localhost:8084/cpguns/pages/confirmacao.html";
                 }, function errorCallback(response) {
                     // deu caquinha
                 });
 
                 // chamar o Java ($http)
             };
+        })
+        
+        .controller("confirmacaoController", function($scope){
+           $scope.order = JSON.parse(window.sessionStorage.getItem("order"));
         });
