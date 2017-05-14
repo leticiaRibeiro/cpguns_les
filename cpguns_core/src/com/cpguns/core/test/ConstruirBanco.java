@@ -1,6 +1,7 @@
 package com.cpguns.core.test;
 
 import com.cpguns.core.dao.impl.AddressDAO;
+import com.cpguns.core.dao.impl.AnalysisDAO;
 import com.cpguns.core.dao.impl.CardDAO;
 import com.cpguns.core.dao.impl.CostumerDAO;
 import com.cpguns.core.dao.impl.ImageDAO;
@@ -10,6 +11,7 @@ import com.cpguns.core.dao.impl.ProductDAO;
 import com.cpguns.core.dao.impl.StoreDAO;
 import com.cpguns.core.dao.impl.UserDAO;
 import com.cpguns.core.model.Address;
+import com.cpguns.core.model.Analysis;
 import com.cpguns.core.model.Card;
 import com.cpguns.core.model.Carrinho;
 import com.cpguns.core.model.City;
@@ -44,6 +46,7 @@ public class ConstruirBanco {
         ImageDAO imgDAO = new ImageDAO();
         CardDAO cardDAO = new CardDAO();
         OrderDAO oDAO = new OrderDAO();
+        AnalysisDAO analiseDAO = new AnalysisDAO();
         
         manuDAO.createTableManufacturer();
         pDAO.createTableProduct();
@@ -54,6 +57,8 @@ public class ConstruirBanco {
         sDAO.createTableStore();
         cardDAO.createTableCard();
         oDAO.createTableOrder();
+        analiseDAO.createTableAcesso();
+        analiseDAO.createTableAutorizacao();
         
         popularArmas();
         popularLojas();

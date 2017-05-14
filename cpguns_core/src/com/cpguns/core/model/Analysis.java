@@ -5,12 +5,17 @@
  */
 package com.cpguns.core.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Leticia
  */
-public class Analysis {
+public class Analysis extends DomainEntity{
     
+    private List<AnaliseAcessos> acessos = new ArrayList<>();
+    private TipoGrafico grafico;
     /*
         -----Query de análise dos acessos-----
         SELECT count(a.id_prod), p.id_product, a.dtacesso
@@ -45,6 +50,34 @@ public class Analysis {
         INNER JOIN tb_addresses a on s.id_add = a.id_address
         WHERE o.dtcreate between '2017-05-01' and '2017-05-15' group by a.state, s.id_store
     */
+
+    /**
+     * @return the acessos
+     */
+    public List<AnaliseAcessos> getAcessos() {
+        return acessos;
+    }
+
+    /**
+     * @param acessos the acessos to set
+     */
+    public void setAcessos(List<AnaliseAcessos> acessos) {
+        this.acessos = acessos;
+    }
+
+    /**
+     * @return the grafico
+     */
+    public TipoGrafico getGrafico() {
+        return grafico;
+    }
+
+    /**
+     * @param grafico the grafico to set
+     */
+    public void setGrafico(TipoGrafico grafico) {
+        this.grafico = grafico;
+    }
     
     
 }

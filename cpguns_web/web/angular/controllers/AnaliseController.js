@@ -1,4 +1,23 @@
-angular.module("analise", ['chart.js', 'minhasDiretivas']).controller("AnaliseController", function ($scope) {
+angular.module("analise", ['chart.js', 'minhasDiretivas']).controller("AnaliseController", function ($scope, $http) {
+    $http({
+        method: 'GET',
+        url: '/cpguns/analise',
+        params: {
+            tipo: "acessos",
+            operacao: "CONSULTAR"
+        }
+    }).then(function successCallback(response) {
+        var valores = response.data[0].acessos;
+        var label = new Array();
+        for (var i = 0; i < valores.length; i++) {
+            label.push(valores[i].dtAcesso);
+        }
+        console.log("eba");
+    }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+    });
+
     $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
     $scope.series = ['Series A', 'Series B'];
     $scope.data = [

@@ -7,6 +7,7 @@ import com.cpguns.core.command.ICommand;
 import com.cpguns.core.command.SalvarCommand;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.app.Result;
+import com.cpguns.core.viewhelper.AnaliseViewHelper;
 import com.cpguns.core.viewhelper.ArmsViewHelper;
 import com.cpguns.core.viewhelper.CostumerViewHelper;
 import com.cpguns.core.viewhelper.IViewHelper;
@@ -47,6 +48,7 @@ public class Servlet extends HttpServlet{
         helpers.put("/cpguns/store", new StoreViewHelper());
         helpers.put("/cpguns/arms", new ArmsViewHelper());
         helpers.put("/cpguns/order", new OrderViewHelper());
+        helpers.put("/cpguns/analise", new AnaliseViewHelper());
     }
 
     /**

@@ -6,10 +6,17 @@
 package com.cpguns.core.dao.impl;
 
 import com.cpguns.core.dao.AbstractJdbcDAO;
+import com.cpguns.core.model.Acesso;
+import com.cpguns.core.model.AnaliseAcessos;
+import com.cpguns.core.model.Analysis;
 import com.cpguns.core.model.DomainEntity;
-import java.sql.Connection;
+import com.cpguns.core.model.Product;
+import com.cpguns.core.model.TipoGrafico;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,12 +25,12 @@ import java.util.logging.Logger;
  *
  * @author Leticia
  */
-public class AnalysisDAO extends AbstractJdbcDAO{
+public class AnalysisDAO extends AbstractJdbcDAO {
 
     public AnalysisDAO() {
         super("tb_acessos", "id_acesso");
     }
-    
+
     public void createTableAcesso() {
         openConnection();
         StringBuilder sql = new StringBuilder();
@@ -33,7 +40,6 @@ public class AnalysisDAO extends AbstractJdbcDAO{
         sql.append("tipo text, ");
         sql.append("dtAcesso date); ");
 
-        
         try {
             connection.setAutoCommit(false);
             PreparedStatement ps = connection.prepareStatement(sql.toString());
@@ -45,14 +51,13 @@ public class AnalysisDAO extends AbstractJdbcDAO{
             Logger.getLogger(ManufacturerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void createTableAutorizacao() {
         openConnection();
         StringBuilder sql = new StringBuilder();
         sql.append("CREATE TABLE tb_autorizacoes(");
         sql.append("autorizacao text, ");
         sql.append("tipo text); ");
-
 
         try {
             connection.setAutoCommit(false);
@@ -68,18 +73,103 @@ public class AnalysisDAO extends AbstractJdbcDAO{
 
     @Override
     public void create(DomainEntity entidade) throws SQLException {
-        
+
     }
 
     @Override
     public List<DomainEntity> read(DomainEntity entidade) throws SQLException {
-    
+        openConnection();
+        PreparedStatement pst = null;
+        Analysis analise = (Analysis) entidade;
+        try {
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            if (analise.getGrafico() == TipoGrafico.ACESSOS) {
+                return analiseAcessos(pst);
+            } else if(analise.getGrafico() == TipoGrafico.VENDAS_POLICIAIS_CIVIS){
+                
+            } else if(analise.getGrafico() == TipoGrafico.VENDA_ESTADOS){
+                
+            }
+
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
     @Override
     public void update(DomainEntity entidade) throws SQLException {
-    
+
     }
-    
+
+    private List<DomainEntity> analiseAcessos(PreparedStatement pst) throws SQLException {
+        StringBuilder sql = new StringBuilder();
+        Analysis analise = new Analysis();
+        analise.setGrafico(TipoGrafico.ACESSOS);
+        List<DomainEntity> retorno = new ArrayList<>();
+        AnaliseAcessos analiseAcessos = new AnaliseAcessos();
+        List<Acesso> acessos = new ArrayList<>();
+        List<AnaliseAcessos> listaFinal = new ArrayList<>();
+        connection.setAutoCommit(false);
+        sql.append("SELECT a.dtacesso\n"
+                + "        FROM tb_acessos a INNER JOIN tb_products p on a.id_prod = p.id_product\n"
+                + "        WHERE a.dtacesso between '2017-03-01' and '2017-05-15' group by a.dtacesso\n"
+                + "        ORDER BY a.dtacesso asc;");
+        pst = connection.prepareStatement(sql.toString());
+
+        ResultSet rs = pst.executeQuery();
+        // enquanto houver registros, vamos lendo....
+
+        while (rs.next()) {
+            analiseAcessos = new AnaliseAcessos();
+            analiseAcessos.setDtAcesso(rs.getDate("dtacesso"));
+            listaFinal.add(analiseAcessos);
+        }
+
+        sql.delete(0, sql.length());
+        sql.append("SELECT count(a.id_prod), p.id_product, a.dtacesso\n"
+                + "        FROM tb_acessos a INNER JOIN tb_products p on a.id_prod = p.id_product\n"
+                + "        WHERE a.dtacesso between '2017-03-01' and '2017-05-15' group by a.id_prod, p.id_product, a.dtacesso\n"
+                + "        ORDER BY a.dtacesso, p.id_product asc");
+        pst = connection.prepareStatement(sql.toString());
+        rs = pst.executeQuery();
+        int contador = 0;
+        while (rs.next()) {
+            Acesso acesso = new Acesso();
+            Product p = new Product();
+            p.setId(rs.getInt("id_product"));
+            p = (Product) new ProductDAO().read(p).get(0);
+            acesso.setNumeroAcessos(rs.getInt("count"));
+            acesso.setProduct(p);
+            Date date = rs.getDate("dtacesso");
+            if (listaFinal.get(contador).getDtAcesso().getTime() == date.getTime()) {
+                acessos.add(acesso);
+            } else {
+                listaFinal.get(contador).setAcessos(acessos);
+                contador++;
+                acessos = new ArrayList<>();
+                acessos.add(acesso);
+            }
+        }
+        listaFinal.get(contador).setAcessos(acessos);
+        analise.setAcessos(listaFinal);
+        retorno.add(analise);
+        return retorno;
+    }
+
 }

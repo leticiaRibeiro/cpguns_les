@@ -12,6 +12,7 @@ package com.cpguns.core.facade;
 import com.cpguns.core.app.Result;
 import com.cpguns.core.dao.IDAO;
 import com.cpguns.core.dao.impl.AddressDAO;
+import com.cpguns.core.dao.impl.AnalysisDAO;
 import com.cpguns.core.dao.impl.CostumerDAO;
 import com.cpguns.core.dao.impl.ManufacturerDAO;
 import com.cpguns.core.dao.impl.OrderDAO;
@@ -19,6 +20,7 @@ import com.cpguns.core.dao.impl.ProductDAO;
 import com.cpguns.core.dao.impl.StoreDAO;
 import com.cpguns.core.dao.impl.UserDAO;
 import com.cpguns.core.model.Address;
+import com.cpguns.core.model.Analysis;
 import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Manufacturer;
@@ -72,6 +74,7 @@ public class Facade implements IFacade {
         UserDAO userDAO = new UserDAO();
         StoreDAO stoDAO = new StoreDAO();
         OrderDAO orderDAO = new OrderDAO();
+        AnalysisDAO analysisDAO = new AnalysisDAO();
 
         /* Adicionando cada dao no MAP indexando pelo nome da classe */
         daos.put(Manufacturer.class.getName(), manuDAO);
@@ -81,6 +84,7 @@ public class Facade implements IFacade {
         daos.put(User.class.getName(), userDAO);
         daos.put(Store.class.getName(), stoDAO);
         daos.put(Order.class.getName(), orderDAO);
+        daos.put(Analysis.class.getName(), analysisDAO);
 
 
         /* Criando instâncias de regras de negócio a serem utilizados*/
