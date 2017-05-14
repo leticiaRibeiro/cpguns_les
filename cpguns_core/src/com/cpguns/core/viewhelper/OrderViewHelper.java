@@ -24,8 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * @author Gustavo de Souza Bezerra <gustavo.bezerra@hotmail.com>
- * @date 06/05/2017
+ * 
+ * @author Leticia
  */
 public class OrderViewHelper implements IViewHelper {
 
