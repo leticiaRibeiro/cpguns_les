@@ -46,7 +46,7 @@ public class CostumerDAO extends AbstractJdbcDAO {
         sql.append("id_us INTEGER REFERENCES tb_users(id_user), ");
         sql.append("dt_create date, ");
         sql.append("ativo boolean, ");
-        sql.append("fk_auto REFERENCES tb_autorizacoes(autorizacao)) ");
+        sql.append("fk_auto text REFERENCES tb_autorizacoes(autorizacao)) ");
 
         try {
             connection.setAutoCommit(false);

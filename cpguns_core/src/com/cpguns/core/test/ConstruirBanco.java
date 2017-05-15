@@ -12,6 +12,7 @@ import com.cpguns.core.dao.impl.StoreDAO;
 import com.cpguns.core.dao.impl.UserDAO;
 import com.cpguns.core.model.Address;
 import com.cpguns.core.model.Analysis;
+import com.cpguns.core.model.Autorizacao;
 import com.cpguns.core.model.Card;
 import com.cpguns.core.model.Carrinho;
 import com.cpguns.core.model.City;
@@ -22,8 +23,14 @@ import com.cpguns.core.model.Order;
 import com.cpguns.core.model.Product;
 import com.cpguns.core.model.State;
 import com.cpguns.core.model.Store;
+import com.cpguns.core.model.TipoAutorizacao;
 import com.cpguns.core.model.User;
+import static com.cpguns.core.util.MyConnection.openConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +55,7 @@ public class ConstruirBanco {
         OrderDAO oDAO = new OrderDAO();
         AnalysisDAO analiseDAO = new AnalysisDAO();
         
+        analiseDAO.createTableAutorizacao();
         manuDAO.createTableManufacturer();
         pDAO.createTableProduct();
         imgDAO.createTableProduct();
@@ -58,8 +66,8 @@ public class ConstruirBanco {
         cardDAO.createTableCard();
         oDAO.createTableOrder();
         analiseDAO.createTableAcesso();
-        analiseDAO.createTableAutorizacao();
         
+        popularAutorizacao(analiseDAO);
         popularArmas();
         popularLojas();
         popularUsuario();
@@ -295,6 +303,8 @@ public class ConstruirBanco {
         CostumerDAO costumerDAO = new CostumerDAO();
         Costumer c = new Costumer();
         User u = new User();
+        Autorizacao auto = new Autorizacao();
+        auto.setAutorizacao("123456789");
         
         u.setAtivo(true);
         u.setDtCreate(new Date());
@@ -311,11 +321,25 @@ public class ConstruirBanco {
         c.setPhoneNumber("11974567733");
         c.setRg("432524381");
         c.setUser(u);
+        c.setAutorizacao(auto);
         
         try {
             costumerDAO.create(c);
         } catch (SQLException ex) {
             Logger.getLogger(ConstruirBanco.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private static void popularAutorizacao(AnalysisDAO analiseDAO){
+        Autorizacao auto = new Autorizacao();
+        auto.setAutorizacao("123456789");
+        auto.setTipo(TipoAutorizacao.CIVIL);
+        
+        Autorizacao auto2 = new Autorizacao();
+        auto2.setAutorizacao("987654321");
+        auto2.setTipo(TipoAutorizacao.POLICIAL);
+        
+        analiseDAO.salvarAutorizacao(auto);
+        analiseDAO.salvarAutorizacao(auto2);
     }
 }

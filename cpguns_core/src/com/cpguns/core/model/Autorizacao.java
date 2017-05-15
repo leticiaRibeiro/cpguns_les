@@ -12,6 +12,7 @@ package com.cpguns.core.model;
 public class Autorizacao extends DomainEntity{
     
     private String autorizacao;
+    private TipoAutorizacao tipo;
 
     /**
      * @return the autorizacao
@@ -25,5 +26,19 @@ public class Autorizacao extends DomainEntity{
      */
     public void setAutorizacao(String autorizacao) {
         this.autorizacao = autorizacao;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public TipoAutorizacao getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(TipoAutorizacao tipo) {
+        this.tipo = tipo;
     }
 }

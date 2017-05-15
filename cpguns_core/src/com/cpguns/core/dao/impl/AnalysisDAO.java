@@ -10,12 +10,16 @@ import com.cpguns.core.model.Acesso;
 import com.cpguns.core.model.AnaliseAcessos;
 import com.cpguns.core.model.AnaliseEstados;
 import com.cpguns.core.model.Analysis;
+import com.cpguns.core.model.Autorizacao;
+import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Product;
 import com.cpguns.core.model.TipoGrafico;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +61,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         openConnection();
         StringBuilder sql = new StringBuilder();
         sql.append("CREATE TABLE tb_autorizacoes(");
-        sql.append("autorizacao text, ");
+        sql.append("autorizacao text primary key, ");
         sql.append("tipo text); ");
 
         try {
@@ -72,6 +76,44 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         }
     }
 
+    public void salvarAutorizacao(DomainEntity entidade){
+        PreparedStatement pst = null;
+        Autorizacao autorizacao = (Autorizacao) entidade;
+        UserDAO usDAO = new UserDAO();
+
+        try {
+            openConnection();
+            connection.setAutoCommit(false);
+
+            StringBuilder sql = new StringBuilder();
+            sql.append("INSERT INTO tb_autorizacoes(autorizacao, tipo)");
+            sql.append(" VALUES (?,?)");
+
+            pst = connection.prepareStatement(sql.toString());
+            pst.setString(1, autorizacao.getAutorizacao());
+            pst.setString(2, autorizacao.getTipo().toString());
+            
+            pst.executeUpdate();
+            connection.commit();
+
+        } catch (Exception e) {
+            
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally{
+            try {
+                pst.close();
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
     @Override
     public void create(DomainEntity entidade) throws SQLException {
 
