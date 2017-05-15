@@ -8,6 +8,7 @@ package com.cpguns.core.dao.impl;
 import com.cpguns.core.dao.AbstractJdbcDAO;
 import com.cpguns.core.model.Acesso;
 import com.cpguns.core.model.AnaliseAcessos;
+import com.cpguns.core.model.AnaliseEstados;
 import com.cpguns.core.model.Analysis;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Product;
@@ -86,10 +87,10 @@ public class AnalysisDAO extends AbstractJdbcDAO {
             StringBuilder sql = new StringBuilder();
             if (analise.getGrafico() == TipoGrafico.ACESSOS) {
                 return analiseAcessos(pst);
-            } else if(analise.getGrafico() == TipoGrafico.VENDAS_POLICIAIS_CIVIS){
-                
-            } else if(analise.getGrafico() == TipoGrafico.VENDA_ESTADOS){
-                
+            } else if (analise.getGrafico() == TipoGrafico.VENDAS_POLICIAIS_CIVIS) {
+
+            } else if (analise.getGrafico() == TipoGrafico.VENDA_ESTADOS) {
+                return analiseEstados(pst);
             }
 
         } catch (Exception e) {
@@ -168,6 +169,34 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         }
         listaFinal.get(contador).setAcessos(acessos);
         analise.setAcessos(listaFinal);
+        retorno.add(analise);
+        return retorno;
+    }
+
+    private List<DomainEntity> analiseEstados(PreparedStatement pst) throws SQLException {
+        StringBuilder sql = new StringBuilder();
+        Analysis analise = new Analysis();
+        analise.setGrafico(TipoGrafico.VENDA_ESTADOS);
+        List<DomainEntity> retorno = new ArrayList<>();
+        AnaliseEstados analiseEstados = new AnaliseEstados();
+        List<AnaliseEstados> listaFinal = new ArrayList<>();
+        connection.setAutoCommit(false);
+        sql.append("SELECT count(s.id_store), a.state FROM tb_orders o INNER JOIN tb_stores s on o.id_sto = s.id_store\n"
+                + "        INNER JOIN tb_addresses a on s.id_add = a.id_address\n"
+                + "        WHERE o.dtcreate between '2017-05-01' and '2017-05-15' group by a.state, s.id_store");
+        pst = connection.prepareStatement(sql.toString());
+
+        ResultSet rs = pst.executeQuery();
+        // enquanto houver registros, vamos lendo....
+
+        while (rs.next()) {
+            analiseEstados = new AnaliseEstados();
+            analiseEstados.setEstado(rs.getString("state"));
+            analiseEstados.setQuantidade(rs.getInt("count"));
+            listaFinal.add(analiseEstados);
+        }
+
+        analise.setEstados(listaFinal);
         retorno.add(analise);
         return retorno;
     }
