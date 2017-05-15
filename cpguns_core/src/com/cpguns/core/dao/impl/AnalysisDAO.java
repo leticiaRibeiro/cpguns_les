@@ -183,7 +183,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         connection.setAutoCommit(false);
         sql.append("SELECT count(s.id_store), a.state FROM tb_orders o INNER JOIN tb_stores s on o.id_sto = s.id_store\n"
                 + "        INNER JOIN tb_addresses a on s.id_add = a.id_address\n"
-                + "        WHERE o.dtcreate between '2017-05-01' and '2017-05-15' group by a.state, s.id_store");
+                + "        WHERE o.dtcreate between '2017-05-01' and '2017-05-15' group by a.state");
         pst = connection.prepareStatement(sql.toString());
 
         ResultSet rs = pst.executeQuery();

@@ -260,7 +260,7 @@ public class ConstruirBanco {
         Store s = new Store();
         
         costumer.setId(1);
-        s.setId(1);
+        s.setId(2);
         card.setCsc("123");
         card.setAtivo(true);
         card.setDtCreate(new Date());

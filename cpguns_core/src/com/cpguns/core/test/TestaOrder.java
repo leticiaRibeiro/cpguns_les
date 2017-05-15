@@ -40,7 +40,7 @@ public class TestaOrder {
         Store s = new Store();
         
         costumer.setId(1);
-        s.setId(1);
+        s.setId(3);
         card.setCsc("123");
         card.setAtivo(true);
         card.setDtCreate(new Date());
@@ -52,10 +52,10 @@ public class TestaOrder {
         o.setCard(card);
         o.setCostumer(costumer);
         o.setStore(s);
-        o.setValorTotal(6000);
+        o.setValorTotal(4500);
         
         p1.setId(1);
-        p1.setQtdeCarrinho(1);
+        p1.setQtdeCarrinho(2);
         p2.setId(2);
         p2.setQtdeCarrinho(1);
         products.add(p1);
@@ -63,7 +63,7 @@ public class TestaOrder {
         carrinho.setProducts(products);
         
         o.setCarrinho(carrinho);
-        
+        o.setAutorizacao("123828937128937");
         try {
             orderDAO.create(o);
         } catch (SQLException ex) {
