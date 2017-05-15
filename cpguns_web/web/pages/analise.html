@@ -105,6 +105,16 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="input-field col s3">
+                            <select id="autorizacoes">
+                                <option value="" disabled selected>Autorização</option>
+                                <option value="1">Policial</option>
+                                <option value="2">Civil</option>
+                            </select>
+                            <label for="autorizacoes">Autorização</label>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="right">
                             <a class="waves-effect waves-light btn">Gerar</a>
                         </div>
@@ -115,27 +125,27 @@
                     <br/>
                     <div class="row">
                         <div class="col s6">
-                            <h3>Line</h3>
+                            <h4>Qtde de acessos por arma</h4>
                             <canvas class="chart chart-line" chart-data="data_acessos" chart-labels="labels_acessos"
                                     chart-series="series_acessos" chart-click="onClick"></canvas>
                         </div>
                         <div class="col s6">
-                            <h3>Bar</h3>
-                            <canvas class="chart chart-bar" chart-data="data" chart-labels="labels"
-                                    chart-series="series" chart-click="onClick"></canvas>
+                            <h4>Qtde de vendas por produto dividido por tipo de autorização</h4>
+                            <canvas class="chart chart-bar" chart-data="data_vendas" chart-labels="labels_vendas"
+                                    chart-series="series_vendas" chart-click="onClick"></canvas>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s6">
-                            <h3>Pie</h3>
+                            <h4>Qtde de vendas por estado</h4>
                             <canvas class="chart chart-pie" chart-data="data_estados" chart-labels="labels_estados"
                                     chart-series="series_estados" chart-click="onClick"></canvas>
                         </div>
-                        <div class="col s6">
+<!--                        <div class="col s6">
                             <h3>Horizontal bar</h3>
                             <canvas class="chart chart-horizontal-bar" chart-data="data" chart-labels="labels"
                                     chart-series="series" chart-click="onClick"></canvas>
-                        </div>
+                        </div>-->
 
                     </div>
                     <div class="row">

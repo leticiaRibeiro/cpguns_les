@@ -31,7 +31,7 @@ public class MainCostumer {
         c.setRg("901112349");
         c.setGenre("feminino");
         c.setPhoneNumber("47009719");
-        a.setAutorizacao("9992223331");
+        a.setAutorizacao("987654321");
         c.setAutorizacao(a);
         c.setDtCreate(new Date());
         c.setDtBirth(new Date());

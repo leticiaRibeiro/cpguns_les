@@ -6,6 +6,9 @@ angular.module("analise", ['chart.js', 'minhasDiretivas']).controller("AnaliseCo
     var valoresFinal = new Array();
     var seriesEstado = new Array();
     var dataEstado = new Array();
+    var labelVendas = new Array();
+    var seriesVendas = new Array();
+    var dadosVendas = new Array();
     $http({
         method: 'GET',
         url: '/cpguns/analise',
@@ -92,6 +95,31 @@ angular.module("analise", ['chart.js', 'minhasDiretivas']).controller("AnaliseCo
         // or server returns response with an error status.
     });
 
+    $http({
+        method: 'GET',
+        url: '/cpguns/analise',
+        params: {
+            tipo: "vendas",
+            operacao: "CONSULTAR"
+        }
+    }).then(function successCallback(response) {
+        var resultado = response.data[0].vendas;
+        var policiais = new Array();
+        var civis = new Array();
+        seriesVendas.push("POLICIAL");
+        seriesVendas.push("CIVIL");
+        for (var i = 0; i < resultado.length; i++) {
+            labelVendas.push(resultado[i].dtVenda);
+            policiais.push(resultado[i].policial);
+            civis.push(resultado[i].civil);
+        }
+        dadosVendas.push(policiais);
+        dadosVendas.push(civis);
+    }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+    });
+
     $scope.labels_acessos = label;
     $scope.series_acessos = produtosNome;
     $scope.data_acessos = valoresFinal;
@@ -99,6 +127,10 @@ angular.module("analise", ['chart.js', 'minhasDiretivas']).controller("AnaliseCo
     $scope.labels_estados = seriesEstado;
     $scope.series_estados = seriesEstado;
     $scope.data_estados = dataEstado;
+    
+    $scope.labels_vendas = labelVendas;
+    $scope.series_vendas = seriesVendas;
+    $scope.data_vendas = dadosVendas;
 
     $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
     $scope.series = ['Series A', 'Series B'];

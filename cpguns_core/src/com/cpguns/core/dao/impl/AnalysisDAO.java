@@ -9,17 +9,15 @@ import com.cpguns.core.dao.AbstractJdbcDAO;
 import com.cpguns.core.model.Acesso;
 import com.cpguns.core.model.AnaliseAcessos;
 import com.cpguns.core.model.AnaliseEstados;
+import com.cpguns.core.model.AnaliseVendas;
 import com.cpguns.core.model.Analysis;
 import com.cpguns.core.model.Autorizacao;
-import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Product;
 import com.cpguns.core.model.TipoGrafico;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,7 +74,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         }
     }
 
-    public void salvarAutorizacao(DomainEntity entidade){
+    public void salvarAutorizacao(DomainEntity entidade) {
         PreparedStatement pst = null;
         Autorizacao autorizacao = (Autorizacao) entidade;
         UserDAO usDAO = new UserDAO();
@@ -92,19 +90,19 @@ public class AnalysisDAO extends AbstractJdbcDAO {
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, autorizacao.getAutorizacao());
             pst.setString(2, autorizacao.getTipo().toString());
-            
+
             pst.executeUpdate();
             connection.commit();
 
         } catch (Exception e) {
-            
+
             try {
                 connection.rollback();
             } catch (SQLException sqlE) {
                 sqlE.printStackTrace();
             }
             e.printStackTrace();
-        } finally{
+        } finally {
             try {
                 pst.close();
                 connection.close();
@@ -113,7 +111,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
             }
         }
     }
-    
+
     @Override
     public void create(DomainEntity entidade) throws SQLException {
 
@@ -130,7 +128,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
             if (analise.getGrafico() == TipoGrafico.ACESSOS) {
                 return analiseAcessos(pst);
             } else if (analise.getGrafico() == TipoGrafico.VENDAS_POLICIAIS_CIVIS) {
-
+                return analiseVendas(pst);
             } else if (analise.getGrafico() == TipoGrafico.VENDA_ESTADOS) {
                 return analiseEstados(pst);
             }
@@ -211,6 +209,60 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         }
         listaFinal.get(contador).setAcessos(acessos);
         analise.setAcessos(listaFinal);
+        retorno.add(analise);
+        return retorno;
+    }
+
+    private List<DomainEntity> analiseVendas(PreparedStatement pst) throws SQLException {
+        StringBuilder sql = new StringBuilder();
+        Analysis analise = new Analysis();
+        analise.setGrafico(TipoGrafico.VENDAS_POLICIAIS_CIVIS);
+        List<DomainEntity> retorno = new ArrayList<>();
+        AnaliseVendas analiseVendas = new AnaliseVendas();
+        List<Acesso> acessos = new ArrayList<>();
+        List<AnaliseVendas> listaFinal = new ArrayList<>();
+        connection.setAutoCommit(false);
+        sql.append("SELECT count(c.id_costumer) , aut.tipo, o.dtcreate FROM tb_orders o INNER JOIN tb_order_product op on o.id_order = op.id_order\n"
+                + "        INNER JOIN tb_products p on p.id_product = op.id_product\n"
+                + "        INNER JOIN tb_costumers c on c.id_costumer = o.id_cos\n"
+                + "        INNER JOIN tb_autorizacoes aut on aut.autorizacao = c.fk_auto\n"
+                + "        WHERE o.dtcreate between '2017-05-01' and '2017-05-15' and p.caliber like '.38' group by c.id_costumer, aut.tipo, o.dtcreate;");
+        pst = connection.prepareStatement(sql.toString());
+
+        ResultSet rs = pst.executeQuery();
+        // enquanto houver registros, vamos lendo....
+        
+        analiseVendas = new AnaliseVendas();
+        while (rs.next()) {
+            if (analiseVendas.getDtVenda() != null) {
+                if (analiseVendas.getDtVenda().getTime() == rs.getDate("dtcreate").getTime()) {
+                    if (rs.getString("tipo").equals("POLICIAL")) {
+                        analiseVendas.setPolicial(rs.getInt("count"));
+                    } else {
+                        analiseVendas.setCivil(rs.getInt("count"));
+                    }
+                } else {
+                    listaFinal.add(analiseVendas);
+                    analiseVendas = new AnaliseVendas();
+                    analiseVendas.setDtVenda(rs.getDate("dtcreate"));
+                    if (rs.getString("tipo").equals("POLICIAL")) {
+                        analiseVendas.setPolicial(rs.getInt("count"));
+                    } else {
+                        analiseVendas.setCivil(rs.getInt("count"));
+                    }
+                }
+            } else {
+                analiseVendas.setDtVenda(rs.getDate("dtcreate"));
+                if (rs.getString("tipo").equals("POLICIAL")) {
+                    analiseVendas.setPolicial(rs.getInt("count"));
+                } else {
+                    analiseVendas.setCivil(rs.getInt("count"));
+                }
+            }
+        }       
+
+        listaFinal.add(analiseVendas);
+        analise.setVendas(listaFinal);
         retorno.add(analise);
         return retorno;
     }

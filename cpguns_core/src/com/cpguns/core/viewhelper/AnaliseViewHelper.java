@@ -24,6 +24,8 @@ public class AnaliseViewHelper implements IViewHelper {
             analise.setGrafico(TipoGrafico.ACESSOS);
         } else if(tipo.equals("estados")){
             analise.setGrafico(TipoGrafico.VENDA_ESTADOS);
+        } else if(tipo.equals("vendas")){
+            analise.setGrafico(TipoGrafico.VENDAS_POLICIAIS_CIVIS);
         }
 
         return analise;

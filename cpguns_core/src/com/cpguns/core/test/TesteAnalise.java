@@ -19,7 +19,7 @@ public class TesteAnalise {
         Analysis analise = new Analysis();
         AnalysisDAO aDAO = new AnalysisDAO();
         
-        analise.setGrafico(TipoGrafico.ACESSOS);
+        analise.setGrafico(TipoGrafico.VENDAS_POLICIAIS_CIVIS);
         try {
             List<DomainEntity> read = aDAO.read(analise);
             System.out.println("Quantidade: "+read.size());
