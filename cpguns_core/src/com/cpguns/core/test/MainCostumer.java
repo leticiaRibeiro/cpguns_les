@@ -6,15 +6,11 @@
 package com.cpguns.core.test;
 
 import com.cpguns.core.dao.impl.CostumerDAO;
+import com.cpguns.core.model.Autorizacao;
 import com.cpguns.core.model.Costumer;
-import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.User;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,15 +21,18 @@ public class MainCostumer {
     public static void main(String[] args){
         
         Costumer c = new Costumer();
+        Autorizacao a = new Autorizacao();
         c.setId(1);
-        User u = new User("gustavo@hotmail.com", "gu", 1);
+        User u = new User("maria@hotmail.com", "maria", 1);
         u.setId(6);
         c.setUser(u);
-        c.setName("Gustavo Bezerra");
-        c.setCpf("4051231231");
-        c.setRg("87162464");
-        c.setGenre("masculino");
-        c.setPhoneNumber("47009718");
+        c.setName("Maria de Souza");
+        c.setCpf("3325526627");
+        c.setRg("901112349");
+        c.setGenre("feminino");
+        c.setPhoneNumber("47009719");
+        a.setAutorizacao("9992223331");
+        c.setAutorizacao(a);
         c.setDtCreate(new Date());
         c.setDtBirth(new Date());
         

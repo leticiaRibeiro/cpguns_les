@@ -18,6 +18,7 @@ public class Costumer extends Person{
     private String genre;
     private Date dtBirth;
     private String phoneNumber;
+    private Autorizacao autorizacao;
 
     /**
      * @return the cpf
@@ -92,5 +93,19 @@ public class Costumer extends Person{
 //    public enum Status{
 //        ACCEPTED, REJECTED, ANALYSING;
 //    }
+
+    /**
+     * @return the autorizacao
+     */
+    public Autorizacao getAutorizacao() {
+        return autorizacao;
+    }
+
+    /**
+     * @param autorizacao the autorizacao to set
+     */
+    public void setAutorizacao(Autorizacao autorizacao) {
+        this.autorizacao = autorizacao;
+    }
     
 }

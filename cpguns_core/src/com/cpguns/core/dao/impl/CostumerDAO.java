@@ -6,6 +6,7 @@
 package com.cpguns.core.dao.impl;
 
 import com.cpguns.core.dao.AbstractJdbcDAO;
+import com.cpguns.core.model.Autorizacao;
 import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.User;
@@ -44,7 +45,8 @@ public class CostumerDAO extends AbstractJdbcDAO {
         sql.append("phone_number text, ");
         sql.append("id_us INTEGER REFERENCES tb_users(id_user), ");
         sql.append("dt_create date, ");
-        sql.append("ativo boolean) ");
+        sql.append("ativo boolean, ");
+        sql.append("fk_auto REFERENCES tb_autorizacoes(autorizacao)) ");
 
         try {
             connection.setAutoCommit(false);
@@ -72,8 +74,8 @@ public class CostumerDAO extends AbstractJdbcDAO {
             connection.setAutoCommit(false);
 
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO tb_costumers(name, cpf, rg, genre, dt_birth, phone_number, id_us, dt_create, ativo)");
-            sql.append(" VALUES (?,?,?,?,?,?,?,?,?)");
+            sql.append("INSERT INTO tb_costumers(name, cpf, rg, genre, dt_birth, phone_number, id_us, dt_create, ativo, fk_auto)");
+            sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?)");
 
             pst = connection.prepareStatement(sql.toString(),
                     Statement.RETURN_GENERATED_KEYS);
@@ -88,6 +90,7 @@ public class CostumerDAO extends AbstractJdbcDAO {
             Timestamp timedtCreate = new Timestamp(costumer.getDtCreate().getTime());
             pst.setTimestamp(8, timedtCreate);
             pst.setBoolean(9, true);
+            pst.setString(10, costumer.getAutorizacao().getAutorizacao());   //// ERROOOOOO NAO TA GRAVANDO
             pst.executeUpdate();
 
             ResultSet rs = pst.getGeneratedKeys();
@@ -147,6 +150,7 @@ public class CostumerDAO extends AbstractJdbcDAO {
                 // novo registro, novo product!
                 Costumer c = new Costumer();
                 User u = new User();
+                Autorizacao a = new Autorizacao();
                 // pegamos os valores das colunas e settamos no objeto de Product - Se a coluna for int: rs.getInt("NOME DA COLUNA")
                 c.setName(rs.getString("name"));
                 c.setId(rs.getInt("id_costumer"));
@@ -154,6 +158,7 @@ public class CostumerDAO extends AbstractJdbcDAO {
                 c.setRg(rs.getString("rg"));
                 c.setGenre(rs.getString("genre"));
                 c.setPhoneNumber(rs.getString("phone_number"));
+                a.setAutorizacao(rs.getString("fk_auto"));
                 java.sql.Date dtBirthLong = rs.getDate("dt_birth");
                 Date dtBirth = new Date(dtBirthLong.getTime());
                 c.setDtBirth(dtBirth);
@@ -164,6 +169,7 @@ public class CostumerDAO extends AbstractJdbcDAO {
                 u.setEmail(rs.getString("email"));
                 u.setPassword(rs.getString("password"));
                 u.setLevel(rs.getInt("level"));
+                c.setAutorizacao(a);    // setta a autorizacao no cliente
                 c.setUser(u);
 
                 // adicionamos o cliente na lista, que iremos retornar com todos os valores encontrados...
