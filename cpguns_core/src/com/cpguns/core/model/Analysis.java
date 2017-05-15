@@ -17,6 +17,7 @@ public class Analysis extends DomainEntity{
     private List<AnaliseAcessos> acessos = new ArrayList<>();
     private TipoGrafico grafico;
     private List<AnaliseEstados> estados = new ArrayList<>();
+    private List<AnaliseVendas> vendas = new ArrayList<>();
     /*
         -----Query de análise dos acessos-----
         SELECT count(a.id_prod), p.id_product, a.dtacesso
@@ -92,6 +93,20 @@ public class Analysis extends DomainEntity{
      */
     public void setEstados(List<AnaliseEstados> estados) {
         this.estados = estados;
+    }
+
+    /**
+     * @return the vendas
+     */
+    public List<AnaliseVendas> getVendas() {
+        return vendas;
+    }
+
+    /**
+     * @param vendas the vendas to set
+     */
+    public void setVendas(List<AnaliseVendas> vendas) {
+        this.vendas = vendas;
     }
     
     
