@@ -8,6 +8,7 @@ import com.cpguns.core.dao.impl.ProductDAO;
 import com.cpguns.core.model.Card;
 import com.cpguns.core.model.Carrinho;
 import com.cpguns.core.model.Order;
+import com.cpguns.core.model.Status;
 import com.cpguns.core.model.Store;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,6 +43,7 @@ public class OrderViewHelper implements IViewHelper {
         Order order = new Order();
         Card card = new Card();
         Carrinho carrinho = new Carrinho();
+        
 
         if (("SALVAR").equals(operacao)) {
             String json = request.getParameter("carrinho");
@@ -71,6 +73,23 @@ public class OrderViewHelper implements IViewHelper {
             order.setAutorizacao(request.getParameter("autorizacao"));
             order.setValorTotal(Double.valueOf(request.getParameter("valorTotal")));
             System.out.println("Oi");
+        }
+        
+        if (("ALTERAR").equals(operacao)){
+            String status = request.getParameter("status");
+            if(Status.AGUARDANDO_APROVACAO.getDescricao().equals(status)){
+                order.setStatus(Status.AGUARDANDO_APROVACAO);
+            } else if (Status.EM_NEGOCIACAO.getDescricao().equals(status)){
+                order.setStatus(Status.EM_NEGOCIACAO);
+            } else if (Status.EM_TRANSPORTE.getDescricao().equals(status)){
+                order.setStatus(Status.EM_TRANSPORTE);
+            } else if (Status.CANCELADO.getDescricao().equals(status)){
+                order.setStatus(Status.CANCELADO);
+            } else if (Status.RETIRADO.getDescricao().equals(status)){
+                order.setStatus(Status.RETIRADO);
+            } else if (Status.DEVOLVIDO.getDescricao().equals(status)){
+                order.setStatus(Status.DEVOLVIDO);
+            }
         }
         return order;
     }

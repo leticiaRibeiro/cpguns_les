@@ -11,7 +11,6 @@ import com.cpguns.core.dao.impl.ProductDAO;
 import com.cpguns.core.dao.impl.StoreDAO;
 import com.cpguns.core.dao.impl.UserDAO;
 import com.cpguns.core.model.Address;
-import com.cpguns.core.model.Analysis;
 import com.cpguns.core.model.Autorizacao;
 import com.cpguns.core.model.Card;
 import com.cpguns.core.model.Carrinho;
@@ -22,15 +21,11 @@ import com.cpguns.core.model.Manufacturer;
 import com.cpguns.core.model.Order;
 import com.cpguns.core.model.Product;
 import com.cpguns.core.model.State;
+import com.cpguns.core.model.Status;
 import com.cpguns.core.model.Store;
 import com.cpguns.core.model.TipoAutorizacao;
 import com.cpguns.core.model.User;
-import static com.cpguns.core.util.MyConnection.openConnection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,22 +50,22 @@ public class ConstruirBanco {
         OrderDAO oDAO = new OrderDAO();
         AnalysisDAO analiseDAO = new AnalysisDAO();
         
-        analiseDAO.createTableAutorizacao();
-        manuDAO.createTableManufacturer();
-        pDAO.createTableProduct();
-        imgDAO.createTableProduct();
-        addDAO.createTableAddress();
-        user.createTableUser();
-        costumerDAO.createTableCostumer();
-        sDAO.createTableStore();
-        cardDAO.createTableCard();
-        oDAO.createTableOrder();
-        analiseDAO.createTableAcesso();
+//        analiseDAO.createTableAutorizacao();
+//        manuDAO.createTableManufacturer();
+//        pDAO.createTableProduct();
+//        imgDAO.createTableProduct();
+//        addDAO.createTableAddress();
+//        user.createTableUser();
+//        costumerDAO.createTableCostumer();
+//        sDAO.createTableStore();
+//        cardDAO.createTableCard();
+//        oDAO.createTableOrder();
+//        analiseDAO.createTableAcesso();
         
-        popularAutorizacao(analiseDAO);
-        popularArmas();
-        popularLojas();
-        popularUsuario();
+//        popularAutorizacao(analiseDAO);
+//        popularArmas();
+//        popularLojas();
+//        popularUsuario();
         fazerPedidoTeste();
     }
     
@@ -267,6 +262,7 @@ public class ConstruirBanco {
         Order o = new Order();
         Store s = new Store();
         
+        
         costumer.setId(1);
         s.setId(2);
         card.setCsc("123");
@@ -292,6 +288,7 @@ public class ConstruirBanco {
         
         o.setCarrinho(carrinho);
         o.setAutorizacao("123828937128937");
+        o.setStatus(Status.RETIRADO);
         try {
             orderDAO.create(o);
         } catch (SQLException ex) {

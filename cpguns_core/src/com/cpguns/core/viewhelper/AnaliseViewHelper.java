@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Gustavo de Souza Bezerra <gustavo.bezerra@hotmail.com>
- * @date 14/05/2017
+ * 
+ * @author Leticia
  */
 public class AnaliseViewHelper implements IViewHelper {
 
@@ -20,6 +20,8 @@ public class AnaliseViewHelper implements IViewHelper {
     public DomainEntity getEntidade(HttpServletRequest request) {
         String tipo = request.getParameter("tipo");
         Analysis analise = new Analysis();
+        
+        
         if (tipo.equals("acessos")) {
             analise.setGrafico(TipoGrafico.ACESSOS);
         } else if(tipo.equals("estados")){

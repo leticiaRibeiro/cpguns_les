@@ -9,6 +9,7 @@ angular.module("analise", ['chart.js', 'minhasDiretivas']).controller("AnaliseCo
     var labelVendas = new Array();
     var seriesVendas = new Array();
     var dadosVendas = new Array();
+    
     $http({
         method: 'GET',
         url: '/cpguns/analise',

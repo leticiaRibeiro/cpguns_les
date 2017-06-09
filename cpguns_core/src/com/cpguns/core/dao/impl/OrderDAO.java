@@ -12,6 +12,7 @@ import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Order;
 import com.cpguns.core.model.Product;
+import com.cpguns.core.model.Status;
 import com.cpguns.core.model.Store;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +45,8 @@ public class OrderDAO extends AbstractJdbcDAO {
         sql.append("id_credcard INTEGER REFERENCES tb_cards(id_card), ");
         sql.append("valorTotal decimal,");
         sql.append("autorizacao TEXT,");
-        sql.append("dtCreate date); ");
+        sql.append("dtCreate date,");
+        sql.append("status TEXT); ");
 
         sql.append("CREATE TABLE tb_order_product(");
         sql.append("id_order INTEGER REFERENCES tb_orders(id_order), ");
@@ -76,8 +78,8 @@ public class OrderDAO extends AbstractJdbcDAO {
             connection.setAutoCommit(false);
 
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO tb_orders(id_sto, id_cos, id_credcard, valortotal, autorizacao, dtcreate)");
-            sql.append(" VALUES (?,?,?,?,?,?)");
+            sql.append("INSERT INTO tb_orders(id_sto, id_cos, id_credcard, valortotal, autorizacao, dtcreate, status)");
+            sql.append(" VALUES (?,?,?,?,?,?,?)");
 
             pst = connection.prepareStatement(sql.toString(),
                     Statement.RETURN_GENERATED_KEYS);
@@ -88,6 +90,7 @@ public class OrderDAO extends AbstractJdbcDAO {
             pst.setString(5, order.getAutorizacao());
             Timestamp timedtCreate = new Timestamp(new Date().getTime());
             pst.setTimestamp(6, timedtCreate);
+            pst.setString(7, order.getStatus().getDescricao());
             pst.executeUpdate();
 
             ResultSet rs = pst.getGeneratedKeys();
@@ -241,7 +244,37 @@ public class OrderDAO extends AbstractJdbcDAO {
 
     @Override
     public void update(DomainEntity entity) throws SQLException {
-
+        
+        openConnection();
+        PreparedStatement pst = null;
+        Order order = (Order) entity;
+        
+        
+        try {
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE tb_orders SET status=? ");
+            sql.append("WHERE id_order=?");
+            pst = connection.prepareStatement(sql.toString());
+            pst.setString(1, order.getStatus().getDescricao());
+            pst.setInt(2, order.getId());
+            pst.executeUpdate();
+            connection.commit();
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally{
+            try{
+                pst.close();
+                connection.close();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     private void guardarProdutosComprados(int id_order, Product product) {
