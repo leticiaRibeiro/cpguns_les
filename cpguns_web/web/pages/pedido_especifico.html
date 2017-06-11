@@ -9,7 +9,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body ng-controller="ClienteController">
+    <body ng-controller="pedidoController">
         <!-- chamando nossa diretiva para o header da area logada -->
     <header-logado></header-logado>
 
@@ -24,9 +24,9 @@
             <!-- Fim do menuzinho da esquerda -->
 
             <!-- parte principal da página -->
-            <div class="card col s7 offset-s1 borda">
+            <div class="card col s7 offset-s1 borda" data-ng-init="getPedido()">
                 <div class="card-action">
-                    <h5>Pedido número #123456</h5>
+                    <h5>Pedido número #{{pedido.id}}</h5>
                 </div>
                 <div class="card-action">
                     <div class="row">
@@ -35,12 +35,12 @@
                             <div class="col s6">
                                 <h5>Endereço de retirada</h5>
                                 <div class="chip">
-                                    Rua Dr Ricardo Vilela, 123 - Das 8hrs às 18hrs
+                                    {{pedido.store.name}} - {{pedido.store.address.street}}, {{pedido.store.address.number}}
                                 </div>
                                 <br/><br/><br/>
-                                <h5>Forma de pagamento</h5>
+                                <h5>Comprador</h5>
                                 <div class="chip">
-                                    Cartão de crédito - 12x
+                                    {{pedido.costumer.name}} - {{pedido.costumer.cpf}}
                                 </div>
                             </div> <!-- Parte Esquerda -->
                             <div class="col s6">
@@ -54,26 +54,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Rifle Walther Colt M4 Carbine Rimfire</td>
+                                        <tr ng-repeat="produto in pedido.carrinho.products">
+                                            <td>{{produto.name}}</td>
                                             <td>
-                                                2
+                                                {{produto.qtdeCarrinho}}
                                             </td>
-                                            <td>R$ 11.000,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Glock</td>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>R$ 11.000,00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>AK-47</td>
-                                            <td>
-                                                1
-                                            </td>
-                                            <td>R$ 11.000,00</td>
+                                            <td>R{{produto.price * produto.qtdeCarrinho | currency}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -86,16 +72,16 @@
                                         <h5>
                                             <table>
                                                 <tr>
-                                                    <td>Subtotal (3 itens):</td>
-                                                    <td>R$ 11.000,00</td>
+                                                    <td>Subtotal ({{getMensagem(pedido.carrinho.products.length)}}) :</td>
+                                                    <td>R{{valorCarrinho | currency}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Taxa de Retirada:</td>
-                                                    <td>R$ 50,00</td>
+                                                    <td>R$300,00</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Taxa de Transporte:</td>
-                                                    <td>R$ 690,00</td>
+                                                    <td>R{{(valorCarrinho * 10) / 100 | currency}}</td>
                                                 </tr>
                                             </table>
                                         </h5>
@@ -103,7 +89,7 @@
                                 </div>
                                 <div class="row">
                                     <h2 class="right">
-                                        R$ 17.200,00
+                                        R{{pedido.valorTotal | currency}}
                                     </h2>
                                 </div>
 

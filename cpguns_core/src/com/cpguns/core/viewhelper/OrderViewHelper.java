@@ -72,11 +72,12 @@ public class OrderViewHelper implements IViewHelper {
             order.setCard(card);
             order.setAutorizacao(request.getParameter("autorizacao"));
             order.setValorTotal(Double.valueOf(request.getParameter("valorTotal")));
-            System.out.println("Oi");
+            order.setStatus(Status.AGUARDANDO_APROVACAO);
         }
         
         else if (("ALTERAR").equals(operacao)){
             String status = request.getParameter("status");
+            String id = request.getParameter("id");
             if(Status.AGUARDANDO_APROVACAO.getDescricao().equals(status)){
                 order.setStatus(Status.AGUARDANDO_APROVACAO);
             } else if (Status.EM_NEGOCIACAO.getDescricao().equals(status)){
@@ -90,6 +91,7 @@ public class OrderViewHelper implements IViewHelper {
             } else if (Status.DEVOLVIDO.getDescricao().equals(status)){
                 order.setStatus(Status.DEVOLVIDO);
             }
+            order.setId(Integer.valueOf(id));
         }
         
         else if (("CONSULTAR").equals(operacao)){
@@ -101,7 +103,7 @@ public class OrderViewHelper implements IViewHelper {
     @Override
     public void setView(Result resultado, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         String retorno = "";
         
         if (("CONSULTAR").equals(operacao)) {

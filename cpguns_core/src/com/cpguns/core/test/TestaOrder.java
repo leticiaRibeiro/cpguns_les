@@ -11,6 +11,7 @@ import com.cpguns.core.model.Carrinho;
 import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.Order;
 import com.cpguns.core.model.Product;
+import com.cpguns.core.model.Status;
 import com.cpguns.core.model.Store;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class TestaOrder {
         
         o.setCarrinho(carrinho);
         o.setAutorizacao("123828937128937");
+        o.setStatus(Status.EM_TRANSPORTE);
         try {
             orderDAO.create(o);
         } catch (SQLException ex) {
