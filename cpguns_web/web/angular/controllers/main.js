@@ -405,6 +405,23 @@ angular.module("cpguns", ['minhasDiretivas'])
             };
         })
         
+        .controller("pedidoController", function ($scope, $http){
+            $scope.buscarPedidos = function(){
+                $http({
+                    method: 'GET',
+                    url: '/cpguns/order',
+                    params: {
+                        operacao: "CONSULTAR"
+                    }
+                }).then(function successCallback(response) {
+                    $scope.pedidos = response.data;
+                }, function errorCallback(response) {
+                    // deu caquinha
+                });
+            };            
+        })
+
+
         .controller("confirmacaoController", function($scope){
            $scope.order = JSON.parse(window.sessionStorage.getItem("order"));
         });

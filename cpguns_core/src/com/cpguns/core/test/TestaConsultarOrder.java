@@ -25,7 +25,7 @@ public class TestaConsultarOrder {
             
             for(DomainEntity e : read){
                 o = (Order) e;
-                System.out.println("Numero do pedido: "+o.getId()+"("+o.getDtCreate()+")");
+                System.out.println("Numero do pedido: "+o.getId()+" - "+ o.getStatus().getDescricao()+"("+o.getDtCreate()+")");
                 System.out.println("Numero de produtos: "+o.getCarrinho().getProducts().size());
                 for(Product p : o.getCarrinho().getProducts()){
                     System.out.println("   - ID:"+p.getId()+" , name: "+p.getName()+", price:"+ p.getPrice()+", qtde: "+p.getQtdeCarrinho());

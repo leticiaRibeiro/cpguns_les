@@ -9,7 +9,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body ng-controller="ClienteController">
+    <body ng-controller="pedidoController">
         <!-- chamando nossa diretiva para o header da area logada -->
     <header-logado></header-logado>
 
@@ -24,59 +24,9 @@
             <!-- Fim do menuzinho da esquerda -->
 
             <!-- parte principal da página -->
-            <div class="card col s7 offset-s1 borda">
+            <div class="card col s8 borda" data-ng-init="buscarPedidos()">
                 <div class="card-action">
-                    <h5>Cadastros Pendentes</h5>
-                    <table class="striped">
-                        <thead>
-                            <tr>
-                                <th data-field="name">Cliente</th>
-                                <th data-field="cpf">CPF</th>
-                                <th data-field="authorization">Doc. Autorização</th>
-                                <th data-field="status">Status</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td><a href="cliente_especifico.html">Leticia Ribeiro</a></td>
-                                <td>445.772.123-09</td>
-                                <td>02800753</td>
-                                <td>
-                                    <a class="waves-effect waves-light btn">Aprovar</a>
-                                    <a class="waves-effect waves-light btn red">Reprovar</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#!!!!">Gustavo Bezerra</a></td>
-                                <td>129.371.987-02</td>
-                                <td>04850151</td>
-                                <td>
-                                    <a class="waves-effect waves-light btn">Aprovar</a>
-                                    <a class="waves-effect waves-light btn red">Reprovar</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#!!!!">Larissa CAmpos</a></td>
-                                <td>445.112.567-90</td>
-                                <td>14803393</td>
-                                <td>
-                                    <a class="waves-effect waves-light btn">Aprovar</a>
-                                    <a class="waves-effect waves-light btn red">Reprovar</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#!!!!">Bruno Henrique</a></td>
-                                <td>681.962.123.45</td>
-                                <td>12300908</td>
-                                <td>
-                                    <a class="waves-effect waves-light btn">Aprovar</a>
-                                    <a class="waves-effect waves-light btn red">Reprovar</a>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
+                    
                     <br/>
 
                     <h5>Pedidos Pendentes</h5>
@@ -92,46 +42,18 @@
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td><a href="pedido_especifico.html">928347</a></td>
+                            <tr ng-repeat="pedido in pedidos">
+                                <td><a href="#">{{pedido.id}}</a></td>
                                 <td>90/90/9090</td>
-                                <td>129.371.987-02</td>
-                                <td>Aguardando aprovação</td>
+                                <td>{{pedido.costumer.cpf}}</td>
+                                <td>{{pedido.status}}</td>
                                 <td>
-                                    <a class="waves-effect waves-light btn disabled">Devolver</a>
-                                    <a class="waves-effect waves-light btn">Cancelar</a>
+                                    <a class="waves-effect waves-light btn" ng-if="pedido.status !== 'CANCELADO' && pedido.status !== 'DEVOLVIDO' && pedido.status !== 'RETIRADO'">Alterar</a>
+                                    <a class="waves-effect waves-light btn" ng-if="pedido.status === 'RETIRADO'">Devolver</a>
+                                    <a class="waves-effect waves-light btn" ng-if="pedido.status !== 'CANCELADO' && pedido.status !== 'DEVOLVIDO' && pedido.status !== 'RETIRADO' && pedido.status !== 'EM_TRANSPORTE'">Cancelar</a>  
                                 </td>
                             </tr>
-                            <tr>
-                                <td><a href="#!!!!">928347</a></td>
-                                <td>90/90/9090</td>
-                                <td>129.371.987-02</td>
-                                <td>Em negociação com a fabricante</td>
-                                <td>
-                                    <a class="waves-effect waves-light btn disabled">Devolver</a>
-                                    <a class="waves-effect waves-light btn">Cancelar</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#!!!!">883274</a></td>
-                                <td>28/28/1293</td>
-                                <td>129.371.987-02</td>
-                                <td>Em fabricação</td>
-                                <td>
-                                    <a class="waves-effect waves-light btn disabled">Devolver</a>
-                                    <a class="waves-effect waves-light btn disabled">Cancelar</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#!!!!">982374</a></td>
-                                <td>13/23/7897</td>
-                                <td>129.371.987-02</td>
-                                <td>Em separação</td>
-                                <td>
-                                    <a class="waves-effect waves-light btn disabled">Devolver</a>
-                                    <a class="waves-effect waves-light btn">Cancelar</a>
-                                </td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                 </div>

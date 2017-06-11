@@ -75,7 +75,7 @@ public class OrderViewHelper implements IViewHelper {
             System.out.println("Oi");
         }
         
-        if (("ALTERAR").equals(operacao)){
+        else if (("ALTERAR").equals(operacao)){
             String status = request.getParameter("status");
             if(Status.AGUARDANDO_APROVACAO.getDescricao().equals(status)){
                 order.setStatus(Status.AGUARDANDO_APROVACAO);
@@ -90,6 +90,10 @@ public class OrderViewHelper implements IViewHelper {
             } else if (Status.DEVOLVIDO.getDescricao().equals(status)){
                 order.setStatus(Status.DEVOLVIDO);
             }
+        }
+        
+        else if (("CONSULTAR").equals(operacao)){
+            order = new Order();
         }
         return order;
     }

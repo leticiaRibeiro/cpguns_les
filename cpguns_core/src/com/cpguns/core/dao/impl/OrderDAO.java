@@ -203,6 +203,21 @@ public class OrderDAO extends AbstractJdbcDAO {
                     o.setCard((Card) cardDAO.read(card).get(0));
                     o.setCostumer((Costumer) cDAO.read(c).get(0));
                     o.setStore((Store) sDAO.read(s).get(0));
+                    
+                    String status = rs.getString("status");
+                    if (Status.AGUARDANDO_APROVACAO.getDescricao().equals(status)) {
+                        o.setStatus(Status.AGUARDANDO_APROVACAO);
+                    } else if (Status.EM_NEGOCIACAO.getDescricao().equals(status)) {
+                        o.setStatus(Status.EM_NEGOCIACAO);
+                    } else if (Status.EM_TRANSPORTE.getDescricao().equals(status)) {
+                        o.setStatus(Status.EM_TRANSPORTE);
+                    } else if (Status.CANCELADO.getDescricao().equals(status)) {
+                        o.setStatus(Status.CANCELADO);
+                    } else if (Status.RETIRADO.getDescricao().equals(status)) {
+                        o.setStatus(Status.RETIRADO);
+                    } else if (Status.DEVOLVIDO.getDescricao().equals(status)) {
+                        o.setStatus(Status.DEVOLVIDO);
+                    }
 
                     // settar o primeiro produto
                     p = (Product) pDAO.read(p).get(0);
@@ -244,12 +259,11 @@ public class OrderDAO extends AbstractJdbcDAO {
 
     @Override
     public void update(DomainEntity entity) throws SQLException {
-        
+
         openConnection();
         PreparedStatement pst = null;
         Order order = (Order) entity;
-        
-        
+
         try {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
@@ -267,11 +281,11 @@ public class OrderDAO extends AbstractJdbcDAO {
                 sqlE.printStackTrace();
             }
             e.printStackTrace();
-        } finally{
-            try{
+        } finally {
+            try {
                 pst.close();
                 connection.close();
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
