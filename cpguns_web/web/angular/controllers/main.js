@@ -289,6 +289,18 @@ angular.module("cpguns", ['minhasDiretivas'])
                     alert("ERRO");
                 });
             };
+            
+            $scope.addCarrinho = function (produto) {
+                if (window.sessionStorage.getItem("carrinho")) { // EXISTE o carrinho
+                    var carrinho = JSON.parse(window.sessionStorage.getItem("carrinho"));
+                } else { // CARRINHO NÃO EXISTE
+                    var carrinho = new Array();
+                }
+                carrinho.push(produto);
+                window.sessionStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+                window.location.href = "http://localhost:8084/cpguns/pages/carrinho.html";
+            };
 
             $scope.verAnuncio = function (arm) {
                 window.sessionStorage.setItem("arm", JSON.stringify(arm));

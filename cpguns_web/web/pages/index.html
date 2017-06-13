@@ -55,7 +55,8 @@
                                             </div> <!-- Parte Esquerda -->
                                             <div class="row">
                                                 <div class="right">
-                                                    <a class="waves-effect waves-light btn" href="#!"><i class="material-icons left">add_shopping_cart</i>Adicionar</a>
+                                                    <a class="waves-effect waves-light btn" ng-click="addCarrinho(arm)" ng-if="arm.qtde > 0"><i class="material-icons left">add_shopping_cart</i>Adicionar</a>
+                                                    <a class="waves-effect waves-light btn" ng-if="arm.qtde === 0" disabled>INDISPONIVEL</a>
                                                 </div>
                                             </div>
                                         </div> <!-- Fim do CARD -->

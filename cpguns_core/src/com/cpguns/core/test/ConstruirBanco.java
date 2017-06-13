@@ -50,22 +50,22 @@ public class ConstruirBanco {
         OrderDAO oDAO = new OrderDAO();
         AnalysisDAO analiseDAO = new AnalysisDAO();
         
-//        analiseDAO.createTableAutorizacao();
-//        manuDAO.createTableManufacturer();
-//        pDAO.createTableProduct();
-//        imgDAO.createTableProduct();
-//        addDAO.createTableAddress();
-//        user.createTableUser();
-//        costumerDAO.createTableCostumer();
-//        sDAO.createTableStore();
-//        cardDAO.createTableCard();
-//        oDAO.createTableOrder();
-//        analiseDAO.createTableAcesso();
+        analiseDAO.createTableAutorizacao();
+        manuDAO.createTableManufacturer();
+        pDAO.createTableProduct();
+        imgDAO.createTableProduct();
+        addDAO.createTableAddress();
+        user.createTableUser();
+        costumerDAO.createTableCostumer();
+        sDAO.createTableStore();
+        cardDAO.createTableCard();
+        oDAO.createTableOrder();
+        analiseDAO.createTableAcesso();
         
-//        popularAutorizacao(analiseDAO);
-//        popularArmas();
-//        popularLojas();
-//        popularUsuario();
+        popularAutorizacao(analiseDAO);
+        popularArmas();
+        popularLojas();
+        popularUsuario();
         fazerPedidoTeste();
     }
     
@@ -115,6 +115,7 @@ public class ConstruirBanco {
         p1.setPrice(3000.00);
         p1.setAtivo(true);
         p1.setAction("N/A");
+        p1.setQtde(20);
         
         
         
@@ -137,6 +138,7 @@ public class ConstruirBanco {
         p2.setPrice(4500.00);
         p2.setAtivo(true);
         p2.setAction("N/A");
+        p2.setQtde(10);
         
         
         
@@ -159,6 +161,7 @@ public class ConstruirBanco {
         p3.setPrice(1300.00);
         p3.setAtivo(true);
         p3.setAction("N/A");
+        p3.setQtde(30);
 
         try {        
             pDAO.create(p1);

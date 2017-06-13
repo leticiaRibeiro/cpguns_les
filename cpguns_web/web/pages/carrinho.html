@@ -51,7 +51,7 @@
                                             <td>{{produto.name}}</td>
                                             <td>R{{produto.price | currency}}</td>
                                             <td>
-                                                <input type="number" min="1" class="col s5" ng-model="produto.qtdeCarrinho" ng-change="mudarQtde()">
+                                                <input type="number" min="1" max="{{produto.qtde}}" class="col s5" ng-model="produto.qtdeCarrinho" ng-change="mudarQtde()">
                                             </td>
                                             <td>R{{produto.price * produto.qtdeCarrinho | currency}}</td>
                                             <td>
