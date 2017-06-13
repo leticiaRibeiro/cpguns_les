@@ -509,7 +509,34 @@ angular.module("cpguns", ['minhasDiretivas'])
                 });
             };
         })
-
+        
+        .controller("productController", function($scope, $http){
+            $scope.salvar = function () {
+                $http({
+                    method: 'POST',
+                    url: '/cpguns/arms',
+                    params: {
+                        operacao: "SALVAR",
+                        origem: $scope.produto.origem,
+                        manufacturer: $scope.produto.manufacturer,
+                        uri: $scope.produto.uri,
+                        nome: $scope.produto.nome,
+                        preco: $scope.produto.preco,
+                        qtde: $scope.produto.qtde,
+                        calibre: $scope.produto.calibre,
+                        peso: $scope.produto.peso,
+                        capacidade: $scope.produto.capacidade,
+                        modelo: $scope.produto.modelo,
+                        action: $scope.produto.action,
+                        descricao: $scope.produto.descricao
+                    }
+                }).then(function successCallback(response) {
+                    alert("Produto salvo com sucesso!");
+                }, function errorCallback(response) {
+                    alert("ERRO");
+                });
+            };                        
+        })
 
         .controller("confirmacaoController", function ($scope) {
             $scope.order = JSON.parse(window.sessionStorage.getItem("order"));

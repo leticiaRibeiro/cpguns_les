@@ -67,10 +67,12 @@ public class ProductDAO extends AbstractJdbcDAO{
         openConnection();
         PreparedStatement pst = null;
         Product product = (Product) entity;
+        ManufacturerDAO mDAO = new ManufacturerDAO();
         ImageDAO imageDAO = new ImageDAO();
         
         try {
             connection.setAutoCommit(false);
+            mDAO.create(product.getManufacturer());
             
             StringBuilder sql = new StringBuilder();
             sql.append("INSERT INTO tb_products(name, description, caliber, weight, action, origin, model, capacity, price, qtde, dtCreate, id_manuf )");

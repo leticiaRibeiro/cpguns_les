@@ -9,7 +9,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body ng-controller="ClienteController">
+    <body ng-controller="productController">
         <!-- chamando nossa diretiva para o header da area logada -->
     <header-logado></header-logado>
 
@@ -32,20 +32,64 @@
                     <div class="row">
                         <div class="input-field col s6">
                             <i class="material-icons prefix">mode_edit</i>
-                            <input type="text" id="nome" />
+                            <input type="text" id="nome" ng-model="produto.nome"/>
                             <label for="nome">Nome do produto</label>
                         </div>
-                        <div class="input-field col s6">
+                        <div class="input-field col s3">
                             <i class="material-icons prefix">attach_money</i>
-                            <input type="text" id="preco" />
+                            <input type="text" id="preco" ng-model="produto.preco"/>
                             <label for="preco">Preço do produto</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <i class="material-icons prefix">shopping_basket</i>
+                            <input type="text" id="qtde" ng-model="produto.qtde" />
+                            <label for="qtde">Qtde estoque</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <i class="material-icons prefix">camera_enhance</i>
-                            <input type="text" id="url" />
+                            <i class="material-icons prefix">add_a_photo</i>
+                            <input type="text" id="url" ng-model="produto.uri"/>
                             <label for="url">URL da imagem</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <i class="material-icons prefix">flag</i>
+                            <input type="text" id="calibre" ng-model="produto.calibre"/>
+                            <label for="calibre">Calibre</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <i class="material-icons prefix">archive</i>
+                            <input type="text" id="peso" ng-model="produto.peso"/>
+                            <label for="peso">Peso</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s3">
+                            <i class="material-icons prefix">format_line_spacing</i>
+                            <input type="text" id="capacidade" ng-model="produto.capacidade"/>
+                            <label for="capacidade">Capacidade</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <i class="material-icons prefix">apps</i>
+                            <input type="text" id="modelo" ng-model="produto.modelo"/>
+                            <label for="modelo">Model</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <i class="material-icons prefix">style</i>
+                            <input type="text" id="action" ng-model="produto.action"/>
+                            <label for="action">Action</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">public</i>
+                            <input type="text" id="manufacturer" ng-model="produto.manufacturer" />
+                            <label for="manufacturer">Manufacturer</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">public</i>
+                            <input type="text" id="origem" ng-model="produto.origem" />
+                            <label for="origem">Origem</label>
                         </div>
                     </div>
                     <div class="row">
@@ -53,7 +97,7 @@
                             <div class="row">
                                 <div class="input-field col s8">
                                     <i class="material-icons prefix">description</i>
-                                    <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+                                    <textarea id="icon_prefix2" ng-model="produto.descricao" class="materialize-textarea"></textarea>
                                     <label for="icon_prefix2">Descrição do produto</label>
                                 </div>
                             </div>
@@ -61,7 +105,7 @@
                     </div>
                     <div class="row">
                         <div class="right">
-                            <a class="waves-effect waves-light btn">Cadastrar</a>
+                            <a class="waves-effect waves-light btn" ng-click="salvar()">Cadastrar</a>
                         </div>
                     </div>
                 </div>
