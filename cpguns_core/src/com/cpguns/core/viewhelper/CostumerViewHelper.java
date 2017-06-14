@@ -10,6 +10,7 @@ import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -92,7 +93,7 @@ public class CostumerViewHelper implements IViewHelper {
     @Override
     public void setView(Result resultado, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
         String retorno;
 
         if (("CONSULTAR").equals(operacao)) {

@@ -293,8 +293,12 @@ public class OrderDAO extends AbstractJdbcDAO {
 
     private void guardarProdutosComprados(int id_order, Product product) {
         PreparedStatement pst = null;
+        ProductDAO productDAO = new ProductDAO();
+        int qtde = product.getQtde() - product.getQtdeCarrinho();
+        product.setQtde(qtde);
 
         try {
+            productDAO.update(product);
             connection.setAutoCommit(false);
 
             StringBuilder sql = new StringBuilder();

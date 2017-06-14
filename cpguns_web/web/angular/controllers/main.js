@@ -326,6 +326,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                 var indice = $scope.carrinho.indexOf(produto);
                 $scope.carrinho.splice(indice, 1);
                 window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
+                $scope.valorTotal -= produto.price * produto.qtdeCarrinho;
             };
 
             $scope.mudarQtde = function () {

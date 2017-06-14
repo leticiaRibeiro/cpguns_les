@@ -40,7 +40,7 @@
                                 <div class="col s5">
                                     <h3 class="center">{{produto.name}}</h3>
                                     <div class="row">
-                                        <h4 class="center">R$ {{produto.price}}</h4>
+                                        <h4 class="center">R{{produto.price | currency}}</h4>
                                     </div>
                                     <div class="row offset-s1">
                                         Formas de pagamento:
@@ -84,6 +84,9 @@
                                     <div class="row">
                                         Calibre: {{produto.caliber}}
                                     </div>
+                                    <div class="row">
+                                        Action: {{produto.action}}
+                                    </div>
                                 </div> <!-- Fim da primeira coluna -->
 
                                 <!-- segunda coluna -->
@@ -96,6 +99,9 @@
                                     </div>
                                     <div class="row">
                                         Origem: {{produto.origin}}
+                                    </div>
+                                    <div class="row">
+                                        Manufacturer: {{produto.manufacturer.name}}
                                     </div>
                                     <div class="row">
                                         Peso: {{produto.weight}}
