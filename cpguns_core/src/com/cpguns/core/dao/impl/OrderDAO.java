@@ -265,6 +265,15 @@ public class OrderDAO extends AbstractJdbcDAO {
         Order order = (Order) entity;
 
         try {
+            if(order.getStatus() == Status.CANCELADO || order.getStatus() == Status.DEVOLVIDO){
+                Status aux = order.getStatus();
+                order = (Order) read(order).get(0);
+                order.setStatus(aux);
+                for(Product p : order.getCarrinho().getProducts()){
+                    reporProdutoAoEstoque(p);
+                }
+            }
+            openConnection();
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE tb_orders SET status=? ");
@@ -293,12 +302,8 @@ public class OrderDAO extends AbstractJdbcDAO {
 
     private void guardarProdutosComprados(int id_order, Product product) {
         PreparedStatement pst = null;
-        ProductDAO productDAO = new ProductDAO();
-        int qtde = product.getQtde() - product.getQtdeCarrinho();
-        product.setQtde(qtde);
-
+        tirarProdutoDoEstoque(product);
         try {
-            productDAO.update(product);
             connection.setAutoCommit(false);
 
             StringBuilder sql = new StringBuilder();
@@ -326,6 +331,28 @@ public class OrderDAO extends AbstractJdbcDAO {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void tirarProdutoDoEstoque(Product product) {
+        ProductDAO productDAO = new ProductDAO();
+        int qtde = product.getQtde() - product.getQtdeCarrinho();
+        product.setQtde(qtde);
+        try {
+            productDAO.update(product);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void reporProdutoAoEstoque(Product product){
+        ProductDAO productDAO = new ProductDAO();
+        int qtde = product.getQtde() + product.getQtdeCarrinho();
+        product.setQtde(qtde);
+        try {
+            productDAO.update(product);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
