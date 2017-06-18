@@ -512,9 +512,6 @@ angular.module("cpguns", ['minhasDiretivas'])
         })
 
         .controller("productController", function ($scope, $http) {
-            if (window.sessionStorage.getItem("produto")) {
-                alert("Opa");
-            }
             $scope.salvar = function () {
                 $http({
                     method: 'POST',
@@ -536,32 +533,6 @@ angular.module("cpguns", ['minhasDiretivas'])
                     }
                 }).then(function successCallback(response) {
                     alert("Produto salvo com sucesso!");
-                }, function errorCallback(response) {
-                    alert("ERRO");
-                });
-            };
-
-            $scope.alterar = function () {
-                $http({
-                    method: 'POST',
-                    url: '/cpguns/arms',
-                    params: {
-                        operacao: "ALTERAR",
-                        origem: $scope.produto.origem,
-                        manufacturer: $scope.produto.manufacturer,
-                        uri: $scope.produto.uri,
-                        nome: $scope.produto.nome,
-                        preco: $scope.produto.preco,
-                        qtde: $scope.produto.qtde,
-                        calibre: $scope.produto.calibre,
-                        peso: $scope.produto.peso,
-                        capacidade: $scope.produto.capacidade,
-                        modelo: $scope.produto.modelo,
-                        action: $scope.produto.action,
-                        descricao: $scope.produto.descricao
-                    }
-                }).then(function successCallback(response) {
-                    alert("Produto alterado com sucesso!");
                 }, function errorCallback(response) {
                     alert("ERRO");
                 });
@@ -597,6 +568,31 @@ angular.module("cpguns", ['minhasDiretivas'])
                         alert("ERRO");
                     });
                 }
+            };
+            
+            $scope.vaiAlterar = function(produto){
+                window.sessionStorage.setItem("produto", JSON.stringify(produto));
+                window.location.href = "http://localhost:8084/cpguns/pages/alterar_produto.html";
+            }
+        })
+        
+        .controller("alterarProductController", function ($scope, $http) {
+            if(window.sessionStorage.getItem("produto")){
+                $scope.produto = JSON.parse(window.sessionStorage.getItem("produto"));
+            }
+            $scope.alterar = function () {
+                $http({
+                    method: 'POST',
+                    url: '/cpguns/arms',
+                    params: {
+                        operacao: "ALTERAR",
+                        produto: $scope.produto
+                    }
+                }).then(function successCallback(response) {
+                    alert("Produto alterado com sucesso!");
+                }, function errorCallback(response) {
+                    alert("ERRO");
+                });
             };
         })
 

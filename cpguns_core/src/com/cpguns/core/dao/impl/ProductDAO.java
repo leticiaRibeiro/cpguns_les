@@ -132,9 +132,15 @@ public class ProductDAO extends AbstractJdbcDAO{
         
         openConnection();
         PreparedStatement pst = null;
+        ManufacturerDAO manufacturerDAO = new ManufacturerDAO();
+        ImageDAO imageDAO = new ImageDAO();
+        
         Product product = (Product) entity;
         
+        manufacturerDAO.update(product.getManufacturer());
+        imageDAO.update(product.getImages().get(0));
         try {
+            openConnection();
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE tb_products SET name=?, description=?, caliber=?, weight=?, action=?, origin=?, model=?, capacity=?, price=?, qtde=?");

@@ -1,6 +1,7 @@
 package com.cpguns.core.viewhelper;
 
 import com.cpguns.core.app.Result;
+import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Image;
 import com.cpguns.core.model.Manufacturer;
@@ -24,6 +25,8 @@ public class ArmsViewHelper implements IViewHelper {
     public DomainEntity getEntidade(HttpServletRequest request) {
         String operacao = request.getParameter("operacao");
         Product p = null;
+        Gson gson = new Gson();
+        
         if (("CONSULTAR").equals(operacao)) {
             p = new Product();
         } else if (("SALVAR").equals(operacao)) {
@@ -55,6 +58,8 @@ public class ArmsViewHelper implements IViewHelper {
         } else if(("EXCLUIR").equals(operacao)){
             p = new Product();
             p.setId(Integer.valueOf(request.getParameter("id")));
+        } else if(("ALTERAR").equals(operacao)){
+            p = gson.fromJson(request.getParameter("produto"), Product.class);
         }
 
         return p;

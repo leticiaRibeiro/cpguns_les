@@ -28,7 +28,7 @@ public class ImageDAO extends AbstractJdbcDAO {
         super("tb_images", "id_image");
     }
 
-    public void createTableProduct(){
+    public void createTableProduct() {
         openConnection();
         StringBuilder sql = new StringBuilder();
         sql.append("CREATE TABLE tb_images(");
@@ -63,14 +63,14 @@ public class ImageDAO extends AbstractJdbcDAO {
             sql.append(" VALUES (?,?)");
 
             pst = connection.prepareStatement(sql.toString(),
-            Statement.RETURN_GENERATED_KEYS);
+                    Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, image.getUri());
             pst.setInt(2, image.getId_product());
             pst.executeUpdate();
 
             ResultSet rs = pst.getGeneratedKeys();
             int idImg = 0;
-            if(rs.next()){
+            if (rs.next()) {
                 idImg = rs.getInt("id_image");
             }
             image.setId(idImg);
@@ -82,11 +82,11 @@ public class ImageDAO extends AbstractJdbcDAO {
                 sqlE.printStackTrace();
             }
             e.printStackTrace();
-        } finally{
-            try{
+        } finally {
+            try {
                 pst.close();
                 connection.close();
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -139,7 +139,36 @@ public class ImageDAO extends AbstractJdbcDAO {
 
     @Override
     public void update(DomainEntity entidade) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        openConnection();
+        PreparedStatement pst = null;
+        Image image = (Image) entidade;
+        
+        try {
+            connection.setAutoCommit(false);
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE tb_images SET uri=?");
+            sql.append(" WHERE id_product=?");
+
+            pst = connection.prepareStatement(sql.toString());
+            pst.setString(1, image.getUri());
+            pst.setInt(2, image.getId_product());
+            pst.executeUpdate();
+            connection.commit();
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlE) {
+                sqlE.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                pst.close();
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
