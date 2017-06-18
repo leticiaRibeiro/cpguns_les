@@ -289,7 +289,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                     alert("ERRO");
                 });
             };
-            
+
             $scope.addCarrinho = function (produto) {
                 if (window.sessionStorage.getItem("carrinho")) { // EXISTE o carrinho
                     var carrinho = JSON.parse(window.sessionStorage.getItem("carrinho"));
@@ -510,8 +510,11 @@ angular.module("cpguns", ['minhasDiretivas'])
                 });
             };
         })
-        
-        .controller("productController", function($scope, $http){
+
+        .controller("productController", function ($scope, $http) {
+            if (window.sessionStorage.getItem("produto")) {
+                alert("Opa");
+            }
             $scope.salvar = function () {
                 $http({
                     method: 'POST',
@@ -536,7 +539,65 @@ angular.module("cpguns", ['minhasDiretivas'])
                 }, function errorCallback(response) {
                     alert("ERRO");
                 });
-            };                        
+            };
+
+            $scope.alterar = function () {
+                $http({
+                    method: 'POST',
+                    url: '/cpguns/arms',
+                    params: {
+                        operacao: "ALTERAR",
+                        origem: $scope.produto.origem,
+                        manufacturer: $scope.produto.manufacturer,
+                        uri: $scope.produto.uri,
+                        nome: $scope.produto.nome,
+                        preco: $scope.produto.preco,
+                        qtde: $scope.produto.qtde,
+                        calibre: $scope.produto.calibre,
+                        peso: $scope.produto.peso,
+                        capacidade: $scope.produto.capacidade,
+                        modelo: $scope.produto.modelo,
+                        action: $scope.produto.action,
+                        descricao: $scope.produto.descricao
+                    }
+                }).then(function successCallback(response) {
+                    alert("Produto alterado com sucesso!");
+                }, function errorCallback(response) {
+                    alert("ERRO");
+                });
+            };
+
+            $scope.buscar = function () {
+                $http({
+                    method: 'GET',
+                    url: '/cpguns/arms',
+                    params: {
+                        operacao: "CONSULTAR"
+                    }
+                }).then(function successCallback(response) {
+                    $scope.produtos = response.data;
+                }, function errorCallback(response) {
+                    alert("ERRO");
+                });
+            };
+
+            $scope.delete = function (produto) {
+                if (confirm("Deseja realmente excluir o produto: " + produto.name + "?")) {
+                    $http({
+                        method: 'POST',
+                        url: '/cpguns/arms',
+                        params: {
+                            operacao: "EXCLUIR",
+                            id: produto.id
+                        }
+                    }).then(function successCallback(response) {
+                        alert("Produto excluido com sucesso!");
+                        $scope.buscar();
+                    }, function errorCallback(response) {
+                        alert("ERRO");
+                    });
+                }
+            };
         })
 
         .controller("confirmacaoController", function ($scope) {

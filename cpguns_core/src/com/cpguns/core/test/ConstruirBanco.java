@@ -256,6 +256,7 @@ public class ConstruirBanco {
     
     public static void fazerPedidoTeste(){
         OrderDAO orderDAO = new OrderDAO();
+        ProductDAO productDAO = new ProductDAO();
         Product p1 = new Product();
         Product p2 = new Product();
         Carrinho carrinho = new Carrinho();
@@ -282,16 +283,23 @@ public class ConstruirBanco {
         o.setValorTotal(4500);
         
         p1.setId(1);
-        p1.setQtdeCarrinho(2);
         p2.setId(2);
-        p2.setQtdeCarrinho(1);
+        try {
+            p1 = (Product) productDAO.read(p1).get(0);
+            p1.setQtdeCarrinho(2);
+            p2 = (Product) productDAO.read(p2).get(0);
+            p2.setQtdeCarrinho(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConstruirBanco.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         products.add(p1);
         products.add(p2);
         carrinho.setProducts(products);
         
         o.setCarrinho(carrinho);
         o.setAutorizacao("123828937128937");
-        o.setStatus(Status.RETIRADO);
+        o.setStatus(Status.EM_NEGOCIACAO);
         try {
             orderDAO.create(o);
         } catch (SQLException ex) {

@@ -52,6 +52,9 @@ public class ArmsViewHelper implements IViewHelper {
             p.setDescription(request.getParameter("descricao"));
             p.setDtCreate(new Date());
             p.setAtivo(true);
+        } else if(("EXCLUIR").equals(operacao)){
+            p = new Product();
+            p.setId(Integer.valueOf(request.getParameter("id")));
         }
 
         return p;

@@ -46,6 +46,7 @@ public class ProductDAO extends AbstractJdbcDAO{
         sql.append("capacity text, ");
         sql.append("price decimal, ");
         sql.append("qtde INTEGER, ");
+        sql.append("ativo BOOLEAN, ");
         sql.append("id_manuf INTEGER REFERENCES tb_manufacturer(id_manufacturer), ");
         sql.append("dtCreate date) ");
         
@@ -75,8 +76,8 @@ public class ProductDAO extends AbstractJdbcDAO{
             mDAO.create(product.getManufacturer());
             
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO tb_products(name, description, caliber, weight, action, origin, model, capacity, price, qtde, dtCreate, id_manuf )");
-            sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+            sql.append("INSERT INTO tb_products(name, description, caliber, weight, action, origin, model, capacity, price, qtde, dtCreate, ativo, id_manuf )");
+            sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
             pst = connection.prepareStatement(sql.toString(), 
             Statement.RETURN_GENERATED_KEYS);
@@ -92,7 +93,8 @@ public class ProductDAO extends AbstractJdbcDAO{
             pst.setInt(10, product.getQtde());
             Timestamp time = new Timestamp(product.getDtCreate().getTime());
             pst.setTimestamp(11, time);
-            pst.setInt(12, product.getManufacturer().getId());
+            pst.setBoolean(12, product.isAtivo());
+            pst.setInt(13, product.getManufacturer().getId());
             pst.executeUpdate();
             
             ResultSet rs = pst.getGeneratedKeys();
@@ -188,7 +190,9 @@ public class ProductDAO extends AbstractJdbcDAO{
             if(product.getId() != 0){ // pq != 0? INT é um tipo primitivo. Ou seja, NUNCA será null. Caso esteja 0, é pq não foi informado um ID especifico.
                 sql.append(" WHERE id_product=?"); // vamos procurar um produto especifico
                 ehEspecifico = true;
-            } 
+            } else{
+                sql.append(" WHERE ativo=true");
+            }
             
             pst = connection.prepareStatement(sql.toString());
             if(ehEspecifico){ // caso for o especifico, precisamos settar o ID para saber qual é o especifico
@@ -204,6 +208,7 @@ public class ProductDAO extends AbstractJdbcDAO{
                 List<Image> imagens = new ArrayList<>();
                 // pegamos os valores das colunas e settamos no objeto de Product - Se a coluna for int: rs.getInt("NOME DA COLUNA")
                 p.setName(rs.getString("name"));
+                p.setAtivo(rs.getBoolean("ativo"));
                 p.setId(rs.getInt("id_product"));
                 p.setDescription(rs.getString("description"));
                 p.setCaliber(rs.getString("caliber"));
@@ -245,4 +250,42 @@ public class ProductDAO extends AbstractJdbcDAO{
         }
         return products;
     }
+
+    @Override
+    public void delete(DomainEntity entity) {
+        openConnection();
+        PreparedStatement pst = null;
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE tb_products SET ativo=false");
+        // estava faltando um espaço aqui no começo rs
+        sql.append(" WHERE id_product=?");
+        try {
+            connection.setAutoCommit(false);
+            pst = connection.prepareStatement(sql.toString());
+            pst.setInt(1, entity.getId());
+
+            pst.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+
+            try {
+                pst.close();
+                if (ctrlTransaction) {
+                    connection.close();
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    
 }

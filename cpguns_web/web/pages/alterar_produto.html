@@ -9,12 +9,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body ng-controller="ClienteController">
+    <body ng-controller="productController">
         <!-- chamando nossa diretiva para o header da area logada -->
     <header-logado></header-logado>
 
     <!-- corpo da página -->
-    <main>
+    <main data-ng-init="buscar()">
         <!-- uma linha em branco, para dar o espaçamento do header -->
         <div class="row"></div>
 
@@ -41,33 +41,13 @@
                             </thead>
 
                             <tbody>
-                                <tr>
-                                    <td><img class="materialboxed" width="150" src="../images/m4a4.png"></td>
-                                    <td>M4A4</td>
-                                    <td>R$ 5.500,00</td>
-                                    <td>Semi-automática</td>
+                                <tr ng-repeat="produto in produtos">
+                                    <td><img class="materialboxed" width="150" src="{{produto.images[0].uri}}"></td>
+                                    <td>{{produto.name}}</td>
+                                    <td>R{{produto.price | currency}}</td>
+                                    <td>{{produto.action}}</td>
                                     <td>
-                                        <i class="small material-icons">delete</i>
-                                        <i class="small material-icons">edit</i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img class="materialboxed" width="150" src="../images/glock.png"></td>
-                                    <td>Glock</td>
-                                    <td>R$ 1.500,00</td>
-                                    <td>Pistola</td>
-                                    <td>
-                                        <i class="small material-icons">delete</i>
-                                        <i class="small material-icons">edit</i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img class="materialboxed" width="150" src="../images/ak47.png"></td>
-                                    <td>AK47</td>
-                                    <td>R$ 6.500,00</td>
-                                    <td>Semi-automática</td>
-                                    <td>
-                                        <i class="small material-icons">delete</i>
+                                        <i class="small material-icons" ng-click="delete(produto)">delete</i>
                                         <i class="small material-icons">edit</i>
                                     </td>
                                 </tr>
