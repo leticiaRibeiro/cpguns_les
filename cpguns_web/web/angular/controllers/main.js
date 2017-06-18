@@ -222,7 +222,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                         alert("Nenhum usuário encontrado com essas credenciais!");
                     } else {
                         window.sessionStorage.setItem("user", JSON.stringify(response.data.entities[0]));
-                        window.location.href = "http://localhost:8084/cpguns/pages/alterar_dados_cadastrais.html";
+                        window.location.href = "http://localhost:8084/cpguns/pages/index.html";
                     }
                 }, function errorCallback(response) {
                     alert("ERRO");
@@ -252,7 +252,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                         window.sessionStorage.setItem("user", JSON.stringify(response.data.entities[0]));
                         //var usuario = JSON.parse(window.sessionStorage.getItem("user"));
                         alert("Usuário cadastrado com sucesso!");
-                        window.location.href = "http://localhost:8084/cpguns/pages/alterar_dados_cadastrais.html";
+                        window.location.href = "http://localhost:8084/cpguns/pages/index.html";
                     }
                 }, function errorCallback(response) {
                     // deu caquinha
@@ -276,6 +276,7 @@ angular.module("cpguns", ['minhasDiretivas'])
         })
 
         .controller("indexController", function ($scope, $http) {
+            $scope.user = JSON.parse(window.sessionStorage.getItem("user"));
             $scope.getArms = function () {
                 $http({
                     method: 'GET',

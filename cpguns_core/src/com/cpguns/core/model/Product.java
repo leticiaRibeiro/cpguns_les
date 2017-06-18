@@ -22,6 +22,7 @@ public class Product extends DomainEntity{
     private List<Image> images;
     private int qtde;
     private int qtdeCarrinho;
+    private int nivelAcesso;
 
     
     public String getName() {
@@ -141,6 +142,20 @@ public class Product extends DomainEntity{
      */
     public void setQtdeCarrinho(int qtdeCarrinho) {
         this.qtdeCarrinho = qtdeCarrinho;
+    }
+
+    /**
+     * @return the nivelAcesso
+     */
+    public int getNivelAcesso() {
+        return nivelAcesso;
+    }
+
+    /**
+     * @param nivelAcesso the nivelAcesso to set
+     */
+    public void setNivelAcesso(int nivelAcesso) {
+        this.nivelAcesso = nivelAcesso;
     }
     
 }

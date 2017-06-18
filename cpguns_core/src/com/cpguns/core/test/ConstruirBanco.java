@@ -116,6 +116,7 @@ public class ConstruirBanco {
         p1.setAtivo(true);
         p1.setAction("N/A");
         p1.setQtde(20);
+        p1.setNivelAcesso(3);
         
         
         
@@ -139,6 +140,7 @@ public class ConstruirBanco {
         p2.setAtivo(true);
         p2.setAction("N/A");
         p2.setQtde(10);
+        p2.setNivelAcesso(2);
         
         
         
@@ -162,6 +164,7 @@ public class ConstruirBanco {
         p3.setAtivo(true);
         p3.setAction("N/A");
         p3.setQtde(30);
+        p3.setNivelAcesso(1);
 
         try {        
             pDAO.create(p1);
@@ -309,30 +312,75 @@ public class ConstruirBanco {
 
     private static void popularUsuario() {
         CostumerDAO costumerDAO = new CostumerDAO();
-        Costumer c = new Costumer();
-        User u = new User();
-        Autorizacao auto = new Autorizacao();
-        auto.setAutorizacao("123456789");
+        Costumer c1 = new Costumer();
+        Costumer c2 = new Costumer();
+        Costumer c3 = new Costumer();
+        User u1 = new User();
+        User u2 = new User();
+        User u3 = new User();
+        Autorizacao auto1 = new Autorizacao();
+        Autorizacao auto2 = new Autorizacao();
+        Autorizacao auto3 = new Autorizacao();
         
-        u.setAtivo(true);
-        u.setDtCreate(new Date());
-        u.setEmail("leticia@hotmail.com");
-        u.setLevel(2);
-        u.setPassword("123");
+        auto1.setAutorizacao("123456789");
+        auto2.setAutorizacao("987654321");
+        auto3.setAutorizacao("192837465");
         
-        c.setAtivo(true);
-        c.setCpf("40562486801");
-        c.setDtBirth(new Date());
-        c.setDtCreate(new Date());
-        c.setGenre("Feminino");
-        c.setName("Leticia");
-        c.setPhoneNumber("11974567733");
-        c.setRg("432524381");
-        c.setUser(u);
-        c.setAutorizacao(auto);
+        u1.setAtivo(true);
+        u1.setDtCreate(new Date());
+        u1.setEmail("leticia@hotmail.com");
+        u1.setLevel(3);
+        u1.setPassword("123");
+        
+        u2.setAtivo(true);
+        u2.setDtCreate(new Date());
+        u2.setEmail("gustavo@hotmail.com");
+        u2.setLevel(2);
+        u2.setPassword("123");
+        
+        u3.setAtivo(true);
+        u3.setDtCreate(new Date());
+        u3.setEmail("rodrigo@hotmail.com");
+        u3.setLevel(1);
+        u3.setPassword("123");
+        
+        c1.setAtivo(true);
+        c1.setCpf("40562486801");
+        c1.setDtBirth(new Date());
+        c1.setDtCreate(new Date());
+        c1.setGenre("Feminino");
+        c1.setName("Leticia");
+        c1.setPhoneNumber("11974567733");
+        c1.setRg("432524381");
+        c1.setUser(u1);
+        c1.setAutorizacao(auto1);
+        
+        c2.setAtivo(true);
+        c2.setCpf("83767312891");
+        c2.setDtBirth(new Date());
+        c2.setDtCreate(new Date());
+        c2.setGenre("Masculino");
+        c2.setName("Gustavo");
+        c2.setPhoneNumber("11974567733");
+        c2.setRg("432524381");
+        c2.setUser(u2);
+        c2.setAutorizacao(auto2);
+        
+        c3.setAtivo(true);
+        c3.setCpf("23252572583");
+        c3.setDtBirth(new Date());
+        c3.setDtCreate(new Date());
+        c3.setGenre("Masculino");
+        c3.setName("Rodrigo");
+        c3.setPhoneNumber("11974567733");
+        c3.setRg("432524381");
+        c3.setUser(u3);
+        c3.setAutorizacao(auto3);
         
         try {
-            costumerDAO.create(c);
+            costumerDAO.create(c1);
+            costumerDAO.create(c2);
+            costumerDAO.create(c3);
         } catch (SQLException ex) {
             Logger.getLogger(ConstruirBanco.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -347,7 +395,12 @@ public class ConstruirBanco {
         auto2.setAutorizacao("987654321");
         auto2.setTipo(TipoAutorizacao.POLICIAL);
         
+        Autorizacao auto3 = new Autorizacao();
+        auto3.setAutorizacao("192837465");
+        auto3.setTipo(TipoAutorizacao.CIVIL);
+        
         analiseDAO.salvarAutorizacao(auto);
         analiseDAO.salvarAutorizacao(auto2);
+        analiseDAO.salvarAutorizacao(auto3);
     }
 }

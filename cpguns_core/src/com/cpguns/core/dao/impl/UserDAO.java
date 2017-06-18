@@ -129,7 +129,7 @@ public class UserDAO extends AbstractJdbcDAO {
                 u.setId(rs.getInt("id_user"));
                 u.setAtivo(rs.getBoolean("ativo"));
                 
-                costumer.setUser(user);
+                costumer.setUser(u);
                 costumer.setId(rs.getInt("id_costumer"));
                 costumer.setName(rs.getString("name"));
                 costumer.setCpf(rs.getString("cpf"));

@@ -39,7 +39,7 @@
                     <div class="card col s12 borda">
                         <div class="card-action">
                             <div class="row">
-                                <div class="col s6" ng-repeat="arm in arms">
+                                <div class="col s6" ng-repeat="arm in arms" ng-if="user.user.level >= arm.nivelAcesso">
                                     <div class="card col s10 borda" >
                                         <div class="card-action">
                                             <div class="row">

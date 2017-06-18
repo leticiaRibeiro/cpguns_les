@@ -46,6 +46,7 @@ public class ProductDAO extends AbstractJdbcDAO{
         sql.append("capacity text, ");
         sql.append("price decimal, ");
         sql.append("qtde INTEGER, ");
+        sql.append("nivel_acesso INTEGER, ");
         sql.append("ativo BOOLEAN, ");
         sql.append("id_manuf INTEGER REFERENCES tb_manufacturer(id_manufacturer), ");
         sql.append("dtCreate date) ");
@@ -76,8 +77,8 @@ public class ProductDAO extends AbstractJdbcDAO{
             mDAO.create(product.getManufacturer());
             
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO tb_products(name, description, caliber, weight, action, origin, model, capacity, price, qtde, dtCreate, ativo, id_manuf )");
-            sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            sql.append("INSERT INTO tb_products(name, description, caliber, weight, action, origin, model, capacity, price, qtde, dtCreate, nivel_acesso, ativo, id_manuf )");
+            sql.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
             pst = connection.prepareStatement(sql.toString(), 
             Statement.RETURN_GENERATED_KEYS);
@@ -93,8 +94,9 @@ public class ProductDAO extends AbstractJdbcDAO{
             pst.setInt(10, product.getQtde());
             Timestamp time = new Timestamp(product.getDtCreate().getTime());
             pst.setTimestamp(11, time);
-            pst.setBoolean(12, product.isAtivo());
-            pst.setInt(13, product.getManufacturer().getId());
+            pst.setInt(12, product.getNivelAcesso());
+            pst.setBoolean(13, product.isAtivo());
+            pst.setInt(14, product.getManufacturer().getId());
             pst.executeUpdate();
             
             ResultSet rs = pst.getGeneratedKeys();
@@ -215,6 +217,7 @@ public class ProductDAO extends AbstractJdbcDAO{
                 // pegamos os valores das colunas e settamos no objeto de Product - Se a coluna for int: rs.getInt("NOME DA COLUNA")
                 p.setName(rs.getString("name"));
                 p.setAtivo(rs.getBoolean("ativo"));
+                p.setNivelAcesso(rs.getInt("nivel_acesso"));
                 p.setId(rs.getInt("id_product"));
                 p.setDescription(rs.getString("description"));
                 p.setCaliber(rs.getString("caliber"));
