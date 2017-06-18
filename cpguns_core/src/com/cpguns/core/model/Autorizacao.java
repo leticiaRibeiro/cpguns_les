@@ -13,6 +13,8 @@ public class Autorizacao extends DomainEntity{
     
     private String autorizacao;
     private TipoAutorizacao tipo;
+    private String cpf;
+    private int nivel;
 
     /**
      * @return the autorizacao
@@ -40,5 +42,33 @@ public class Autorizacao extends DomainEntity{
      */
     public void setTipo(TipoAutorizacao tipo) {
         this.tipo = tipo;
+    }
+
+    /**
+     * @return the cpf
+     */
+    public String getCpf() {
+        return cpf;
+    }
+
+    /**
+     * @param cpf the cpf to set
+     */
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    /**
+     * @return the nivel
+     */
+    public int getNivel() {
+        return nivel;
+    }
+
+    /**
+     * @param nivel the nivel to set
+     */
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
     }
 }

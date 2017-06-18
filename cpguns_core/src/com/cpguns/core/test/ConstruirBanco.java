@@ -2,6 +2,7 @@ package com.cpguns.core.test;
 
 import com.cpguns.core.dao.impl.AddressDAO;
 import com.cpguns.core.dao.impl.AnalysisDAO;
+import com.cpguns.core.dao.impl.AutorizacaoDAO;
 import com.cpguns.core.dao.impl.CardDAO;
 import com.cpguns.core.dao.impl.CostumerDAO;
 import com.cpguns.core.dao.impl.ImageDAO;
@@ -37,7 +38,7 @@ import java.util.logging.Logger;
  * @author Leticia
  */
 public class ConstruirBanco {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         
         CostumerDAO costumerDAO = new CostumerDAO();
         UserDAO user = new UserDAO();
@@ -49,8 +50,9 @@ public class ConstruirBanco {
         CardDAO cardDAO = new CardDAO();
         OrderDAO oDAO = new OrderDAO();
         AnalysisDAO analiseDAO = new AnalysisDAO();
+        AutorizacaoDAO autorizacaoDAO = new AutorizacaoDAO();
         
-        analiseDAO.createTableAutorizacao();
+        autorizacaoDAO.createTableAutorizacao();
         manuDAO.createTableManufacturer();
         pDAO.createTableProduct();
         imgDAO.createTableProduct();
@@ -62,11 +64,11 @@ public class ConstruirBanco {
         oDAO.createTableOrder();
         analiseDAO.createTableAcesso();
         
-        popularAutorizacao(analiseDAO);
+        popularAutorizacao(autorizacaoDAO);
         popularArmas();
         popularLojas();
-        popularUsuario();
-        fazerPedidoTeste();
+//        popularUsuario();
+//        fazerPedidoTeste();
     }
     
     public static void popularArmas(){
@@ -322,7 +324,7 @@ public class ConstruirBanco {
         Autorizacao auto2 = new Autorizacao();
         Autorizacao auto3 = new Autorizacao();
         
-        auto1.setAutorizacao("123456789");
+        auto1.setAutorizacao("44566843807");
         auto2.setAutorizacao("987654321");
         auto3.setAutorizacao("192837465");
         
@@ -386,21 +388,55 @@ public class ConstruirBanco {
         }
     }
     
-    private static void popularAutorizacao(AnalysisDAO analiseDAO){
-        Autorizacao auto = new Autorizacao();
-        auto.setAutorizacao("123456789");
+    private static void popularAutorizacao(AutorizacaoDAO autorizaccaoDAO) throws SQLException{
+        Autorizacao auto;
+        
+        auto = new Autorizacao();
+        auto.setAutorizacao("1");
         auto.setTipo(TipoAutorizacao.CIVIL);
+        auto.setCpf("83767312891");
+        auto.setNivel(1);
         
-        Autorizacao auto2 = new Autorizacao();
-        auto2.setAutorizacao("987654321");
-        auto2.setTipo(TipoAutorizacao.POLICIAL);
+        autorizaccaoDAO.create(auto);
         
-        Autorizacao auto3 = new Autorizacao();
-        auto3.setAutorizacao("192837465");
-        auto3.setTipo(TipoAutorizacao.CIVIL);
+        auto = new Autorizacao();
+        auto.setAutorizacao("2");
+        auto.setTipo(TipoAutorizacao.CIVIL);
+        auto.setCpf("40562486801");
+        auto.setNivel(2);
         
-        analiseDAO.salvarAutorizacao(auto);
-        analiseDAO.salvarAutorizacao(auto2);
-        analiseDAO.salvarAutorizacao(auto3);
+        autorizaccaoDAO.create(auto);
+        
+        auto = new Autorizacao();
+        auto.setAutorizacao("3");
+        auto.setTipo(TipoAutorizacao.CIVIL);
+        auto.setCpf("44566843807");
+        auto.setNivel(3);
+        
+        autorizaccaoDAO.create(auto);
+        
+        auto = new Autorizacao();
+        auto.setAutorizacao("4");
+        auto.setTipo(TipoAutorizacao.POLICIAL);
+        auto.setCpf("19886972041");
+        auto.setNivel(1);
+        
+        autorizaccaoDAO.create(auto);
+        
+        auto = new Autorizacao();
+        auto.setAutorizacao("5");
+        auto.setTipo(TipoAutorizacao.POLICIAL);
+        auto.setCpf("48115293083");
+        auto.setNivel(2);
+        
+        autorizaccaoDAO.create(auto);
+        
+        auto = new Autorizacao();
+        auto.setAutorizacao("6");
+        auto.setTipo(TipoAutorizacao.POLICIAL);
+        auto.setCpf("32905728035");
+        auto.setNivel(3);
+        
+        autorizaccaoDAO.create(auto);
     }
 }

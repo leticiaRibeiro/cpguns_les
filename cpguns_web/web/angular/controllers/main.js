@@ -242,7 +242,8 @@ angular.module("cpguns", ['minhasDiretivas'])
                         rg: $scope.user.rg,
                         phone: $scope.user.phoneNumber,
                         email: $scope.user.email,
-                        password: $scope.user.password
+                        password: $scope.user.password,
+                        autorizacao: $scope.user.autorizacao
                     }
                 }).then(function successCallback(response) {
                     if (response.data.msg) {
@@ -343,21 +344,16 @@ angular.module("cpguns", ['minhasDiretivas'])
             };
 
             $scope.continuar = function () {
-                var autorizacao = prompt("Insira o número da autorização concedida pela polícia");
-                if (autorizacao !== null) {
-                    if (window.sessionStorage.getItem("user")) {
-                        window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
-                        window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
-                        window.sessionStorage.setItem("autorizacao", autorizacao);
-                        window.location.href = "http://localhost:8084/cpguns/pages/escolher_endereco.html";
-                    } else {
-                        alert("Você deve estar logado para efetuar a compra!");
-                        window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
-                        window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
-                        window.location.href = "http://localhost:8084/cpguns/pages/login.html";
-                    }
+
+                if (window.sessionStorage.getItem("user")) {
+                    var costumer = JSON.parse(window.sessionStorage.getItem("user"));
+
+                    window.sessionStorage.setItem("carrinho", JSON.stringify($scope.carrinho));
+                    window.sessionStorage.setItem("valorTotal", $scope.valorTotal);
+                    window.sessionStorage.setItem("autorizacao", costumer.autorizacao.autorizacao);
+                    window.location.href = "http://localhost:8084/cpguns/pages/escolher_endereco.html";
                 } else {
-                    alert("Favor inserir o número da autorização!");
+                    alert("Favor efetue o login!");
                 }
 
 
@@ -530,6 +526,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                         capacidade: $scope.produto.capacidade,
                         modelo: $scope.produto.modelo,
                         action: $scope.produto.action,
+                        nivel: $scope.produto.nivel,
                         descricao: $scope.produto.descricao
                     }
                 }).then(function successCallback(response) {
@@ -570,15 +567,15 @@ angular.module("cpguns", ['minhasDiretivas'])
                     });
                 }
             };
-            
-            $scope.vaiAlterar = function(produto){
+
+            $scope.vaiAlterar = function (produto) {
                 window.sessionStorage.setItem("produto", JSON.stringify(produto));
                 window.location.href = "http://localhost:8084/cpguns/pages/alterar_produto.html";
             }
         })
-        
+
         .controller("alterarProductController", function ($scope, $http) {
-            if(window.sessionStorage.getItem("produto")){
+            if (window.sessionStorage.getItem("produto")) {
                 $scope.produto = JSON.parse(window.sessionStorage.getItem("produto"));
             }
             $scope.alterar = function () {

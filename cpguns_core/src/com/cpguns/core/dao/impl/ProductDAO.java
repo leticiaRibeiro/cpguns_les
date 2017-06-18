@@ -145,7 +145,7 @@ public class ProductDAO extends AbstractJdbcDAO{
             openConnection();
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
-            sql.append("UPDATE tb_products SET name=?, description=?, caliber=?, weight=?, action=?, origin=?, model=?, capacity=?, price=?, qtde=?");
+            sql.append("UPDATE tb_products SET name=?, description=?, caliber=?, weight=?, action=?, origin=?, model=?, capacity=?, price=?, qtde=?, nivel_acesso=?");
             // estava faltando um espaço aqui no começo rs
             sql.append(" WHERE id_product=?");
             
@@ -160,7 +160,8 @@ public class ProductDAO extends AbstractJdbcDAO{
             pst.setString(8, product.getCapacity());
             pst.setDouble(9, product.getPrice());
             pst.setInt(10, product.getQtde());
-            pst.setInt(11, product.getId());
+            pst.setInt(11, product.getNivelAcesso());
+            pst.setInt(12, product.getId());
             pst.executeUpdate();
             connection.commit();            
         } catch (Exception e) {

@@ -39,15 +39,15 @@
                     <div class="card col s12 borda">
                         <div class="card-action">
                             <div class="row">
-                                <div class="col s6" ng-repeat="arm in arms" ng-if="user.user.level >= arm.nivelAcesso">
-                                    <div class="card col s10 borda" >
+                                <div class="col s4" ng-repeat="arm in armsFiltrado = (arms | filter:filtro)" ng-if="user.user.level >= arm.nivelAcesso">
+                                    <div class="card col s12 borda" style="height: 400px;">
                                         <div class="card-action">
                                             <div class="row">
                                                 <div class="card-title">
                                                     {{arm.name}}
                                                 </div>
                                                 <div class="card-image">
-                                                    <a ng-click="verAnuncio(arm)"><img src="{{arm.images[0].uri}}"></a>
+                                                    <a ng-click="verAnuncio(arm)"><img class="col s12" src="{{arm.images[0].uri}}"></a>
                                                 </div>
                                                 <div class="card-content">
                                                     <p>{{arm.description}}</p>
@@ -55,7 +55,7 @@
                                             </div> <!-- Parte Esquerda -->
                                             <div class="row">
                                                 <div class="right">
-                                                    <a class="waves-effect waves-light btn" ng-click="addCarrinho(arm)" ng-if="arm.qtde > 0"><i class="material-icons left">add_shopping_cart</i>Adicionar</a>
+                                                    <a class="waves-effect waves-light btn btn-small" ng-click="addCarrinho(arm)" ng-if="arm.qtde > 0"><i class="material-icons left">add_shopping_cart</i>Adicionar</a>
                                                     <a class="waves-effect waves-light btn" ng-if="arm.qtde === 0" disabled>INDISPONIVEL</a>
                                                 </div>
                                             </div>

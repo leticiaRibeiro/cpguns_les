@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Gustavo de Souza Bezerra <gustavo.bezerra@hotmail.com>
- * @date 03/05/2017
+ * 
+ * @author Leticia
  */
 public class ArmsViewHelper implements IViewHelper {
 
@@ -52,6 +52,7 @@ public class ArmsViewHelper implements IViewHelper {
             p.setCapacity(request.getParameter("capacidade"));
             p.setModel(request.getParameter("modelo"));
             p.setAction(request.getParameter("action"));
+            p.setNivelAcesso(Integer.valueOf(request.getParameter("nivel")));
             p.setDescription(request.getParameter("descricao"));
             p.setDtCreate(new Date());
             p.setAtivo(true);

@@ -13,6 +13,7 @@ import com.cpguns.core.app.Result;
 import com.cpguns.core.dao.IDAO;
 import com.cpguns.core.dao.impl.AddressDAO;
 import com.cpguns.core.dao.impl.AnalysisDAO;
+import com.cpguns.core.dao.impl.AutorizacaoDAO;
 import com.cpguns.core.dao.impl.CostumerDAO;
 import com.cpguns.core.dao.impl.ManufacturerDAO;
 import com.cpguns.core.dao.impl.OrderDAO;
@@ -21,6 +22,7 @@ import com.cpguns.core.dao.impl.StoreDAO;
 import com.cpguns.core.dao.impl.UserDAO;
 import com.cpguns.core.model.Address;
 import com.cpguns.core.model.Analysis;
+import com.cpguns.core.model.Autorizacao;
 import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.Manufacturer;
@@ -38,6 +40,7 @@ import com.cpguns.core.strategy.ValidarExistencia;
 import com.cpguns.core.strategy.ValidarIdade;
 import com.cpguns.core.strategy.ValidarNome;
 import com.cpguns.core.strategy.ValidarTelefone;
+import com.cpguns.core.strategy.VerificaAutorizacao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,6 +78,7 @@ public class Facade implements IFacade {
         StoreDAO stoDAO = new StoreDAO();
         OrderDAO orderDAO = new OrderDAO();
         AnalysisDAO analysisDAO = new AnalysisDAO();
+        AutorizacaoDAO autorizacaoDAO = new AutorizacaoDAO();
 
         /* Adicionando cada dao no MAP indexando pelo nome da classe */
         daos.put(Manufacturer.class.getName(), manuDAO);
@@ -85,6 +89,7 @@ public class Facade implements IFacade {
         daos.put(Store.class.getName(), stoDAO);
         daos.put(Order.class.getName(), orderDAO);
         daos.put(Analysis.class.getName(), analysisDAO);
+        daos.put(Autorizacao.class.getName(), autorizacaoDAO);
 
 
         /* Criando instâncias de regras de negócio a serem utilizados*/
@@ -97,6 +102,7 @@ public class Facade implements IFacade {
         ValidarTelefone validarTelefone = new ValidarTelefone();
         ValidarNome validarNome = new ValidarNome();
         ValidarDadosObrigatoriosLoja validarDadosObgLoja = new ValidarDadosObrigatoriosLoja();
+        VerificaAutorizacao verificaAutorizacao = new VerificaAutorizacao();
         
 
         /* Criando uma lista para conter as regras de negócio do cliente
@@ -116,11 +122,13 @@ public class Facade implements IFacade {
         rnsCreateCostumer.add(validarExistencia);
         rnsCreateCostumer.add(validarTelefone);
         rnsCreateCostumer.add(validarNome);
+        rnsCreateCostumer.add(verificaAutorizacao);
         rnsUpdateCostumer.add(validarEmail);
         rnsUpdateCostumer.add(validarTelefone);
         rnsUpdateCostumer.add(validarNome);
         rnsUpdateCostumer.add(validarDadosObgCli);
         rnsCreateStore.add(validarDadosObgLoja);
+        
         
 
         /* Cria o mapa que poderá conter todas as listas de regras de negócio específica

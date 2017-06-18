@@ -6,6 +6,7 @@
 package com.cpguns.core.viewhelper;
 
 import com.cpguns.core.app.Result;
+import com.cpguns.core.model.Autorizacao;
 import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.User;
@@ -47,6 +48,9 @@ public class CostumerViewHelper implements IViewHelper {
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            String autorizacao = request.getParameter("autorizacao");
+            Autorizacao auto = new Autorizacao();
+            auto.setAutorizacao(autorizacao);
 
             costumer = new Costumer();
             user = new User();
@@ -62,6 +66,7 @@ public class CostumerViewHelper implements IViewHelper {
             user.setLevel(1);
             costumer.setUser(user);
 
+            costumer.setAutorizacao(auto);
             costumer.setCpf(cpf);
             costumer.setDtCreate(new Date());
             costumer.setGenre(genre);
