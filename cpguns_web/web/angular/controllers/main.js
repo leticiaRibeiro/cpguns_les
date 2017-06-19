@@ -582,6 +582,7 @@ angular.module("cpguns", ['minhasDiretivas'])
 
             $scope.limparCarrinho = function () {
                 $scope.carrinho.splice(0, $scope.carrinho.length);
+                $scope.valorTotal = 0;
                 window.sessionStorage.removeItem("carrinho");
             };
 

@@ -54,7 +54,7 @@
                         </div>
                         <div class="input-field col s3">
                             <i class="material-icons prefix">flag</i>
-                            <input type="text" id="calibre" ng-model="produto.calibre"/>
+                            <input type="text" id="calibre" ng-model="produto.caliber"/>
                             <label for="calibre">Calibre</label>
                         </div>
                         <div class="input-field col s3">
@@ -105,7 +105,11 @@
                     </div>
                     <div class="row">
                         <div class="right">
-                            <a class="waves-effect waves-light btn" ng-click="alterar()">Alterar</a>
+                            <a class="waves-effect waves-light btn" ng-click="alterar()"
+                               ng-disabled="!produto.name || !produto.price || !produto.qtde || !produto.images[0].uri || !produto.caliber || !produto.weight || !produto.capacity
+                               || !produto.model || !produto.action || !produto.manufacturer.name || !produto.origin || !produto.description">
+                                Alterar
+                            </a>
                         </div>
                     </div>
                 </div>

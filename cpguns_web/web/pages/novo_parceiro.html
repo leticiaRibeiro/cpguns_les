@@ -117,7 +117,11 @@
 
                     <div class="row">
                         <div class="right">
-                            <a class="waves-effect waves-light btn" ng-click="salvarStore(store)">Cadastrar</a>
+                            <a class="waves-effect waves-light btn" ng-click="salvarStore(store)"
+                               ng-disabled="!store.name || !store.zip || !store.address || !store.neighborhood || !store.city || !store.number || !store.complement || !store.state
+                               || !store.email || !store.password">
+                                Cadastrar
+                            </a>
                         </div>
                     </div>
                 </div>

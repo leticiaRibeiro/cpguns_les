@@ -49,7 +49,7 @@ and open the template in the editor.
                         </div>
                         <br/>
                         <div class="row">
-                            <a class="waves-effect waves-light btn right" ng-click="logar(login)">
+                            <a class="waves-effect waves-light btn right" ng-disabled="!login.mail || !login.pass" ng-click="logar(login)">
                                 <i class="material-icons left">input</i>Entrar</a>
                         </div>
                     </div>
@@ -135,7 +135,8 @@ and open the template in the editor.
                             </div>
                             <br/>
                             <div class="row">
-                                <a class="waves-effect waves-light btn right green darken-1" ng-click="cadastrar()">
+                                <a class="waves-effect waves-light btn right green darken-1" ng-click="cadastrar()"
+                                   ng-disabled="!user.name || !user.dtBirth || !user.genre || !user.cpf || !user.rg || !user.phoneNumber || !user.email || !user.password || !user.autorizacao" >
                                     <i class="material-icons left">input</i>Cadastrar</a>
                             </div>
 <!--                            ng-disabled="!user.name"-->

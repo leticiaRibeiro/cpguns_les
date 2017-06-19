@@ -96,7 +96,8 @@
                             <div class="row">
                                 <a class="waves-effect waves-light btn left red" ng-click="excluir()">
                                     <i class="material-icons left">delete</i>Excluir</a>
-                                <a class="waves-effect waves-light btn right green darken-1" ng-click="alterar()">
+                                <a class="waves-effect waves-light btn right green darken-1" ng-click="alterar()"
+                                   ng-disabled="!user.name || !user.dtBirth || !user.genre || !user.phoneNumber || !user.user.email || !user.user.password">
                                     <i class="material-icons left">input</i>Alterar</a>
                             </div>
                             <!--                            ng-disabled="!user.name"-->

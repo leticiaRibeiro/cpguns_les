@@ -167,7 +167,11 @@
                             <div class="row">
                                 <div class="right">
                                     <a class="waves-effect waves-light btn brown lighten-3" href="escolher_endereco.html">Voltar</a>
-                                    <a class="waves-effect waves-light btn" ng-click="finalizar()">Finalizar</a>
+                                    <a class="waves-effect waves-light btn" ng-click="finalizar()"
+                                       ng-disabled="!card.name || !card.number || !card.month || !card.year || !card.csc || !endereco.zip || !endereco.logradouro ||
+                                       !endereco.bairro || !endereco.cidade || !endereco.estado">
+                                        Finalizar
+                                    </a>
                                 </div>
                             </div>
                         </div> <!-- Fim do CARD -->
