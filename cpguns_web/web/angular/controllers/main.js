@@ -225,6 +225,20 @@ angular.module("cpguns", ['minhasDiretivas'])
                 window.sessionStorage.setItem("pedido", JSON.stringify(pedido));
                 window.location.href = "http://localhost:8084/cpguns/pages/pedido_especifico.html";
             };
+            
+            $scope.getLojas = function () {
+                $http({
+                    method: 'GET',
+                    url: '/cpguns/store',
+                    params: {
+                        operacao: "CONSULTAR"
+                    }
+                }).then(function successCallback(response) {
+                    $scope.lojas = response.data;
+                }, function errorCallback(response) {
+                    alert("ERRO");
+                });
+            };
         })
 
         .controller("CrudController", function ($scope, $http) {
