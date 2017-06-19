@@ -4,7 +4,7 @@ package com.cpguns.core.model;
  * @author Gustavo de Souza Bezerra <gustavo.bezerra@hotmail.com>
  * @date   14/05/2017
  */
-public class Acesso {
+public class Acesso extends DomainEntity{
     
     private int numeroAcessos;
     private Product product;

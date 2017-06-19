@@ -54,7 +54,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                     alert("ERRO");
                 });
             };
-            
+
             $scope.buscarPedidos = function () {
                 var costumer = JSON.parse(window.sessionStorage.getItem("user"));
                 $http({
@@ -97,7 +97,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                 window.sessionStorage.setItem("pedido", JSON.stringify(pedido));
                 window.location.href = "http://localhost:8084/cpguns/pages/pedido_especifico.html";
             };
-            
+
             $scope.alterarPedido = function (pedido) {
                 var status;
                 if (pedido.status === "AGUARDANDO_APROVACAO") {
@@ -490,8 +490,21 @@ angular.module("cpguns", ['minhasDiretivas'])
             };
         })
 
-        .controller("anuncioController", function ($scope) {
+        .controller("anuncioController", function ($scope, $http) {
             $scope.produto = JSON.parse(window.sessionStorage.getItem("arm"));
+            $http({
+                    method: 'POST',
+                url: '/cpguns/acesso',
+                params: {
+                    operacao: "SALVAR",
+                    id_produto: $scope.produto.id
+                }
+            }).then(function successCallback(response) {
+                
+            }, function errorCallback(response) {
+                console.log("Erro ao gravar o acesso");
+            });
+            
             $scope.addCarrinho = function () {
                 if (window.sessionStorage.getItem("carrinho")) { // EXISTE o carrinho
                     var carrinho = JSON.parse(window.sessionStorage.getItem("carrinho"));

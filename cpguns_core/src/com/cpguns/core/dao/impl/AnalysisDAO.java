@@ -13,11 +13,14 @@ import com.cpguns.core.model.AnaliseVendas;
 import com.cpguns.core.model.Analysis;
 import com.cpguns.core.model.Autorizacao;
 import com.cpguns.core.model.DomainEntity;
+import com.cpguns.core.model.Image;
 import com.cpguns.core.model.Product;
 import com.cpguns.core.model.TipoGrafico;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,10 +57,10 @@ public class AnalysisDAO extends AbstractJdbcDAO {
             Logger.getLogger(ManufacturerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public void create(DomainEntity entidade) throws SQLException {
-
+        
     }
 
     @Override
@@ -112,7 +115,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         connection.setAutoCommit(false);
         sql.append("SELECT a.dtacesso\n"
                 + "        FROM tb_acessos a INNER JOIN tb_products p on a.id_prod = p.id_product\n"
-                + "        WHERE a.dtacesso between '2017-03-01' and '2017-05-15' group by a.dtacesso\n"
+                + "        WHERE a.dtacesso between '2017-05-01' and '2017-06-20' group by a.dtacesso\n"
                 + "        ORDER BY a.dtacesso asc;");
         pst = connection.prepareStatement(sql.toString());
 
@@ -128,7 +131,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         sql.delete(0, sql.length());
         sql.append("SELECT count(a.id_prod), p.id_product, a.dtacesso\n"
                 + "        FROM tb_acessos a INNER JOIN tb_products p on a.id_prod = p.id_product\n"
-                + "        WHERE a.dtacesso between '2017-03-01' and '2017-05-15' group by a.id_prod, p.id_product, a.dtacesso\n"
+                + "        WHERE a.dtacesso between '2017-05-01' and '2017-06-20' group by a.id_prod, p.id_product, a.dtacesso\n"
                 + "        ORDER BY a.dtacesso, p.id_product asc");
         pst = connection.prepareStatement(sql.toString());
         rs = pst.executeQuery();
@@ -169,12 +172,12 @@ public class AnalysisDAO extends AbstractJdbcDAO {
                 + "        INNER JOIN tb_products p on p.id_product = op.id_product\n"
                 + "        INNER JOIN tb_costumers c on c.id_costumer = o.id_cos\n"
                 + "        INNER JOIN tb_autorizacoes aut on aut.autorizacao = c.fk_auto\n"
-                + "        WHERE o.dtcreate between '2017-05-01' and '2017-05-15' and p.caliber like '.38' group by c.id_costumer, aut.tipo, o.dtcreate;");
+                + "        WHERE o.dtcreate between '2017-06-01' and '2017-06-20' and p.caliber like '.38' group by c.id_costumer, aut.tipo, o.dtcreate;");
         pst = connection.prepareStatement(sql.toString());
 
         ResultSet rs = pst.executeQuery();
         // enquanto houver registros, vamos lendo....
-        
+
         analiseVendas = new AnaliseVendas();
         while (rs.next()) {
             if (analiseVendas.getDtVenda() != null) {
@@ -202,7 +205,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
                     analiseVendas.setCivil(rs.getInt("count"));
                 }
             }
-        }       
+        }
 
         listaFinal.add(analiseVendas);
         analise.setVendas(listaFinal);
@@ -220,7 +223,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         connection.setAutoCommit(false);
         sql.append("SELECT count(s.id_store), a.state FROM tb_orders o INNER JOIN tb_stores s on o.id_sto = s.id_store\n"
                 + "        INNER JOIN tb_addresses a on s.id_add = a.id_address\n"
-                + "        WHERE o.dtcreate between '2017-05-01' and '2017-05-15' group by a.state");
+                + "        WHERE o.dtcreate between '2017-06-01' and '2017-06-20' group by a.state");
         pst = connection.prepareStatement(sql.toString());
 
         ResultSet rs = pst.executeQuery();
