@@ -37,7 +37,7 @@ public class StoreViewHelper implements IViewHelper{
             
         } else if(("SALVAR").equals(operacao) || ("ALTERAR").equals(operacao)){
             String name = request.getParameter("name");
-            String street = request.getParameter("street");
+            String street = request.getParameter("address");
             String number = request.getParameter("number");
             String complement = request.getParameter("complement");
             String zip = request.getParameter("zip");

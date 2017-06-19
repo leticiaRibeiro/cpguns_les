@@ -6,8 +6,10 @@
 package com.cpguns.core.dao.impl;
 
 import com.cpguns.core.dao.AbstractJdbcDAO;
+import com.cpguns.core.model.Autorizacao;
 import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
+import com.cpguns.core.model.TipoAutorizacao;
 import com.cpguns.core.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -105,13 +107,16 @@ public class UserDAO extends AbstractJdbcDAO {
         PreparedStatement pst = null;
         User user = (User) entity;
         Costumer costumer;
+        Autorizacao autorizacao;
         List<DomainEntity> costumers = new ArrayList<>();
 
         try {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             sql.append("SELECT * from tb_costumers c\n"
-                    + "inner join tb_users u on u.id_user=c.id_us where u.email=? and u.password=? and u.ativo=true;");
+                    + "inner join tb_users u on u.id_user=c.id_us");
+            sql.append(" inner join tb_autorizacoes a on a.cpf=c.cpf");
+            sql.append(" where u.email=? and u.password=? and u.ativo=true;");
 
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, user.getEmail());
@@ -122,6 +127,15 @@ public class UserDAO extends AbstractJdbcDAO {
             while (rs.next()) {
                 User u = new User();
                 costumer = new Costumer();
+                autorizacao = new Autorizacao();
+                
+                autorizacao.setAutorizacao(rs.getString("autorizacao"));
+                autorizacao.setNivel(rs.getInt("nivel_acesso"));
+                if(rs.getString("tipo").equals(TipoAutorizacao.CIVIL.toString())){
+                    autorizacao.setTipo(TipoAutorizacao.CIVIL);
+                } else{
+                    autorizacao.setTipo(TipoAutorizacao.POLICIAL);
+                }
                 
                 u.setEmail(rs.getString("email"));
                 u.setPassword(rs.getString("password"));
@@ -129,6 +143,7 @@ public class UserDAO extends AbstractJdbcDAO {
                 u.setId(rs.getInt("id_user"));
                 u.setAtivo(rs.getBoolean("ativo"));
                 
+                costumer.setAutorizacao(autorizacao);
                 costumer.setUser(u);
                 costumer.setId(rs.getInt("id_costumer"));
                 costumer.setName(rs.getString("name"));

@@ -39,7 +39,7 @@
                     <div class="card col s12 borda">
                         <div class="card-action">
                             <div class="row">
-                                <div class="col s4" ng-repeat="arm in armsFiltrado = (arms | filter:filtro)" ng-if="user.user.level >= arm.nivelAcesso">
+                                <div class="col s4" ng-repeat="arm in armsFiltrado = (arms | filter:filtro)" ng-if="user.autorizacao.nivel >= arm.nivelAcesso">
                                     <div class="card col s12 borda" style="height: 400px;">
                                         <div class="card-action">
                                             <div class="row">

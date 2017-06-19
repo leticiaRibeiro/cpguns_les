@@ -73,7 +73,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                         state: store.state
                     }
                 }).then(function successCallback(response) {
-
+                    alert("Lojas cadastrada com sucesso!");
                 }, function errorCallback(response) {
                     // deu caquinha
                 });
