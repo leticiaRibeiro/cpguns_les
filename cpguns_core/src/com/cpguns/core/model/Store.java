@@ -17,6 +17,7 @@ public class Store extends DomainEntity{
     private Address address;
     private String name;
     private int level;
+    private User user;
 
     /**
      * @return the orders
@@ -72,6 +73,20 @@ public class Store extends DomainEntity{
      */
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
     
     

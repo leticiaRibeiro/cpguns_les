@@ -39,6 +39,7 @@ public class StoreDAO extends AbstractJdbcDAO{
         sql.append("id_store serial primary key, ");
         sql.append("name text not null, ");
         sql.append("dtCreate date, ");
+        sql.append("id_user INTEGER REFERENCES tb_users(id_user), ");
         sql.append("id_add INTEGER REFERENCES tb_addresses(id_address)) ");
         
         try{
@@ -59,16 +60,17 @@ public class StoreDAO extends AbstractJdbcDAO{
         PreparedStatement pst = null;
         Store store = (Store) entity;
         AddressDAO addDAO = new AddressDAO();
+        UserDAO userDAO = new UserDAO();
         
         try {
-            
+            userDAO.create(store.getUser());
             addDAO.create(store.getAddress());
             openConnection();
             connection.setAutoCommit(false);
             
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO tb_stores(name, dtCreate, id_add)");
-            sql.append(" VALUES (?,?,?)");
+            sql.append("INSERT INTO tb_stores(name, dtCreate, id_add, id_user)");
+            sql.append(" VALUES (?,?,?,?)");
             
             pst = connection.prepareStatement(sql.toString(),
                     Statement.RETURN_GENERATED_KEYS);
@@ -76,6 +78,7 @@ public class StoreDAO extends AbstractJdbcDAO{
             Timestamp timedtCreate = new Timestamp(new Date().getTime());
             pst.setTimestamp(2, timedtCreate);
             pst.setInt(3, store.getAddress().getId());
+            pst.setInt(4, store.getUser().getId());
             pst.executeUpdate();
             
              ResultSet rs = pst.getGeneratedKeys();

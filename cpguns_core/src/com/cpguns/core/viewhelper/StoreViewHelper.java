@@ -11,6 +11,7 @@ import com.cpguns.core.model.City;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.State;
 import com.cpguns.core.model.Store;
+import com.cpguns.core.model.User;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.Date;
@@ -31,6 +32,7 @@ public class StoreViewHelper implements IViewHelper{
         Address address = null;
         City city = null;
         State state = null;
+        User user = null;
         
         if(("CONSULTAR").equals(operacao)){
             store = new Store();
@@ -44,18 +46,25 @@ public class StoreViewHelper implements IViewHelper{
             String neighborhood = request.getParameter("neighborhood");
             String paramCity = request.getParameter("city");
             String paramState = request.getParameter("state");
+            String login = request.getParameter("login");
+            String senha = request.getParameter("password");
             
+            user = new User();
             store = new Store();
             address = new Address();
             city = new City();
             state = new State();
             
+            user.setEmail(login);
+            user.setPassword(senha);
+            user.setLevel(101);
+            
             if(("ALTERAR").equals(operacao)){
                 int id = Integer.valueOf(request.getParameter("id"));
                 store.setId(id);
             }
-            
-            store.setLevel(2);
+            store.setUser(user);
+            store.setLevel(101);
             store.setName(name);
             address.setStreet(street);
             store.setDtCreate(new Date());

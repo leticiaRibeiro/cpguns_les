@@ -57,6 +57,19 @@ angular.module("cpguns", ['minhasDiretivas'])
         })
 
         .controller("StoreController", function ($scope, $http) {
+            $scope.buscarCEP = function () {
+                $http({
+                    method: 'GET',
+                    url: 'https://viacep.com.br/ws/' + $scope.store.zip + '/json',
+                }).then(function success(response) {
+                    $scope.store.address = response.data.logradouro;
+                    $scope.store.city = response.data.localidade;
+                    $scope.store.neighborhood = response.data.bairro;
+                }, function erro(response) {
+                    console.log(response);
+                });
+            };
+            
             $scope.salvarStore = function (store) {
                 $http({
                     method: 'POST',
@@ -70,7 +83,9 @@ angular.module("cpguns", ['minhasDiretivas'])
                         zip: store.zip,
                         neighborhood: store.neighborhood,
                         city: store.city,
-                        state: store.state
+                        state: store.state,
+                        login: store.email,
+                        password: store.password
                     }
                 }).then(function successCallback(response) {
                     alert("Lojas cadastrada com sucesso!");

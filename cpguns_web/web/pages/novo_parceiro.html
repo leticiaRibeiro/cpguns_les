@@ -30,18 +30,35 @@
                 </div>
                 <div class="card-action">
                     <div class="row">
+                        <h5>Nome</h5>
                         <div class="input-field col s10">
-                            <i class="material-icons prefix">store</i>
+                            <i class="material-icons prefix">account_box</i>
                             <input id="icon_prefix" type="text" class="validate" ng-model="store.name">
                             <label for="icon_prefix">Nome</label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s5">
+                        <h5>Localidade</h5>
+                        <div class="input-field col s3">
                             <i class="material-icons prefix">store</i>
+                            <input id="icon_prefix" type="text" class="validate" ng-model="store.zip" ng-blur="buscarCEP()">
+                            <label for="icon_prefix">CEP</label>
+                        </div>
+                        <div class="input-field col s4">
                             <input id="icon_prefix" type="text" class="validate" ng-model="store.address">
                             <label for="icon_prefix">Endereço</label>
                         </div>
+                        <div class="input-field col s2">
+                            <input id="icon_prefix" type="text" class="validate" ng-model="store.neighborhood">
+                            <label for="icon_prefix">Bairro</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <input id="icon_prefix" type="text" class="validate" ng-model="store.city">
+                            <label for="icon_prefix">Cidade</label>
+                        </div>
+
+                    </div>
+                    <div class="row">
                         <div class="input-field col s1">
                             <input id="icon_prefix" type="text" class="validate" ng-model="store.number">
                             <label for="icon_prefix">Número</label>
@@ -50,20 +67,7 @@
                             <input id="icon_prefix" type="text" class="validate" ng-model="store.complement">
                             <label for="icon_prefix">Complemento</label>
                         </div>
-                        <div class="input-field col s2">
-                            <input id="icon_prefix" type="text" class="validate" ng-model="store.zip">
-                            <label for="icon_prefix">CEP</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s2">
-                            <input id="icon_prefix" type="text" class="validate" ng-model="store.neighborhood">
-                            <label for="icon_prefix">Bairro</label>
-                        </div>
-                        <div class="input-field col s3">
-                            <input id="icon_prefix" type="text" ng-model="store.city">
-                            <label for="cidade">Cidade</label>
-                        </div>
+
                         <div class="input-field col s3">
                             <select id="estados" ng-model="store.state">
                                 <option value="Acre">Acre</option> 
@@ -97,6 +101,20 @@
                             <label for="estado">Estado</label>
                         </div>
                     </div>
+                    <div class="row">
+                        <h5>Dados de acesso</h5>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="icon_prefix" type="email" class="validate" ng-model="store.email">
+                            <label for="icon_prefix">E-mail</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">vpn_keys</i>
+                            <input id="icon_prefix" type="password" class="validate" ng-model="store.password">
+                            <label for="icon_prefix">Senha</label>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="right">
                             <a class="waves-effect waves-light btn" ng-click="salvarStore(store)">Cadastrar</a>

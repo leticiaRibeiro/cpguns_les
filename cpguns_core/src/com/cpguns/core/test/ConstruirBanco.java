@@ -185,11 +185,26 @@ public class ConstruirBanco {
         City city1 = new City();
         City city2 = new City();
         City city3 = new City();
+        User user1 = new User();
+        User user2 = new User();
+        User user3 = new User();
         State state1 = new State();
         State state2 = new State();
         Store store1 = new Store();
         Store store2 = new Store();
         Store store3 = new Store();
+        
+        user1.setEmail("loja1@hotmail.com");
+        user1.setPassword("123");
+        user1.setLevel(101);
+        
+        user2.setEmail("loja2@hotmail.com");
+        user2.setPassword("123");
+        user2.setLevel(101);
+        
+        user3.setEmail("loja3@hotmail.com");
+        user3.setPassword("123");
+        user3.setLevel(101);
         
         state1.setAtivo(true);
         state1.setDtCreate(new Date());
@@ -243,12 +258,18 @@ public class ConstruirBanco {
         
         store1.setAddress(add1);
         store1.setName("CPGuns Alto do Ipiranga");
+        store1.setLevel(101);
+        store1.setUser(user1);
         
         store2.setAddress(add2);
         store2.setName("CPGuns Suzano");
+        store2.setLevel(101);
+        store2.setUser(user2);
         
         store3.setAddress(add3);
         store3.setName("CPGuns Botafogo");
+        store3.setLevel(101);
+        store3.setUser(user3);
         
         try {
             sDAO.create(store1);
