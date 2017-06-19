@@ -11,7 +11,7 @@ import com.cpguns.core.model.DomainEntity;
 
 /**
  *
- * @author Gustavo
+ * @author Leticia
  */
 public class ExcluirCommand implements ICommand{
 

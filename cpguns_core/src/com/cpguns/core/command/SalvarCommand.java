@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Gustavo
+ * @author Leticia
  */
 public class SalvarCommand implements ICommand{
 

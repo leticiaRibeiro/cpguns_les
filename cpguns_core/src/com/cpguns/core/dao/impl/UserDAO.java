@@ -135,7 +135,7 @@ public class UserDAO extends AbstractJdbcDAO {
                 u.setAtivo(rs.getBoolean("ativo"));
             }
 
-            if (u != null) {
+            if (u != null) { // encontrei algum user?
                 boolean achou = false;
                 sql.delete(0, sql.length());
                 sql.append("SELECT * from tb_costumers c");

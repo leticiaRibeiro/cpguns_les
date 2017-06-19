@@ -7,7 +7,7 @@ package com.cpguns.core.model;
 
 /**
  *
- * @author Gustavo
+ * @author Leticia
  */
 public class User extends DomainEntity{
     

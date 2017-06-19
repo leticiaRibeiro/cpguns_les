@@ -28,6 +28,10 @@
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/analise</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Servlet</servlet-name>
+        <url-pattern>/acesso</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

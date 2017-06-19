@@ -7,8 +7,8 @@ import com.cpguns.core.model.Product;
 import java.sql.SQLException;
 
 /**
- * @author Gustavo de Souza Bezerra <gustavo.bezerra@hotmail.com>
- * @date   03/05/2017
+ * 
+ * @author Leticia
  */
 public class BuscarArmas {
 

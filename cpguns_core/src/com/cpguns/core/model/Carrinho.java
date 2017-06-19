@@ -3,8 +3,8 @@ package com.cpguns.core.model;
 import java.util.List;
 
 /**
- * @author Gustavo de Souza Bezerra <gustavo.bezerra@hotmail.com>
- * @date   06/05/2017
+ * 
+ * @author Leticia
  */
 public class Carrinho extends DomainEntity{
     

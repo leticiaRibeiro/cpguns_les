@@ -3,8 +3,8 @@ package com.cpguns.core.model;
 import java.util.Date;
 
 /**
- * @author Gustavo de Souza Bezerra <gustavo.bezerra@hotmail.com>
- * @date   15/05/2017
+ * 
+ * @author Leticia
  */
 public class AnaliseVendas {
     

@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Gustavo de Souza Bezerra <gustavo.bezerra@hotmail.com>
- * @date   14/05/2017
+ * 
+ * @author Leticia
  */
 public class AnaliseAcessos{
     

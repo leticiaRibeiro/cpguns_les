@@ -13,8 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author Gustavo de Souza Bezerra <gustavo.bezerra@hotmail.com>
- * @date 18/06/2017
+ * 
+ * @author Leticia
  */
 public class AutorizacaoDAO extends AbstractJdbcDAO {
 
