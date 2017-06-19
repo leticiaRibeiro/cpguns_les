@@ -211,6 +211,8 @@ public class OrderDAO extends AbstractJdbcDAO {
                         o.setStatus(Status.EM_NEGOCIACAO);
                     } else if (Status.EM_TRANSPORTE.getDescricao().equals(status)) {
                         o.setStatus(Status.EM_TRANSPORTE);
+                    } else if(Status.A_RETIRAR.getDescricao().equals(status)){
+                        o.setStatus(Status.A_RETIRAR);
                     } else if (Status.CANCELADO.getDescricao().equals(status)) {
                         o.setStatus(Status.CANCELADO);
                     } else if (Status.RETIRADO.getDescricao().equals(status)) {

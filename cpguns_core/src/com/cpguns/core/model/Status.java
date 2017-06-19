@@ -16,8 +16,9 @@ public enum Status {
     EM_NEGOCIACAO("Em negociação",2),
     CANCELADO("Cancelado",3),
     EM_TRANSPORTE("Em transporte",3),
-    RETIRADO("Retirado",4),
-    DEVOLVIDO("Devolvido",5);
+    A_RETIRAR("A Retirar",4),
+    RETIRADO("Retirado",5),
+    DEVOLVIDO("Devolvido",6);
     
     private int codigo;
     private String descricao;

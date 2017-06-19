@@ -468,6 +468,8 @@ angular.module("cpguns", ['minhasDiretivas'])
                     return "Em negociação";
                 } else if (status === "DEVOLVIDO") {
                     return "Devolvido";
+                } else if(status === "A_RETIRAR"){
+                    return "A retirar";
                 }
             };
 
@@ -495,6 +497,8 @@ angular.module("cpguns", ['minhasDiretivas'])
                 } else if (pedido.status === "RETIRADO") {
                     status = "Devolvido";
                 } else if (pedido.status === "EM_TRANSPORTE") {
+                    status = "A Retirar";
+                } else if(pedido.status === "A_RETIRAR"){
                     status = "Retirado";
                 } else if (pedido.status === "EM_NEGOCIACAO") {
                     status = "Em transporte";

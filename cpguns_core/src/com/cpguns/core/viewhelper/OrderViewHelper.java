@@ -86,6 +86,8 @@ public class OrderViewHelper implements IViewHelper {
                 order.setStatus(Status.EM_TRANSPORTE);
             } else if (Status.CANCELADO.getDescricao().equals(status)){
                 order.setStatus(Status.CANCELADO);
+            }else if (Status.A_RETIRAR.getDescricao().equals(status)){
+                order.setStatus(Status.A_RETIRAR);
             } else if (Status.RETIRADO.getDescricao().equals(status)){
                 order.setStatus(Status.RETIRADO);
             } else if (Status.DEVOLVIDO.getDescricao().equals(status)){
