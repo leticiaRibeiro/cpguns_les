@@ -9,12 +9,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body ng-controller="ClienteController">
+    <body ng-controller="StoreController">
         <!-- chamando nossa diretiva para o header da area logada -->
     <header-logado></header-logado>
 
     <!-- corpo da página -->
-    <main>
+    <main data-ng-init="buscarPedidos()">
         <!-- uma linha em branco, para dar o espaçamento do header -->
         <div class="row"></div>
 
@@ -35,40 +35,13 @@
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td><a href="pedido_especifico.html">928347</a></td>
-                                <td>90/90/9090</td>
-                                <td>129.371.987-02</td>
-                                <td>Aguardando aprovação</td>
+                            <tr ng-repeat="pedido in pedidos">
+                                <td><a ng-click="verDetalhes(pedido)">{{pedido.id}}</a></td>
+                                <td>{{pedido.dtCreate}}</td>
+                                <td>{{pedido.costumer.cpf}}</td>
+                                <td>{{getStatus(pedido.status)}}</td>
                                 <td>
-                                    <a class="waves-effect waves-light btn disabled">Entregue</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#!!!!">928347</a></td>
-                                <td>90/90/9090</td>
-                                <td>129.371.987-02</td>
-                                <td>Em negociação com a fabricante</td>
-                                <td>
-                                    <a class="waves-effect waves-light btn disabled">Entregue</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#!!!!">883274</a></td>
-                                <td>28/28/1293</td>
-                                <td>129.371.987-02</td>
-                                <td>Em fabricação</td>
-                                <td>
-                                    <a class="waves-effect waves-light btn disabled">Entregue</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#!!!!">982374</a></td>
-                                <td>13/23/7897</td>
-                                <td>129.371.987-02</td>
-                                <td>Em separação</td>
-                                <td>
-                                    <a class="waves-effect waves-light btn disabled">Entregue</a>
+                                    <a class="waves-effect waves-light btn" ng-disabled="pedido.status !== 'A_RETIRAR'" ng-click="alterar(pedido)">Entregue</a>
                                 </td>
                             </tr>
                         </tbody>

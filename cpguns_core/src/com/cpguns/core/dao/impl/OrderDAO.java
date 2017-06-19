@@ -140,6 +140,7 @@ public class OrderDAO extends AbstractJdbcDAO {
         List<DomainEntity> orders = new ArrayList<>();
         boolean ehPedidoEspecifico = false;
         boolean ehCostumerEspecifico = false;
+        boolean ehStoreEspecifico = false;
         try {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
@@ -154,6 +155,11 @@ public class OrderDAO extends AbstractJdbcDAO {
                 // Caso esteja 0, é pq não foi informado um ID especifico.
                 sql.append("WHERE o.id_order=?;"); // vamos procurar um cliente especifico
                 ehPedidoEspecifico = true;
+            } else if(order.getStore() != null){
+                if(order.getStore().getId() != 0){
+                    sql.append("WHERE o.id_sto=?;"); // vamos procurar um cliente especifico
+                    ehStoreEspecifico = true;
+                }
             }
 
             pst = connection.prepareStatement(sql.toString());
@@ -161,6 +167,8 @@ public class OrderDAO extends AbstractJdbcDAO {
                 pst.setInt(1, order.getId());
             } else if (ehCostumerEspecifico) {
                 pst.setInt(1, order.getCostumer().getId());
+            } else if(ehStoreEspecifico){
+                pst.setInt(1, order.getStore().getId());
             }
 
             ResultSet rs = pst.executeQuery();

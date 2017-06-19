@@ -98,6 +98,20 @@ public class OrderViewHelper implements IViewHelper {
         
         else if (("CONSULTAR").equals(operacao)){
             order = new Order();
+            String idStore = request.getParameter("id_store");
+            String idCostumer = request.getParameter("id_costumer");
+            String idOrder = request.getParameter("id_order");
+            if(idStore != null){
+                store = new Store();
+                store.setId(Integer.valueOf(idStore));
+                order.setStore(store);
+            } else if(idCostumer != null){
+                costumer = new Costumer();
+                costumer.setId(Integer.valueOf(idCostumer));
+                order.setCostumer(costumer);
+            } else if(idOrder != null){
+                order.setId(Integer.valueOf(idOrder));
+            }
         }
         return order;
     }

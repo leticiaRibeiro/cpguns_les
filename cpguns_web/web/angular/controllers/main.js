@@ -164,6 +164,67 @@ angular.module("cpguns", ['minhasDiretivas'])
                     }
                 });
             };
+            
+            $scope.buscarPedidos = function(){
+                var store = JSON.parse(window.sessionStorage.getItem("user"));
+                $http({
+                    method: 'GET',
+                    url: '/cpguns/order',
+                    params: {
+                        operacao: "CONSULTAR",
+                        id_store: store.id                        
+                    }                    
+                }).then(function success(response) {
+                    if(response.data[0].id === 0){
+                        $scope.pedidos = {};
+                    } else {
+                        $scope.pedidos = response.data;                        
+                    }
+                }, function erro(response) {
+                    console.log(response);
+                });
+            };
+            
+            $scope.alterar = function (pedido) {
+                var status = "Retirado";;
+                
+                $http({
+                    method: 'POST',
+                    url: '/cpguns/order',
+                    params: {
+                        operacao: "ALTERAR",
+                        id: pedido.id,
+                        status: status
+                    }
+                }).then(function successCallback(response) {
+                    $scope.buscarPedidos();
+                }, function errorCallback(response) {
+                    // deu caquinha
+                });
+            };
+            
+            $scope.getStatus = function (status) {
+                if (status === "AGUARDANDO_APROVACAO") {
+                    return "Aguardando Aprovação";
+                } else if (status === "CANCELADO") {
+                    return "Cancelado";
+                } else if (status === "RETIRADO") {
+                    return "Retirado";
+                } else if (status === "EM_TRANSPORTE") {
+                    return "Em transporte";
+                } else if (status === "EM_NEGOCIACAO") {
+                    return "Em negociação";
+                } else if (status === "DEVOLVIDO") {
+                    return "Devolvido";
+                } else if(status === "A_RETIRAR"){
+                    return "A retirar";
+                }
+            };
+            
+            $scope.verDetalhes = function (pedido) {
+                window.sessionStorage.setItem("pedido", JSON.stringify(pedido));
+                window.location.href = "http://localhost:8084/cpguns/pages/pedido_especifico.html";
+            };
         })
 
         .controller("CrudController", function ($scope, $http) {
