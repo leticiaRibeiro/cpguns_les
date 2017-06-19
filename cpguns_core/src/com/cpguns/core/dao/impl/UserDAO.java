@@ -6,9 +6,11 @@
 package com.cpguns.core.dao.impl;
 
 import com.cpguns.core.dao.AbstractJdbcDAO;
+import com.cpguns.core.model.Address;
 import com.cpguns.core.model.Autorizacao;
 import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
+import com.cpguns.core.model.Store;
 import com.cpguns.core.model.TipoAutorizacao;
 import com.cpguns.core.model.User;
 import java.sql.PreparedStatement;
@@ -107,16 +109,16 @@ public class UserDAO extends AbstractJdbcDAO {
         PreparedStatement pst = null;
         User user = (User) entity;
         Costumer costumer;
+        Store store;
         Autorizacao autorizacao;
-        List<DomainEntity> costumers = new ArrayList<>();
+        User u = null;
+        AddressDAO addressDAO = new AddressDAO();
+        List<DomainEntity> retorno = new ArrayList<>();
 
         try {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
-            sql.append("SELECT * from tb_costumers c\n"
-                    + "inner join tb_users u on u.id_user=c.id_us");
-            sql.append(" inner join tb_autorizacoes a on a.cpf=c.cpf");
-            sql.append(" where u.email=? and u.password=? and u.ativo=true;");
+            sql.append("SELECT * from tb_users where email=? and password=? and ativo=true;");
 
             pst = connection.prepareStatement(sql.toString());
             pst.setString(1, user.getEmail());
@@ -125,36 +127,74 @@ public class UserDAO extends AbstractJdbcDAO {
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
-                User u = new User();
-                costumer = new Costumer();
-                autorizacao = new Autorizacao();
-                
-                autorizacao.setAutorizacao(rs.getString("autorizacao"));
-                autorizacao.setNivel(rs.getInt("nivel_acesso"));
-                if(rs.getString("tipo").equals(TipoAutorizacao.CIVIL.toString())){
-                    autorizacao.setTipo(TipoAutorizacao.CIVIL);
-                } else{
-                    autorizacao.setTipo(TipoAutorizacao.POLICIAL);
-                }
-                
+                u = new User();
                 u.setEmail(rs.getString("email"));
                 u.setPassword(rs.getString("password"));
                 u.setLevel(rs.getInt("level"));
                 u.setId(rs.getInt("id_user"));
                 u.setAtivo(rs.getBoolean("ativo"));
-                
-                costumer.setAutorizacao(autorizacao);
-                costumer.setUser(u);
-                costumer.setId(rs.getInt("id_costumer"));
-                costumer.setName(rs.getString("name"));
-                costumer.setCpf(rs.getString("cpf"));
-                costumer.setRg(rs.getString("rg"));
-                costumer.setGenre(rs.getString("genre"));
-                costumer.setDtBirth(rs.getDate("dt_birth"));
-                costumer.setPhoneNumber(rs.getString("phone_number"));
-                costumer.setDtCreate(rs.getDate("dt_create"));                
-                
-                costumers.add(costumer);
+            }
+
+            if (u != null) {
+                boolean achou = false;
+                sql.delete(0, sql.length());
+                sql.append("SELECT * from tb_costumers c");
+                sql.append(" inner join tb_autorizacoes a on a.cpf=c.cpf");
+                sql.append(" where c.id_us=?;");
+                pst = connection.prepareStatement(sql.toString());
+                pst.setInt(1, u.getId());
+
+                rs = pst.executeQuery();
+
+                while (rs.next()) { // achou o user em costumer
+                    achou = true;
+                    costumer = new Costumer();
+                    autorizacao = new Autorizacao();
+
+                    autorizacao.setAutorizacao(rs.getString("autorizacao"));
+                    autorizacao.setNivel(rs.getInt("nivel_acesso"));
+                    if (rs.getString("tipo").equals(TipoAutorizacao.CIVIL.toString())) {
+                        autorizacao.setTipo(TipoAutorizacao.CIVIL);
+                    } else {
+                        autorizacao.setTipo(TipoAutorizacao.POLICIAL);
+                    }
+
+                    costumer.setAutorizacao(autorizacao);
+                    costumer.setUser(u);
+                    costumer.setId(rs.getInt("id_costumer"));
+                    costumer.setName(rs.getString("name"));
+                    costumer.setCpf(rs.getString("cpf"));
+                    costumer.setRg(rs.getString("rg"));
+                    costumer.setGenre(rs.getString("genre"));
+                    costumer.setDtBirth(rs.getDate("dt_birth"));
+                    costumer.setPhoneNumber(rs.getString("phone_number"));
+                    costumer.setDtCreate(rs.getDate("dt_create"));
+
+                    retorno.add(costumer);
+                }
+                if (!achou) { // não achou o user em costumer, então é uma loja
+                    store = new Store();
+
+                    sql.delete(0, sql.length());
+                    sql.append("SELECT * from tb_stores where id_user=?");
+                    pst = connection.prepareStatement(sql.toString());
+                    pst.setInt(1, u.getId());
+
+                    rs = pst.executeQuery();
+                    
+                    while(rs.next()){
+                        Address ad = new Address();
+                        ad.setId(rs.getInt("id_add"));
+                        store.setUser(u);
+                        store.setId(rs.getInt("id_store"));
+                        store.setName(rs.getString("name"));
+                        store.setLevel(101);
+                        store.setAddress((Address) addressDAO.read(ad).get(0));
+                        
+                        retorno.add(store);
+                    }
+                }
+
             }
 
         } catch (Exception e) {
@@ -172,7 +212,7 @@ public class UserDAO extends AbstractJdbcDAO {
                 e.printStackTrace();
             }
         }
-        return costumers;
+        return retorno;
     }
 
     @Override

@@ -69,7 +69,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                     console.log(response);
                 });
             };
-            
+
             $scope.salvarStore = function (store) {
                 $http({
                     method: 'POST',
@@ -237,7 +237,13 @@ angular.module("cpguns", ['minhasDiretivas'])
                         alert("Nenhum usuário encontrado com essas credenciais!");
                     } else {
                         window.sessionStorage.setItem("user", JSON.stringify(response.data.entities[0]));
-                        window.location.href = "http://localhost:8084/cpguns/pages/index.html";
+                        if (response.data.entities[0].level === 101) {
+                            window.location.href = "http://localhost:8084/cpguns/pages/home_loja.html";
+                        } else if (response.data.entities[0].user.level === 100) {
+                            window.location.href = "http://localhost:8084/cpguns/pages/home_admin.html";
+                        } else {
+                            window.location.href = "http://localhost:8084/cpguns/pages/index.html";
+                        }
                     }
                 }, function errorCallback(response) {
                     alert("ERRO");
@@ -439,7 +445,11 @@ angular.module("cpguns", ['minhasDiretivas'])
                         operacao: "CONSULTAR"
                     }
                 }).then(function successCallback(response) {
-                    $scope.pedidos = response.data;
+                    if (response.data[0].id === 0) {
+                        $scope.pedidos = {};
+                    } else {
+                        $scope.pedidos = response.data;
+                    }
                 }, function errorCallback(response) {
                     // deu caquinha
                 });
