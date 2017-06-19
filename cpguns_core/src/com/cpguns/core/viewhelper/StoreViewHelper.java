@@ -8,6 +8,7 @@ package com.cpguns.core.viewhelper;
 import com.cpguns.core.app.Result;
 import com.cpguns.core.model.Address;
 import com.cpguns.core.model.City;
+import com.cpguns.core.model.Costumer;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.State;
 import com.cpguns.core.model.Store;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Leticia
  */
-public class StoreViewHelper implements IViewHelper{
+public class StoreViewHelper implements IViewHelper {
 
     @Override
     public DomainEntity getEntidade(HttpServletRequest request) {
@@ -33,11 +34,12 @@ public class StoreViewHelper implements IViewHelper{
         City city = null;
         State state = null;
         User user = null;
-        
-        if(("CONSULTAR").equals(operacao)){
+        Gson gson = new Gson();
+
+        if (("CONSULTAR").equals(operacao)) {
             store = new Store();
-            
-        } else if(("SALVAR").equals(operacao) || ("ALTERAR").equals(operacao)){
+
+        } else if (("SALVAR").equals(operacao) || ("ALTERAR").equals(operacao)) {
             String name = request.getParameter("name");
             String street = request.getParameter("address");
             String number = request.getParameter("number");
@@ -48,43 +50,46 @@ public class StoreViewHelper implements IViewHelper{
             String paramState = request.getParameter("state");
             String login = request.getParameter("login");
             String senha = request.getParameter("password");
-            
+
             user = new User();
             store = new Store();
             address = new Address();
             city = new City();
             state = new State();
-            
-            user.setEmail(login);
-            user.setPassword(senha);
-            user.setLevel(101);
-            
-            if(("ALTERAR").equals(operacao)){
-                int id = Integer.valueOf(request.getParameter("id"));
-                store.setId(id);
+
+            if (("ALTERAR").equals(operacao)) {
+                store = gson.fromJson(request.getParameter("store"), Store.class);
+            } else {
+                user.setEmail(login);
+                user.setPassword(senha);
+                user.setLevel(101);
+                store.setUser(user);
+                store.setLevel(101);
+                store.setName(name);
+                address.setStreet(street);
+                store.setDtCreate(new Date());
+                address.setNumber(number);
+                address.setComplement(complement);
+                address.setZip(zip);
+                address.setNeighborhood(neighborhood);
+                city.setName(paramCity);
+                state.setName(paramState);
+                city.setState(state);
+                address.setCity(city);
+                store.setAddress(address);
             }
-            store.setUser(user);
-            store.setLevel(101);
-            store.setName(name);
-            address.setStreet(street);
-            store.setDtCreate(new Date());
-            address.setNumber(number);
-            address.setComplement(complement);
-            address.setZip(zip);
-            address.setNeighborhood(neighborhood);
-            city.setName(paramCity);
-            state.setName(paramState);
-            city.setState(state);
-            address.setCity(city);
-            store.setAddress(address);
-            
+
         } else if (("EXCLUIR").equals(operacao)) {
             int id = Integer.valueOf(request.getParameter("id"));
-            
+            int id_user = Integer.valueOf(request.getParameter("id_user"));
+
             store = new Store();
+            user = new User();
+            user.setId(id_user);
             store.setId(id);
+            store.setUser(user);
         }
-        
+
         return store;
     }
 
@@ -93,7 +98,7 @@ public class StoreViewHelper implements IViewHelper{
         String operacao = request.getParameter("operacao");
         Gson gson = new Gson();
         String retorno;
-        
+
         if (("CONSULTAR").equals(operacao)) {
             retorno = gson.toJson(resultado.getEntidades());
             response.getWriter().write(retorno);
@@ -104,9 +109,7 @@ public class StoreViewHelper implements IViewHelper{
         } else if (("ALTERAR").equals(operacao)) {
             response.getWriter().write(new Gson().toJson(resultado));
         }
-        
-        
-        
+
     }
-    
+
 }

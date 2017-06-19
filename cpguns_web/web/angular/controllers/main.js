@@ -164,30 +164,31 @@ angular.module("cpguns", ['minhasDiretivas'])
                     }
                 });
             };
-            
-            $scope.buscarPedidos = function(){
+
+            $scope.buscarPedidos = function () {
                 var store = JSON.parse(window.sessionStorage.getItem("user"));
                 $http({
                     method: 'GET',
                     url: '/cpguns/order',
                     params: {
                         operacao: "CONSULTAR",
-                        id_store: store.id                        
-                    }                    
+                        id_store: store.id
+                    }
                 }).then(function success(response) {
-                    if(response.data[0].id === 0){
+                    if (response.data[0].id === 0) {
                         $scope.pedidos = {};
                     } else {
-                        $scope.pedidos = response.data;                        
+                        $scope.pedidos = response.data;
                     }
                 }, function erro(response) {
                     console.log(response);
                 });
             };
-            
+
             $scope.alterar = function (pedido) {
-                var status = "Retirado";;
-                
+                var status = "Retirado";
+                ;
+
                 $http({
                     method: 'POST',
                     url: '/cpguns/order',
@@ -202,7 +203,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                     // deu caquinha
                 });
             };
-            
+
             $scope.getStatus = function (status) {
                 if (status === "AGUARDANDO_APROVACAO") {
                     return "Aguardando Aprovação";
@@ -216,16 +217,16 @@ angular.module("cpguns", ['minhasDiretivas'])
                     return "Em negociação";
                 } else if (status === "DEVOLVIDO") {
                     return "Devolvido";
-                } else if(status === "A_RETIRAR"){
+                } else if (status === "A_RETIRAR") {
                     return "A retirar";
                 }
             };
-            
+
             $scope.verDetalhes = function (pedido) {
                 window.sessionStorage.setItem("pedido", JSON.stringify(pedido));
                 window.location.href = "http://localhost:8084/cpguns/pages/pedido_especifico.html";
             };
-            
+
             $scope.getLojas = function () {
                 $http({
                     method: 'GET',
@@ -238,6 +239,49 @@ angular.module("cpguns", ['minhasDiretivas'])
                 }, function errorCallback(response) {
                     alert("ERRO");
                 });
+            };
+
+            $scope.irParaAlterar = function (loja) {
+                window.sessionStorage.setItem("store", JSON.stringify(loja));
+                window.location.href = "http://localhost:8084/cpguns/pages/alterar_parceiro.html";
+            };
+
+            $scope.getLoja = function () {
+                $scope.store = JSON.parse(window.sessionStorage.getItem("store"));
+            };
+
+            $scope.alterarCadastro = function (store) {
+                $http({
+                    method: 'POST',
+                    url: '/cpguns/store',
+                    params: {
+                        operacao: "ALTERAR",
+                        store: store
+                    }
+                }).then(function successCallback(response) {
+                    alert("Alterado com sucesso");
+                }, function errorCallback(response) {
+                    // deu caquinha
+                });
+            };
+
+            $scope.excluir = function (store) {
+                if (confirm("Deseja realmente excluir a loja " + store.name)) {
+                    $http({
+                        method: 'POST',
+                        url: '/cpguns/store',
+                        params: {
+                            operacao: "EXCLUIR",
+                            id: store.id,
+                            id_user: store.user.id
+                        }
+                    }).then(function successCallback(response) {
+                        alert("Excluido com sucesso!");
+                        $scope.getLojas();
+                    }, function errorCallback(response) {
+                        // deu caquinha
+                    });
+                }
             };
         })
 
@@ -543,7 +587,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                     return "Em negociação";
                 } else if (status === "DEVOLVIDO") {
                     return "Devolvido";
-                } else if(status === "A_RETIRAR"){
+                } else if (status === "A_RETIRAR") {
                     return "A retirar";
                 }
             };
@@ -573,7 +617,7 @@ angular.module("cpguns", ['minhasDiretivas'])
                     status = "Devolvido";
                 } else if (pedido.status === "EM_TRANSPORTE") {
                     status = "A Retirar";
-                } else if(pedido.status === "A_RETIRAR"){
+                } else if (pedido.status === "A_RETIRAR") {
                     status = "Retirado";
                 } else if (pedido.status === "EM_NEGOCIACAO") {
                     status = "Em transporte";

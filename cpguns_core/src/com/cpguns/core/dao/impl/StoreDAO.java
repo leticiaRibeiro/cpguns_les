@@ -11,6 +11,7 @@ import com.cpguns.core.model.City;
 import com.cpguns.core.model.DomainEntity;
 import com.cpguns.core.model.State;
 import com.cpguns.core.model.Store;
+import com.cpguns.core.model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,6 +40,7 @@ public class StoreDAO extends AbstractJdbcDAO{
         sql.append("id_store serial primary key, ");
         sql.append("name text not null, ");
         sql.append("dtCreate date, ");
+        sql.append("ativo boolean, ");
         sql.append("id_user INTEGER REFERENCES tb_users(id_user), ");
         sql.append("id_add INTEGER REFERENCES tb_addresses(id_address)) ");
         
@@ -69,16 +71,17 @@ public class StoreDAO extends AbstractJdbcDAO{
             connection.setAutoCommit(false);
             
             StringBuilder sql = new StringBuilder();
-            sql.append("INSERT INTO tb_stores(name, dtCreate, id_add, id_user)");
-            sql.append(" VALUES (?,?,?,?)");
+            sql.append("INSERT INTO tb_stores(name, dtCreate, ativo, id_add, id_user)");
+            sql.append(" VALUES (?,?,?,?,?)");
             
             pst = connection.prepareStatement(sql.toString(),
                     Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, store.getName());
             Timestamp timedtCreate = new Timestamp(new Date().getTime());
             pst.setTimestamp(2, timedtCreate);
-            pst.setInt(3, store.getAddress().getId());
-            pst.setInt(4, store.getUser().getId());
+            pst.setBoolean(3, true);
+            pst.setInt(4, store.getAddress().getId());
+            pst.setInt(5, store.getUser().getId());
             pst.executeUpdate();
             
              ResultSet rs = pst.getGeneratedKeys();
@@ -113,17 +116,21 @@ public class StoreDAO extends AbstractJdbcDAO{
         openConnection();
         PreparedStatement pst = null;
         Store store = (Store) entity;
+        User user;
         List<DomainEntity> stores = new ArrayList<>();
         boolean ehEspecifico = false;
+        UserDAO userDAO = new UserDAO();
         
         try {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
-            sql.append("SELECT s.*, a.* FROM tb_stores s INNER JOIN tb_addresses a on s.id_add = a.id_address");
+            sql.append("SELECT s.*, a.*, u.* FROM tb_stores s INNER JOIN tb_addresses a on s.id_add = a.id_address INNER JOIN tb_users u on s.id_user=u.id_user");
             if (store.getId() != 0) { // pq != 0? INT é um tipo primitivo. Ou seja, NUNCA será null. 
                 // Caso esteja 0, é pq não foi informado um ID especifico.
                 sql.append(" WHERE id_store=?"); // vamos procurar um cliente especifico
                 ehEspecifico = true;
+            } else{
+                sql.append(" WHERE s.ativo=true");
             }
             
             pst = connection.prepareStatement(sql.toString());
@@ -137,6 +144,12 @@ public class StoreDAO extends AbstractJdbcDAO{
                 Address a = new Address();
                 City c = new City();
                 State st = new State();
+                user = new User();
+                
+                user.setId(rs.getInt("id_user"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setLevel(rs.getInt("level"));
                 
                 s.setName(rs.getString("name"));
                 s.setId(rs.getInt("id_store"));
@@ -154,7 +167,8 @@ public class StoreDAO extends AbstractJdbcDAO{
                 c.setState(st);
                 a.setCity(c);
                 s.setAddress(a);
-                
+                s.setUser(user);
+                s.setAtivo(rs.getBoolean("ativo"));
                 
                 stores.add(s);
             }
@@ -189,8 +203,10 @@ public class StoreDAO extends AbstractJdbcDAO{
         PreparedStatement pst = null;
         Store store = (Store) entity;
         AddressDAO addDAO = new AddressDAO();
+        UserDAO userDAO = new UserDAO();
         
         try {
+            userDAO.update(store.getUser());
             addDAO.update(store.getAddress());
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
@@ -219,4 +235,45 @@ public class StoreDAO extends AbstractJdbcDAO{
             }
         }
     }
+
+    @Override
+    public void delete(DomainEntity entity) {
+        openConnection();
+        Store store = (Store) entity;
+        PreparedStatement pst = null;
+        UserDAO userDAO = new UserDAO();
+        userDAO.delete(store.getUser());
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE tb_stores SET ativo=false");
+        // estava faltando um espaço aqui no começo rs
+        sql.append(" WHERE id_store=?");
+        try {
+            connection.setAutoCommit(false);
+            pst = connection.prepareStatement(sql.toString());
+            pst.setInt(1, entity.getId());
+
+            pst.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+
+            try {
+                pst.close();
+                if (ctrlTransaction) {
+                    connection.close();
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    
 }
