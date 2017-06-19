@@ -6,6 +6,7 @@
 package com.cpguns.core.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +19,8 @@ public class Analysis extends DomainEntity{
     private TipoGrafico grafico;
     private List<AnaliseEstados> estados = new ArrayList<>();
     private List<AnaliseVendas> vendas = new ArrayList<>();
+    private Date dtInicio;
+    private Date dtFim;
     /*
         -----Query de análise dos acessos-----
         SELECT count(a.id_prod), p.id_product, a.dtacesso
@@ -107,6 +110,34 @@ public class Analysis extends DomainEntity{
      */
     public void setVendas(List<AnaliseVendas> vendas) {
         this.vendas = vendas;
+    }
+
+    /**
+     * @return the dtInicio
+     */
+    public Date getDtInicio() {
+        return dtInicio;
+    }
+
+    /**
+     * @param dtInicio the dtInicio to set
+     */
+    public void setDtInicio(Date dtInicio) {
+        this.dtInicio = dtInicio;
+    }
+
+    /**
+     * @return the dtFim
+     */
+    public Date getDtFim() {
+        return dtFim;
+    }
+
+    /**
+     * @param dtFim the dtFim to set
+     */
+    public void setDtFim(Date dtFim) {
+        this.dtFim = dtFim;
     }
     
     

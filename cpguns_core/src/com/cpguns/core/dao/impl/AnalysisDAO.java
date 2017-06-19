@@ -60,7 +60,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
 
     @Override
     public void create(DomainEntity entidade) throws SQLException {
-        
+
     }
 
     @Override
@@ -72,11 +72,11 @@ public class AnalysisDAO extends AbstractJdbcDAO {
             connection.setAutoCommit(false);
             StringBuilder sql = new StringBuilder();
             if (analise.getGrafico() == TipoGrafico.ACESSOS) {
-                return analiseAcessos(pst);
+                return analiseAcessos(pst, analise);
             } else if (analise.getGrafico() == TipoGrafico.VENDAS_POLICIAIS_CIVIS) {
-                return analiseVendas(pst);
+                return analiseVendas(pst, analise);
             } else if (analise.getGrafico() == TipoGrafico.VENDA_ESTADOS) {
-                return analiseEstados(pst);
+                return analiseEstados(pst, analise);
             }
 
         } catch (Exception e) {
@@ -104,7 +104,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
 
     }
 
-    private List<DomainEntity> analiseAcessos(PreparedStatement pst) throws SQLException {
+    private List<DomainEntity> analiseAcessos(PreparedStatement pst, Analysis entidade) throws SQLException {
         StringBuilder sql = new StringBuilder();
         Analysis analise = new Analysis();
         analise.setGrafico(TipoGrafico.ACESSOS);
@@ -115,9 +115,13 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         connection.setAutoCommit(false);
         sql.append("SELECT a.dtacesso\n"
                 + "        FROM tb_acessos a INNER JOIN tb_products p on a.id_prod = p.id_product\n"
-                + "        WHERE a.dtacesso between '2017-05-01' and '2017-06-20' group by a.dtacesso\n"
+                + "        WHERE a.dtacesso between ? and ? group by a.dtacesso\n"
                 + "        ORDER BY a.dtacesso asc;");
         pst = connection.prepareStatement(sql.toString());
+        Timestamp timedtInicio = new Timestamp(entidade.getDtInicio().getTime());
+        Timestamp timedtFim = new Timestamp(entidade.getDtFim().getTime());
+        pst.setTimestamp(1, timedtInicio);
+        pst.setTimestamp(2, timedtFim);
 
         ResultSet rs = pst.executeQuery();
         // enquanto houver registros, vamos lendo....
@@ -131,9 +135,11 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         sql.delete(0, sql.length());
         sql.append("SELECT count(a.id_prod), p.id_product, a.dtacesso\n"
                 + "        FROM tb_acessos a INNER JOIN tb_products p on a.id_prod = p.id_product\n"
-                + "        WHERE a.dtacesso between '2017-05-01' and '2017-06-20' group by a.id_prod, p.id_product, a.dtacesso\n"
+                + "        WHERE a.dtacesso between ? and ? group by a.id_prod, p.id_product, a.dtacesso\n"
                 + "        ORDER BY a.dtacesso, p.id_product asc");
         pst = connection.prepareStatement(sql.toString());
+        pst.setTimestamp(1, timedtInicio);
+        pst.setTimestamp(2, timedtFim);
         rs = pst.executeQuery();
         int contador = 0;
         while (rs.next()) {
@@ -159,7 +165,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         return retorno;
     }
 
-    private List<DomainEntity> analiseVendas(PreparedStatement pst) throws SQLException {
+    private List<DomainEntity> analiseVendas(PreparedStatement pst, Analysis entidade) throws SQLException {
         StringBuilder sql = new StringBuilder();
         Analysis analise = new Analysis();
         analise.setGrafico(TipoGrafico.VENDAS_POLICIAIS_CIVIS);
@@ -172,8 +178,12 @@ public class AnalysisDAO extends AbstractJdbcDAO {
                 + "        INNER JOIN tb_products p on p.id_product = op.id_product\n"
                 + "        INNER JOIN tb_costumers c on c.id_costumer = o.id_cos\n"
                 + "        INNER JOIN tb_autorizacoes aut on aut.autorizacao = c.fk_auto\n"
-                + "        WHERE o.dtcreate between '2017-06-01' and '2017-06-20' and p.caliber like '.38' group by c.id_costumer, aut.tipo, o.dtcreate;");
+                + "        WHERE o.dtcreate between ? and ? group by c.id_costumer, aut.tipo, o.dtcreate;");
         pst = connection.prepareStatement(sql.toString());
+        Timestamp timedtInicio = new Timestamp(entidade.getDtInicio().getTime());
+        Timestamp timedtFim = new Timestamp(entidade.getDtFim().getTime());
+        pst.setTimestamp(1, timedtInicio);
+        pst.setTimestamp(2, timedtFim);
 
         ResultSet rs = pst.executeQuery();
         // enquanto houver registros, vamos lendo....
@@ -213,7 +223,7 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         return retorno;
     }
 
-    private List<DomainEntity> analiseEstados(PreparedStatement pst) throws SQLException {
+    private List<DomainEntity> analiseEstados(PreparedStatement pst, Analysis entidade) throws SQLException {
         StringBuilder sql = new StringBuilder();
         Analysis analise = new Analysis();
         analise.setGrafico(TipoGrafico.VENDA_ESTADOS);
@@ -223,9 +233,13 @@ public class AnalysisDAO extends AbstractJdbcDAO {
         connection.setAutoCommit(false);
         sql.append("SELECT count(s.id_store), a.state FROM tb_orders o INNER JOIN tb_stores s on o.id_sto = s.id_store\n"
                 + "        INNER JOIN tb_addresses a on s.id_add = a.id_address\n"
-                + "        WHERE o.dtcreate between '2017-06-01' and '2017-06-20' group by a.state");
+                + "        WHERE o.dtcreate between ? and ? group by a.state");
         pst = connection.prepareStatement(sql.toString());
-
+        Timestamp timedtInicio = new Timestamp(entidade.getDtInicio().getTime());
+        Timestamp timedtFim = new Timestamp(entidade.getDtFim().getTime());
+        pst.setTimestamp(1, timedtInicio);
+        pst.setTimestamp(2, timedtFim);
+        
         ResultSet rs = pst.executeQuery();
         // enquanto houver registros, vamos lendo....
 
