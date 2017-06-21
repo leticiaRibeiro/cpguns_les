@@ -79,11 +79,11 @@ and open the template in the editor.
                                 </div>
                                 <div class="input-field col s4">
                                     <i class="material-icons prefix">date_range</i>
-                                    <input id="dt_nascimento" placeholder="Nascimento" type="date" class="datepicker" ng-model="user.dtBirth">
+                                    <input id="dt_nascimento" placeholder="Nascimento" type="text" ng-model="user.dtBirth">
                                     <label for="dt_nascimento"></label>
                                 </div>
                                 <div class="input-field col s3">
-                                    <select ng-model="user.genre">
+                                    <select id="genre" name="genre" ng-model="user.genre">
                                         <option value="M" selected>Masculino</option>
                                         <option value="F">Feminino</option>
                                     </select>
