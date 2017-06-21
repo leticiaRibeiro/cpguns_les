@@ -481,7 +481,6 @@ angular.module("cpguns", ['minhasDiretivas'])
                         // converte um objeto JavaScript para um objeto JSON
                         window.sessionStorage.setItem("user", JSON.stringify(response.data.entities[0]));
                         //var usuario = JSON.parse(window.sessionStorage.getItem("user"));
-                        alert("Usuário cadastrado com sucesso!");
                         window.location.href = "http://localhost:8084/cpguns/pages/index.html";
                     }
                 }, function errorCallback(response) {
